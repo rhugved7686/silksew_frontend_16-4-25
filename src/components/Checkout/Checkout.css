@@ -1,0 +1,202 @@
+.form-container {
+    display: flex;
+    flex-direction: row;
+    gap: 6rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem; /* Adds internal space at the bottom */
+    min-height: 80vh;
+    border-top: 1px solid #ddd;
+    margin: 2rem;
+    margin-bottom: 3rem; /* Adds external space at the bottom */
+    background-color: #f8f9fa;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    align-items: flex-start; /* Aligns child items to the top */
+}
+
+  
+  .form-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 650px;
+    margin-left: 100px; 
+  }
+  
+  .payment-method {
+    border: 2px solid #ccc;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .payment-method legend {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .payment-options {
+    display: flex;
+    gap: 3rem; /* Increased spacing between payment options */
+    margin-top: 1rem;
+  }
+  
+  .payment-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    padding: 0.8rem 3rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .payment-text {
+    font-size: 1rem; /* Adjust font size for better readability */
+    color: #fff; /* White color for text */
+    font-weight: 600; /* Make text bold for emphasis */
+    text-align: center; /* Centers text within the payment option box */
+    padding: 0.8rem 1.2rem; /* Add padding around the text for spacing */
+    border-radius: 5px; /* Rounded corners for the text background */
+    background-color: #ff7739; /* Orange color for the background */
+    transition: all 0.3s ease; /* Smooth transition for background color and text color */
+    text-transform: uppercase; /* Make the text uppercase for better visibility */
+    letter-spacing: 1px; /* Add spacing between letters for a cleaner look */
+    white-space: nowrap; /* Prevent the text from breaking into multiple lines */
+    display: inline-block; /* Keeps the text in a single horizontal line */
+}
+
+  
+  .payment-option.selected {
+    background-color: #ff7739;
+    border-color: #ff7739;
+    color: #fff;
+    font-weight: bold;
+    margin: 0.5rem; /* Adds space on all sides */
+  }
+  
+  .payment-option:hover {
+    background-color: #f5f5f5;
+    border-color: #888;
+  }
+  
+  .payment-logo {
+    height: 30px;
+  }
+  
+  .form-title h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 1.2rem;
+  }
+  
+  .form-input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.8rem 1rem;
+    width: 100%;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .form-input:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+  }
+  
+   .form-right {
+    width: 480px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    margin-left: 220px; 
+     margin-top: 0; 
+   } 
+   
+  
+  .cart-total {
+    margin-bottom: 2rem;
+  }
+  
+  .cart-total h3 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.5rem;
+  }
+  
+  .cart-total-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cart-total-item span:first-child {
+    color: #666;
+  }
+  
+  .cart-total-item span:last-child {
+    font-weight: bold;
+    color: #000;
+  }
+  
+  .form-submit {
+    text-align: right;
+    margin-top: 2rem;
+  }
+  
+  .submit-button {
+    background-color: #28a745;
+    color: #fff;
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #218838;
+    transform: scale(1.02);
+  }
+  
+  @media (max-width: 768px) {
+    .form-container {
+      flex-direction: column;
+      gap: 2rem;
+      padding: 1rem;
+    }
+  
+    .form-left {
+      max-width: 100%;
+    }
+  
+    .form-right {
+      width: 100%;
+    }
+  
+    .payment-option {
+      padding: 0.6rem 1.5rem;
+    }
+  }
+  

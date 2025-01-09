@@ -1,0 +1,169 @@
+.offer-banner {
+  background: linear-gradient(
+    45deg,
+    #4c4f69,
+    #2c2e43
+  ); /* Deep purple gradient */
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 15px 0;
+  z-index: 1000; /* High z-index to keep it above other content */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  position: fixed; /* Fixed below the navbar */
+  top: 100px; /* Adjust this to create space below the navbar */
+  left: 0;
+  right: 0;
+  width: 100%; /* Full width of the viewport */
+  height: 120px; /* Adjust the height as needed */
+}
+
+.offer-content p {
+  font-weight: bold; /* Make the text bold */
+  font-size: 24px; /* Slightly increase the font size for emphasis */
+  font-family: "Arial", sans-serif; /* Use a clean and readable font */
+  margin: 0;
+  text-transform: uppercase; /* Optional: Make all text uppercase */
+  color: #fff; /* Default text color as white for dark backgrounds */
+  animation: fadeInUp 1s ease-in-out, bounce 2s infinite,
+    colorPulse 2s ease-in-out infinite; /* Add animations */
+}
+
+/* Fade-in effect */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* Starts lower */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Ends in original position */
+  }
+}
+
+/* Bouncing animation */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px); /* Slight bounce effect */
+  }
+}
+
+/* Light color pulsing animation */
+@keyframes colorPulse {
+  0% {
+    color: #f85206; /* White color for the default text */
+  }
+  50% {
+    color: #00bcd4; /* Light cyan color for pulse effect */
+  }
+  100% {
+    color: #fff; /* Back to white */
+  }
+}
+
+.offer-content {
+  text-align: center;
+  font-size: 18px;
+}
+
+.offer-timer {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 10px;
+  display: flex;
+  gap: 15px;
+  color: #fff; /* White text for contrast on dark background */
+  animation: pulseGlow 2s ease-in-out infinite, slideIn 1s ease-out; /* Add animations */
+}
+
+/* Glowing Pulse Animation */
+@keyframes pulseGlow {
+  0% {
+    text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 15px #00bcd4,
+      0 0 20px #00bcd4; /* Light cyan glow */
+    color: #00bcd4;
+  }
+  50% {
+    text-shadow: 0 0 10px #00bcd4, 0 0 15px #00bcd4, 0 0 20px #00bcd4,
+      0 0 25px #00bcd4;
+    color: #00bcd4;
+  }
+  100% {
+    text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 15px #00bcd4,
+      0 0 20px #00bcd4;
+    color: #00bcd4;
+  }
+}
+
+/* Sliding In Animation */
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.offer-timer span {
+  background-color: #2c2e43;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+.scrolling-banner-container {
+  position: fixed; /* Fixed positioning for scrolling banner */
+  top: 220px; /* Place below the offer banner */
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  background: #333; /* Dark background for contrast */
+  z-index: 999; /* Place it just below the offer banner */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.scrolling-banner {
+  display: flex;
+  white-space: nowrap;
+  animation: scrollLeft 30s linear infinite;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+}
+
+.scrolling-banner span {
+  margin-right: 60px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: "Arial", sans-serif;
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.scrolling-banner-container:hover .scrolling-banner {
+  animation-play-state: paused;
+}
+
+body {
+  padding-top: 240px; /* Add padding to prevent overlapping with banners */
+}
