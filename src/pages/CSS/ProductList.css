@@ -1,0 +1,286 @@
+/* Container Styles */
+.product-list {
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+  background: linear-gradient(135deg, #e3f2fd, #90caf9);
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  transform: translateY(-10px);
+  opacity: 0;
+  animation: fadeInSlide 1s ease-out forwards;
+}
+
+@keyframes fadeInSlide {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.product-list h2 {
+  font-size: 26px;
+  color: #007bff;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: glowText 1.5s infinite alternate;
+}
+
+@keyframes glowText {
+  0% {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    text-shadow: 0 2px 8px rgba(0, 123, 255, 0.6);
+  }
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+thead {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  text-align: left;
+}
+
+thead th {
+  padding: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+tbody tr {
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+tbody tr:hover {
+  background-color: #f0f8ff;
+  transform: scale(1.01);
+}
+
+td {
+  padding: 12px;
+  font-size: 14px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+td img {
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+td img:hover {
+  transform: scale(1.1);
+}
+
+/* Button Styles */
+button {
+  padding: 8px 14px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background: rgba(0, 123, 255, 0.2);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:first-of-type {
+  background-color: #28a745;
+  color: white;
+}
+
+button:first-of-type:hover {
+  background-color: #218838;
+}
+
+button:last-of-type {
+  background-color: #dc3545;
+  color: white;
+}
+
+button:last-of-type:hover {
+  background-color: #c82333;
+}
+
+/* Input Field Styles */
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  outline: none;
+  transition: box-shadow 0.3s, border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+/* Save and Cancel Buttons */
+.product-list button {
+  padding: 8px 16px;
+  margin: 5px; /* Space between buttons */
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Save Button */
+.product-list button:first-of-type {
+  background-color: #28a745; /* Green color */
+  color: white;
+}
+
+.product-list button:first-of-type:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: scale(1.1); /* Slight zoom effect */
+}
+
+/* Cancel Button */
+.product-list button:last-of-type {
+  background-color: #dc3545; /* Red color */
+  color: white;
+}
+
+.product-list button:last-of-type:hover {
+  background-color: #c82333; /* Darker red on hover */
+  transform: scale(1.1); /* Slight zoom effect */
+}
+
+/* General Button Interaction */
+.product-list button:active {
+  transform: scale(0.95); /* Slight shrink on click */
+  opacity: 0.8; /* Reduce opacity to indicate a press */
+}
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  /* Adjust layout for tablets */
+  .product-list {
+    padding: 15px;
+    width: 90%;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  td,
+  th {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* For smaller tablets and large mobile screens */
+  .product-list {
+    padding: 12px;
+    width: 90%;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  td,
+  th {
+    font-size: 11px;
+    padding: 8px;
+  }
+
+  button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* For mobile screens */
+  .product-list {
+    padding: 10px;
+    width: 95%;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  td,
+  th {
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  button {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .product-list button {
+    font-size: 12px; /* Slightly reduced font size for buttons */
+  }
+}

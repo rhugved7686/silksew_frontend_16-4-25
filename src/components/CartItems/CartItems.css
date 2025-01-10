@@ -2,6 +2,7 @@
     margin: 100px 170px;
 }
 
+/* Cart Items Header */
 .cartitems-header {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
@@ -14,6 +15,7 @@
     border-bottom: 2px solid #e2e2e2;
 }
 
+/* Horizontal line inside cart items */
 .cartitems hr {
     height: 2px;
     background: #e2e2e2;
@@ -21,6 +23,7 @@
     margin: 20px 0;
 }
 
+/* Individual Cart Item */
 .cartitem {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
@@ -58,6 +61,7 @@
     background: #e04a4a;
 }
 
+/* Cart Items Total Section */
 .cartitems-down {
     display: flex;
     justify-content: space-between;
@@ -65,6 +69,7 @@
     gap: 30px;
 }
 
+/* Cart Total Styling */
 .cartitems-total {
     flex: 1;
     background: #f9f9f9;
@@ -123,6 +128,7 @@
     background: #e04a4a;
 }
 
+/* Promo Code Section */
 .cartitems-promocode {
     flex: 1;
     display: flex;
@@ -174,4 +180,86 @@
 
 .cartitems-promobox button:hover {
     background: #333;
+}
+
+/* Responsive Media Queries */
+
+/* For tablets and smaller screens */
+@media (max-width: 768px) {
+    .cartitems {
+        margin: 60px 20px; /* Reduced margin */
+    }
+
+    /* Cart Items Header */
+    .cartitems-header {
+        grid-template-columns: 1fr 2fr 1fr 1fr;
+        font-size: 16px;
+        gap: 10px;
+    }
+
+    .cartitem {
+        grid-template-columns: 1fr 2fr 1fr 1fr;
+        font-size: 14px;
+    }
+
+    .cartitems-down {
+        flex-direction: column;
+    }
+
+    .cartitems-total,
+    .cartitems-promocode {
+        flex: 1 1 auto; /* Allow the boxes to stack */
+        margin-top: 20px;
+    }
+
+    .cartitems-total h1 {
+        font-size: 20px;
+    }
+
+    .cartitems-total-item {
+        font-size: 16px;
+    }
+
+    .cartitems-promobox button {
+        width: 100%;
+        height: 45px;
+    }
+}
+
+/* For mobile screens */
+@media (max-width: 480px) {
+    .cartitems {
+        margin: 40px 10px; /* Further reduced margin */
+    }
+
+    .cartitems-header {
+        grid-template-columns: 1fr 2fr 1fr;
+        font-size: 14px;
+        gap: 5px;
+    }
+
+    .cartitem {
+        grid-template-columns: 1fr 2fr 1fr;
+        font-size: 14px;
+        padding: 10px 0;
+    }
+
+    .cartitems-down {
+        flex-direction: column;
+    }
+
+    .cartitems-total,
+    .cartitems-promocode {
+        margin-top: 20px;
+    }
+
+    .cartitems-promobox input {
+        font-size: 14px;
+    }
+
+    .cartitems-promobox button {
+        width: 100%;
+        height: 45px;
+        font-size: 14px;
+    }
 }

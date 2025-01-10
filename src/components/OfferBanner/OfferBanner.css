@@ -1,9 +1,5 @@
 .offer-banner {
-  background: linear-gradient(
-    45deg,
-    #4c4f69,
-    #2c2e43
-  ); /* Deep purple gradient */
+  background: linear-gradient(45deg, #4c4f69, #2c2e43);
   color: white;
   font-family: Arial, sans-serif;
   display: flex;
@@ -12,36 +8,35 @@
   align-items: center;
   text-align: center;
   padding: 15px 0;
-  z-index: 1000; /* High z-index to keep it above other content */
+  z-index: 1000;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  position: fixed; /* Fixed below the navbar */
-  top: 100px; /* Adjust this to create space below the navbar */
+  position: fixed;
+  top: 100px;
   left: 0;
   right: 0;
-  width: 100%; /* Full width of the viewport */
-  height: 120px; /* Adjust the height as needed */
+  width: 100%;
+  height: 120px;
 }
 
 .offer-content p {
-  font-weight: bold; /* Make the text bold */
-  font-size: 24px; /* Slightly increase the font size for emphasis */
-  font-family: "Arial", sans-serif; /* Use a clean and readable font */
+  font-weight: bold;
+  font-size: 24px;
+  font-family: "Arial", sans-serif;
   margin: 0;
-  text-transform: uppercase; /* Optional: Make all text uppercase */
-  color: #fff; /* Default text color as white for dark backgrounds */
-  animation: fadeInUp 1s ease-in-out, bounce 2s infinite,
-    colorPulse 2s ease-in-out infinite; /* Add animations */
+  text-transform: uppercase;
+  color: #fff;
+  animation: fadeInUp 1s ease-in-out, bounce 2s infinite, colorPulse 2s ease-in-out infinite;
 }
 
 /* Fade-in effect */
 @keyframes fadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(20px); /* Starts lower */
+    transform: translateY(20px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0); /* Ends in original position */
+    transform: translateY(0);
   }
 }
 
@@ -52,20 +47,20 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-8px); /* Slight bounce effect */
+    transform: translateY(-8px);
   }
 }
 
 /* Light color pulsing animation */
 @keyframes colorPulse {
   0% {
-    color: #f85206; /* White color for the default text */
+    color: #f85206;
   }
   50% {
-    color: #00bcd4; /* Light cyan color for pulse effect */
+    color: #00bcd4;
   }
   100% {
-    color: #fff; /* Back to white */
+    color: #fff;
   }
 }
 
@@ -80,25 +75,22 @@
   margin-top: 10px;
   display: flex;
   gap: 15px;
-  color: #fff; /* White text for contrast on dark background */
-  animation: pulseGlow 2s ease-in-out infinite, slideIn 1s ease-out; /* Add animations */
+  color: #fff;
+  animation: pulseGlow 2s ease-in-out infinite, slideIn 1s ease-out;
 }
 
 /* Glowing Pulse Animation */
 @keyframes pulseGlow {
   0% {
-    text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 15px #00bcd4,
-      0 0 20px #00bcd4; /* Light cyan glow */
+    text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 15px #00bcd4, 0 0 20px #00bcd4;
     color: #00bcd4;
   }
   50% {
-    text-shadow: 0 0 10px #00bcd4, 0 0 15px #00bcd4, 0 0 20px #00bcd4,
-      0 0 25px #00bcd4;
+    text-shadow: 0 0 10px #00bcd4, 0 0 15px #00bcd4, 0 0 20px #00bcd4, 0 0 25px #00bcd4;
     color: #00bcd4;
   }
   100% {
-    text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 15px #00bcd4,
-      0 0 20px #00bcd4;
+    text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 15px #00bcd4, 0 0 20px #00bcd4;
     color: #00bcd4;
   }
 }
@@ -122,14 +114,15 @@
   color: white;
 }
 
+/* Scrolling Banner */
 .scrolling-banner-container {
-  position: fixed; /* Fixed positioning for scrolling banner */
-  top: 220px; /* Place below the offer banner */
+  position: fixed;
+  top: 220px;
   left: 0;
   width: 100%;
   overflow: hidden;
-  background: #333; /* Dark background for contrast */
-  z-index: 999; /* Place it just below the offer banner */
+  background: #333;
+  z-index: 999;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -166,4 +159,92 @@
 
 body {
   padding-top: 240px; /* Add padding to prevent overlapping with banners */
+}
+
+/* Media Queries for Responsiveness */
+
+/* For Tablet screens */
+@media (max-width: 1024px) {
+  .offer-banner {
+    top: 80px; /* Adjust top position on smaller screens */
+    height: 100px; /* Reduce height */
+  }
+
+  .offer-content p {
+    font-size: 20px; /* Reduce font size */
+  }
+
+  .offer-timer {
+    font-size: 18px; /* Reduce font size */
+    gap: 10px; /* Adjust spacing */
+  }
+
+  .scrolling-banner {
+    font-size: 18px; /* Smaller font size for the scrolling banner */
+    padding: 15px;
+  }
+
+  .scrolling-banner span {
+    margin-right: 40px; /* Reduce margin for smaller screens */
+  }
+}
+
+/* For Mobile screens */
+@media (max-width: 768px) {
+  .offer-banner {
+    top: 60px; /* Adjust top position for mobile */
+    height: 80px; /* Reduce height */
+  }
+
+  .offer-content p {
+    font-size: 18px; /* Smaller font size */
+  }
+
+  .offer-timer {
+    font-size: 16px; /* Smaller font size */
+    gap: 8px; /* Reduce spacing */
+  }
+
+  .scrolling-banner {
+    font-size: 16px; /* Smaller font size */
+    padding: 10px;
+  }
+
+  .scrolling-banner span {
+    margin-right: 30px; /* Reduce margin */
+  }
+
+  body {
+    padding-top: 200px; /* Adjust padding to prevent overlap */
+  }
+}
+
+/* For Very Small Mobile Screens */
+@media (max-width: 480px) {
+  .offer-banner {
+    top: 50px; /* Adjust top position */
+    height: 70px; /* Reduce height */
+  }
+
+  .offer-content p {
+    font-size: 16px; /* Further reduce font size */
+  }
+
+  .offer-timer {
+    font-size: 14px; /* Further reduce font size */
+    gap: 6px; /* Reduce gap */
+  }
+
+  .scrolling-banner {
+    font-size: 14px; /* Smaller font size */
+    padding: 8px;
+  }
+
+  .scrolling-banner span {
+    margin-right: 20px; /* Reduce margin */
+  }
+
+  body {
+    padding-top: 180px; /* Adjust padding */
+  }
 }

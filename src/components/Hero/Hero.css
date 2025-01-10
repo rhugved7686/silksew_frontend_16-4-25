@@ -1,10 +1,13 @@
-.hero{
+.hero {
     height: 100vh;
     background: linear-gradient(180deg, #fde1ff, #e1ffea22 60%);
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
 }
 
-.hero-left{
+.hero-left {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -14,29 +17,29 @@
     line-height: 1.1;
 }
 
-.hero-left h2{
+.hero-left h2 {
     color: #090909;
     font-size: 26px;
     font-weight: 600;
 }
 
-.hero-left p{
+.hero-left p {
     color: #171717;
     font-size: 100px;
     font-weight: 700;
 }
 
-.hero-hand-icon{
+.hero-hand-icon {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.hero-hand-icon img{
+.hero-hand-icon img {
     width: 105px;
 }
 
-.hero-latest-btn{
+.hero-latest-btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,4 +52,101 @@
     color: white;
     font-size: 22px;
     font-weight: 500;
+    cursor: pointer;
+}
+
+/* Mobile and Tablet Responsiveness */
+@media (max-width: 1024px) {
+    .hero {
+        flex-direction: column;
+        align-items: center;
+        padding: 30px 20px;
+    }
+
+    .hero-left {
+        padding-left: 0;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .hero-left h2 {
+        font-size: 24px;
+    }
+
+    .hero-left p {
+        font-size: 80px;
+    }
+
+    .hero-hand-icon {
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .hero-latest-btn {
+        width: 280px;
+        height: 60px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 20px;
+    }
+
+    .hero-left {
+        padding-left: 0;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .hero-left h2 {
+        font-size: 22px;
+    }
+
+    .hero-left p {
+        font-size: 60px;
+    }
+
+    .hero-hand-icon {
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .hero-latest-btn {
+        width: 250px;
+        height: 55px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 20px;
+    }
+
+    .hero-left {
+        padding-left: 0;
+        text-align: center;
+        gap: 8px;
+    }
+
+    .hero-left h2 {
+        font-size: 20px;
+    }
+
+    .hero-left p {
+        font-size: 45px;
+    }
+
+    .hero-hand-icon {
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .hero-latest-btn {
+        width: 220px;
+        height: 50px;
+        font-size: 16px;
+    }
 }

@@ -1,0 +1,172 @@
+/* General Styles */
+.admin-page {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f3f4f6, #d1d5db);
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.admin-page h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    animation: textGlow 1.5s infinite alternate;
+}
+
+@keyframes textGlow {
+    from {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    to {
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* Tabs Section */
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 15px;
+    animation: fadeSlideIn 1s ease-in-out;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.tab-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+    background: linear-gradient(135deg, green, #cbd5e1);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tab-button.active {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+}
+
+.tab-button:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
+}
+
+.tab-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+
+/* For Tablet Screens (Up to 1024px) */
+@media (max-width: 1024px) {
+    .admin-page {
+        padding: 20px;
+    }
+
+    .tabs {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .tab-button {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .admin-page h2 {
+        font-size: 1.75rem;
+    }
+}
+
+/* For Mobile Screens (Up to 768px) */
+@media (max-width: 768px) {
+    .admin-page {
+        padding: 15px;
+    }
+
+    .tabs {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .tab-button {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+        font-size: 0.85rem;
+    }
+
+    .admin-page h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* For Very Small Mobile Screens (Up to 480px) */
+@media (max-width: 480px) {
+    .admin-page {
+        padding: 10px;
+    }
+
+    .tabs {
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .tab-button {
+        width: 100%;
+        justify-content: center;
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+
+    .admin-page h2 {
+        font-size: 1.25rem;
+    }
+}

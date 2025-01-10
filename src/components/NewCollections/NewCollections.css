@@ -1,27 +1,78 @@
-.new-collections{
+.new-collections {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
     margin-bottom: 100px;
-}
-
-.new-collections h1{
+  }
+  
+  .new-collections h1 {
     color: #171717;
     font-size: 50px;
     font-weight: 600;
-}
-
-.new-collections hr{
+  }
+  
+  .new-collections hr {
     width: 200px;
     height: 6px;
     border-radius: 10px;
     background: #252525;
-}
-
-.collections{
+  }
+  
+  .collections {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     margin-top: 50px;
     gap: 30px;
-}
+  }
+  
+  /* Media Queries for Responsiveness */
+  
+  /* For Tablet screens */
+  @media (max-width: 1024px) {
+    .new-collections h1 {
+      font-size: 40px; /* Reduce font size for tablet */
+    }
+  
+    .new-collections hr {
+      width: 150px; /* Adjust width of the line */
+    }
+  
+    .collections {
+      grid-template-columns: 1fr 1fr 1fr; /* 3 columns for tablets */
+      gap: 20px;
+    }
+  }
+  
+  /* For Mobile screens */
+  @media (max-width: 768px) {
+    .new-collections h1 {
+      font-size: 32px; /* Reduce font size for mobile */
+    }
+  
+    .new-collections hr {
+      width: 120px; /* Adjust width of the line */
+    }
+  
+    .collections {
+      grid-template-columns: 1fr 1fr; /* 2 columns for smaller devices */
+      gap: 15px;
+    }
+  }
+  
+  /* For very small mobile screens (e.g., under 480px) */
+  @media (max-width: 480px) {
+    .new-collections h1 {
+      font-size: 28px; /* Further reduce font size for very small devices */
+    }
+  
+    .new-collections hr {
+      width: 100px; /* Adjust width of the line */
+    }
+  
+    .collections {
+      grid-template-columns: 1fr; /* Single column for very small screens */
+      gap: 10px;
+    }
+  }
+  

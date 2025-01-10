@@ -1,4 +1,4 @@
-.newsletter{
+.newsletter {
     width: 60%;
     height: 40vh;
     display: flex;
@@ -10,20 +10,20 @@
     margin-bottom: 150px;
     background: linear-gradient(180deg, #fde1ff 0%, #e1ffea22 60%);
     gap: 30px;
-}
-
-.newsletter h1{
+  }
+  
+  .newsletter h1 {
     color: #454545;
     font-size: 55px;
     font-weight: 600;
-}
-
-.newsletter p{
+  }
+  
+  .newsletter p {
     color: #454545;
     font-size: 20px;
-}
-
-.newsletter div{
+  }
+  
+  .newsletter div {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -32,9 +32,9 @@
     height: 70px;
     border-radius: 80px;
     border: 1px solid #e3e3e3;
-}
-
-.newsletter input{
+  }
+  
+  .newsletter input {
     width: 500px;
     margin-left: 30px;
     border: none;
@@ -42,9 +42,9 @@
     color: #616161;
     font-family: Poppins;
     font-size: 16px;
-}
-
-.newsletter div button{
+  }
+  
+  .newsletter div button {
     width: 210px;
     height: 70px;
     border-radius: 80px;
@@ -52,4 +52,97 @@
     color: white;
     font-size: 16px;
     cursor: pointer;
-}
+  }
+  
+  /* Media Queries for Responsiveness */
+  
+  /* For Tablet screens */
+  @media (max-width: 1024px) {
+    .newsletter {
+      width: 80%; /* Make the container slightly smaller on tablets */
+      padding: 0px 50px; /* Reduce padding */
+      height: auto; /* Adjust height to auto to allow content to adjust */
+    }
+  
+    .newsletter h1 {
+      font-size: 40px; /* Reduce heading font size */
+    }
+  
+    .newsletter p {
+      font-size: 18px; /* Adjust paragraph font size */
+    }
+  
+    .newsletter div {
+      width: 100%; /* Make the form container take full width */
+      flex-direction: column; /* Stack input and button vertically */
+      gap: 10px; /* Add space between the input and button */
+    }
+  
+    .newsletter input {
+      width: 100%; /* Make the input field take full width */
+      margin-left: 0; /* Remove left margin */
+    }
+  
+    .newsletter div button {
+      width: 100%; /* Make the button take full width */
+    }
+  }
+  
+  /* For Mobile screens */
+  @media (max-width: 768px) {
+    .newsletter {
+      width: 90%; /* Make the container width 90% on mobile */
+      padding: 0px 20px; /* Reduce padding for smaller screens */
+      height: auto; /* Allow content to adjust its height */
+    }
+  
+    .newsletter h1 {
+      font-size: 32px; /* Further reduce font size */
+      text-align: center; /* Center the heading text */
+    }
+  
+    .newsletter p {
+      font-size: 16px; /* Adjust paragraph font size */
+      text-align: center; /* Center the paragraph text */
+    }
+  
+    .newsletter div {
+      width: 100%; /* Make the form container full width */
+      flex-direction: column; /* Stack the input and button vertically */
+      gap: 10px;
+    }
+  
+    .newsletter input {
+      width: 100%; /* Make the input field full width */
+    }
+  
+    .newsletter div button {
+      width: 100%; /* Make the button full width */
+    }
+  }
+  
+  /* For very small mobile screens (under 480px) */
+  @media (max-width: 480px) {
+    .newsletter h1 {
+      font-size: 28px; /* Further reduce font size */
+    }
+  
+    .newsletter p {
+      font-size: 14px; /* Adjust paragraph font size */
+    }
+  
+    .newsletter div {
+      width: 100%; /* Form container takes full width */
+      flex-direction: column; /* Stack the form elements */
+      gap: 10px;
+    }
+  
+    .newsletter input {
+      width: 100%; /* Ensure input takes full width */
+    }
+  
+    .newsletter div button {
+      width: 100%; /* Ensure button takes full width */
+    }
+  }
+  

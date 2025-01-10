@@ -1,0 +1,132 @@
+/* Default Form Styles */
+.create-product-form {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #4caf50, #81c784);
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  font-family: 'Arial', sans-serif;
+  color: white;
+  transform: translateY(-10px);
+  opacity: 0;
+  animation: fadeInSlide 1s ease-out forwards;
+}
+
+@keyframes fadeInSlide {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.create-product-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.create-product-form input {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.create-product-form input:focus {
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.create-product-form input[type="file"] {
+  padding: 0;
+  border: none;
+  font-size: 0.9rem;
+  background: none;
+  color: #ffffff;
+}
+
+.create-product-form button {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  background: #ffffff;
+  color: #4caf50;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.create-product-form button:hover {
+  background: #4caf50;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.create-product-form button:active {
+  transform: scale(0.97);
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+  .create-product-form {
+    padding: 1.5rem;
+    width: 90%; /* Increased width for better visibility on tablets */
+  }
+
+  .create-product-form h2 {
+    font-size: 1.6rem; /* Slightly smaller font size for tablets */
+  }
+
+  .create-product-form input,
+  .create-product-form button {
+    font-size: 1rem; /* Standard font size */
+  }
+}
+
+/* Very Small Screens (480px and below) */
+@media (max-width: 480px) {
+  .create-product-form {
+    padding: 1.2rem;
+    width: 90%; /* Ensure the form doesn't become too small on phones */
+  }
+
+  .create-product-form h2 {
+    font-size: 1.4rem; /* Adjusted for smaller screens */
+  }
+
+  .create-product-form input,
+  .create-product-form button {
+    font-size: 0.9rem; /* Reduced size for mobile */
+  }
+
+  .create-product-form input:focus {
+    animation: glow 1.5s infinite alternate;
+  }
+}
+
+/* Glow Effect for Input Focus */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 1);
+  }
+}
+
+/* Hover Effect on Form */
+.create-product-form:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  transition: box-shadow 0.3s ease;
+}
