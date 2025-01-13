@@ -14,6 +14,7 @@ import kid_banner from './components/Assets/banner_kids.png';
 import OfferBanner from "./components/OfferBanner/OfferBanner";
 import Checkout from "./components/Checkout/Checkout";
 import AdminPage from "./pages/AdminPage";
+import ForgottenPassword from "./pages/ForgottenPassword";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/forgot-password" element={<ForgottenPassword />} />
       </Routes>
       
       <Footer />

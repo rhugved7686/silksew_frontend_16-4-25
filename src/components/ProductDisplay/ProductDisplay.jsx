@@ -120,7 +120,9 @@ const ProductDisplay = ({ product }) => {
               <div
                 key={size}
                 onClick={() => setSelectedSize(size)}
-                className={selectedSize === size ? "selected" : ""}
+                className={`size-box ${selectedSize === size ? "selected" : ""}`}
+
+                //className={selectedSize === size ? "selected" : ""}
               >
                 {size}
               </div>

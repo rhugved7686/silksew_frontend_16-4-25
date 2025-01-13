@@ -60,6 +60,25 @@
   transition: background-color 0.3s;
 }
 
+.login-forgotpassword {
+  margin-top: 20px;
+  text-align: center;
+  color: #5c5c5c;
+  font-size: 14px;
+}
+
+.loginsignup-login span {
+  color: #ff4141;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-forgotpassword-link {
+  color: red;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 /* Media Queries for Responsiveness */
 
 /* For Tablet screens */

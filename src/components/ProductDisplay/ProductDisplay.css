@@ -81,6 +81,27 @@
     border-radius: 3px;
     cursor: pointer;
   }
+
+  .size-box {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .size-box:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .size-box.selected {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+    font-weight: bold;
+  }
   
   .productdisplay-right button {
     padding: 20px 40px;
