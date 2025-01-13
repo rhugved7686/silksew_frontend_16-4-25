@@ -82,7 +82,7 @@
 
 // export default ShopContextProvider;
 
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import all_product from "../components/Assets/all_product";
 import axios from "axios";
 import { BASEURL } from "../config";
@@ -93,6 +93,7 @@ export const ShopContext = createContext(null);
 const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
+  const [products, setProducts] = useState([])
 
   const addToCart = (id, size) => {
     setCartItems((prevItems) => {
@@ -131,7 +132,32 @@ const ShopContextProvider = (props) => {
     return Object.values(cartItems).reduce((total, { quantity }) => total + quantity, 0);
   };
 
+
+  // function to get all products list from the backend
+  const getProducts = async () =>{
+    try {
+      const response = await axios.get(BASEURL + "/api/products")
+      // if(response.status){
+        setProducts(response.data);
+      // }
+      // else{
+      //   console.log(response.data)
+      // }
+      // console.log(products)
+      // console.log(response.status)
+    } catch (error) {
+      console.log(error) 
+    }
+    
+  }
+
+  useEffect (()=>{
+
+    getProducts()
+  },[])
+
   const contextValue = {
+    products,
     cartItems,
     addToCart,
     removeFromCart,
