@@ -1,80 +1,160 @@
 .popular {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    height: 90vh;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  height: auto; /* Change from fixed height to auto to accommodate content dynamically */
+  padding: 20px;
+  text-align: center;
+}
+
+.popular h1 {
+  color: #171717;
+  font-size: 50px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.popular hr {
+  width: 200px;
+  height: 6px;
+  border-radius: 10px;
+  background: #252525;
+  margin: 20px auto;
+}
+
+.popular-item {
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+/* Media Queries for Responsiveness */
+
+/* For Tablet screens */
+@media (max-width: 1024px) {
   .popular h1 {
-    color: #171717;
-    font-size: 50px;
-    font-weight: 600;
+    font-size: 40px; /* Reduce font size for tablet screens */
   }
-  
+
   .popular hr {
-    width: 200px;
-    height: 6px;
-    border-radius: 10px;
-    background: #252525;
+    width: 150px; /* Adjust the width of the line for smaller screens */
   }
-  
+
   .popular-item {
-    margin-top: 50px;
-    display: flex;
-    gap: 30px;
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    margin-top: 30px; /* Reduce the margin */
+    gap: 20px; /* Adjust the gap between items */
   }
-  
-  /* Media Queries for Responsiveness */
-  
-  /* For Tablet screens */
-  @media (max-width: 1024px) {
-    .popular h1 {
-      font-size: 40px; /* Reduce font size for tablet screens */
-    }
-  
-    .popular hr {
-      width: 150px; /* Adjust the width of the line for smaller screens */
-    }
-  
-    .popular-item {
-      flex-direction: column; /* Stack items vertically on smaller screens */
-      margin-top: 30px; /* Reduce the margin */
-      gap: 20px; /* Adjust the gap between items */
-    }
+
+  .item-container {
+    width: 300px; /* Slightly smaller width for tablet screens */
   }
-  
-  /* For Mobile screens */
-  @media (max-width: 768px) {
-    .popular h1 {
-      font-size: 30px; /* Reduce font size further for mobile screens */
-    }
-  
-    .popular hr {
-      width: 120px; /* Further reduce the width of the line */
-    }
-  
-    .popular-item {
-      flex-direction: column; /* Keep the items stacked vertically */
-      gap: 15px; /* Reduce the gap between items */
-      margin-top: 20px; /* Reduce the margin */
-    }
+}
+
+/* For Mobile screens */
+@media (max-width: 768px) {
+  .popular h1 {
+    font-size: 30px; /* Reduce font size further for mobile screens */
   }
-  
-  /* For Very Small Mobile Screens */
-  @media (max-width: 480px) {
-    .popular h1 {
-      font-size: 25px; /* Further reduce font size for very small screens */
-    }
-  
-    .popular hr {
-      width: 100px; /* Adjust the width for very small screens */
-    }
-  
-    .popular-item {
-      flex-direction: column; /* Stack items vertically */
-      gap: 10px; /* Smaller gap between items */
-      margin-top: 15px; /* Reduce the margin */
-    }
+
+  .popular hr {
+    width: 120px; /* Further reduce the width of the line */
   }
-  
+
+  .popular-item {
+    flex-direction: column; /* Keep the items stacked vertically */
+    gap: 15px; /* Reduce the gap between items */
+    margin-top: 20px; /* Reduce the margin */
+  }
+
+  .item-container {
+    width: 250px; /* Adjust width for mobile devices */
+  }
+}
+
+/* For Very Small Mobile Screens */
+@media (max-width: 480px) {
+  .popular {
+    padding-top: 150px; /* Added padding-top for very small mobile screens */
+  }
+
+  .popular h1 {
+    font-size: 25px; /* Further reduce font size for very small screens */
+  }
+
+  .popular hr {
+    width: 100px; /* Adjust the width for very small screens */
+  }
+
+  .popular-item {
+    flex-direction: column; /* Stack items vertically */
+    gap: 10px; /* Smaller gap between items */
+    margin-top: 15px; /* Reduce the margin */
+  }
+
+  .item-container {
+    width: 220px; /* Adjust width for smaller mobile screens */
+  }
+
+  .add-to-cart-btn {
+    width: 100%; /* Make the button full width on small screens */
+    padding: 12px; /* Increase padding for better touch interaction */
+  }
+}
+
+.item-container {
+  width: 300px;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: transform 0.3s ease; /* Add smooth hover effect */
+}
+
+.item-container:hover {
+  transform: scale(1.05); /* Hover effect to make items slightly zoomable */
+}
+
+.item img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.price {
+  margin-top: 10px;
+}
+
+.new-price {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.old-price {
+  font-size: 16px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.add-to-cart-btn {
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #e5533c;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-size: 18px;
+}

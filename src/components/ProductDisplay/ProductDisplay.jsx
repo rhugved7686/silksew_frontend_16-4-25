@@ -1,128 +1,63 @@
-// import React, { useContext,useState } from "react";
-// import "./ProductDisplay.css";
-// import star_icon from "../Assets/star_icon.png";
-// import star_dull_icon from "../Assets/star_dull_icon.png";
-// import { ShopContext } from "../../context/ShopContext";
+import React, { useState, useContext } from 'react';
+import { useLocation } from 'react-router-dom';
+import './ProductDisplay.css';
+import { ShopContext } from '../../context/ShopContext';
 
-// const ProductDisplay = (props) => {
-//   const { product } = props;
-//   const {addToCart} = useContext(ShopContext)
-//   const [selectedSize, setSelectedSize] = useState("");
+const ProductDisplay = () => {
+  const { state } = useLocation(); // Access passed state
+  const product = state?.product; // Safely access product
 
-//   const handleSizeSelection = (size) => {
-//     setSelectedSize(size);
-//   };
-
-//   // Handle Add to Cart button
-//   const handleAddToCart = () => {
-//     if (selectedSize) {
-//       addToCart(product.id, selectedSize);
-//     } else {
-//       alert("Please select a size");
-//     }
-//   };
-
-//   return (
-//     <div className="productdisplay">
-//       <div className="productdisplay-left">
-//         <div className="productdisplay-img-list">
-//           <img src={product.image} alt="" />
-//           <img src={product.image} alt="" />
-//           <img src={product.image} alt="" />
-//           <img src={product.image} alt="" />
-//         </div>
-//         <div className="productdisplay-img">
-//           <img className="productdisplay-main-img" src={product.image} alt="" />
-//         </div>
-//       </div>
-//       <div className="productdisplay-right">
-//         <h1>{product.name}</h1>
-//         <div className="productdisplay-right-star">
-//           <img src={star_icon} alt="" />
-//           <img src={star_icon} alt="" />
-//           <img src={star_icon} alt="" />
-//           <img src={star_icon} alt="" />
-//           <img src={star_dull_icon} alt="" />
-//           <p>(122)</p>
-//         </div>
-//         <div className="productdisplay-right-prices">
-//           <div className="productdisplay-right-price-old">
-//             Rs {product.old_price}
-//           </div>
-//           <div className="productdisplay-right-price-new">
-//             Rs {product.new_price}
-//           </div>
-//         </div>
-//         <div className="productdisplay-right-description">
-//             A lightweight, usually knitted, pullover shirt, close fitted and
-//             a round neckline and short sleeves, worn as undershirt garment.
-//         </div>
-//         <div className="productdisplay-right-size">
-//             <h1>Select Size</h1>
-//             <div className="productdisplay-right-sizes">
-//                 <div>S</div>
-//                 <div>M</div>
-//                 <div>L</div>
-//                 <div>XL</div>
-//                 <div>XXL</div>
-//             </div>
-//         </div>
-//         <button onClick={()=>{addToCart(product.id)}}>ADD TO CART</button>
-//         <p className="productdisplay-right-category"><span>Category: </span>Women, T-Shirt, Crop-top</p>
-//         <p className="productdisplay-right-category"><span>Tags: </span>Modern, Latest</p>
-
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ProductDisplay;
-
-
-import React, { useContext, useState } from "react";
-import "./ProductDisplay.css";
-import { ShopContext } from "../../context/ShopContext";
-
-const ProductDisplay = ({ product }) => {
+  // Hooks must be called unconditionally
   const { addToCart } = useContext(ShopContext);
-  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedSize, setSelectedSize] = useState('');
+  const [mainImage, setMainImage] = useState(product?.images[0] || ''); // Fallback to an empty string if product is undefined
+
+  // Early return for missing product
+  if (!product) {
+    return <div>Product not found.</div>;
+  }
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      alert("Please select a size before adding to cart.");
+      alert('Please select a size before adding to cart.');
       return;
     }
     addToCart(product.id, selectedSize);
+    alert('Product added to cart!');
   };
 
   return (
     <div className="productdisplay">
       <div className="productdisplay-left">
-      <div className="productdisplay-img-list">
-           <img src={product.image} alt="" />
-           <img src={product.image} alt="" />
-           <img src={product.image} alt="" />
-           <img src={product.image} alt="" />
+        <div className="productdisplay-img-list">
+          {product.images.map((img, index) => (
+            <img
+              key={index}
+              src={img}
+              alt={`Product ${index + 1}`}
+              onClick={() => setMainImage(img)} // Update main image on click
+            />
+          ))}
         </div>
         <div className="productdisplay-img">
-          <img className="productdisplay-main-img" src={product.image} alt={product.name} />
+          <img className="productdisplay-main-img" src={mainImage} alt={product.name} />
         </div>
       </div>
       <div className="productdisplay-right">
-        <h1>{product.name}</h1>
+        <h2>{product.name}</h2>
+        <h4>Category : {product.category}</h4>
         <div className="productdisplay-right-prices">
-          <div className="productdisplay-right-price-new">Rs {product.new_price}</div>
+          <div className="productdisplay-right-price-new">Rs {product.price}</div>
+          <div className="productdisplay-right-price-old">Rs {product.oldPrice}</div>
         </div>
         <div className="productdisplay-right-size">
           <h2>Select Size</h2>
           <div className="productdisplay-right-sizes">
-            {["S", "M", "L", "XL", "XXL"].map((size) => (
+            {['S', 'M', 'L', 'XL', 'XXL'].map((size) => (
               <div
                 key={size}
                 onClick={() => setSelectedSize(size)}
-                className={`size-box ${selectedSize === size ? "selected" : ""}`}
-
-                //className={selectedSize === size ? "selected" : ""}
+                className={selectedSize === size ? 'selected' : ''}
               >
                 {size}
               </div>
