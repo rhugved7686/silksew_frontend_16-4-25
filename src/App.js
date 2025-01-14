@@ -30,7 +30,7 @@ function App() {
 function AppContent() {
   return (
     <div>
-      {/* <Navbar /> */}
+      <Navbar />
 
       <Routes>
         <Route path="/" element={<Shop />} />
