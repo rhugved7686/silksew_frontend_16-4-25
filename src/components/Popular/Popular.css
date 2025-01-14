@@ -106,7 +106,7 @@
 }
 
 .item-container {
-  width: 300px;
+  width: auto;
   text-align: center;
   padding: 10px;
   border: 1px solid #ccc;

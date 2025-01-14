@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Popular.css';
+import '../components/Popular/Popular.css';
 import axios from 'axios';
-import Item from '../Item/Item';
+import Item from '../components/Item/Item';
 
-const Popular = () => {
+function Women() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -39,14 +39,13 @@ const Popular = () => {
 
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;
-
   return (
     <div className="popular">
-      <h1>POPULAR IN WOMEN</h1>
+      {/* <h1>POPULAR IN WOMEN</h1> */}
       <hr />
       <div className="popular-item">
         {products.length > 0 ? (
-          products.slice(0, 4).map((item) => ( // Limit to first 4 products
+          products.map((item) => (
             <div key={item._id} className="item-container">
               <center><Item
                 id={item._id}
@@ -65,7 +64,7 @@ const Popular = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Popular;
+export default Women
