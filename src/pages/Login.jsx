@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../CSS/LoginSignup.css";
 import axios from "axios";
 import { BASEURL } from "../config"; // Your API base URL
@@ -44,6 +44,10 @@ const Login = () => {
       setError("Invalid email or password. Please try again."); // Set error message
     }
   };
+
+  useEffect(()=>{
+    console.log(localStorage.getItem("token"));
+  },[])
 
   return (
     <form onSubmit={onSubmitHandler}>

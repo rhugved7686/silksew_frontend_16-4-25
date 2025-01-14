@@ -134,27 +134,29 @@ const ShopContextProvider = (props) => {
 
 
   // function to get all products list from the backend
-  const getProducts = async () =>{
+  const getProducts = async () => {
     try {
-      const response = await axios.get(BASEURL + "/api/products")
-      // if(response.status){
-        setProducts(response.data);
-      // }
-      // else{
-      //   console.log(response.data)
-      // }
-      // console.log(products)
-      // console.log(response.status)
+      const response = await axios.get(BASEURL + "/api/products");
+
+      if (response.status === 200) {
+        setProducts(response.data); // Update state with fetched products
+        console.log("Fetched products:", response.data); // Log the fetched data
+      } else {
+        console.error("Failed to fetch products. Response status:", response.status);
+      }
     } catch (error) {
-      console.log(error) 
+      console.error("Error fetching products:", error.message);
     }
-    
-  }
+  };
 
-  useEffect (()=>{
+  useEffect(() => {
+    getProducts();
+  }, []); // Empty dependency array ensures this runs only once when the component mounts
 
-    getProducts()
-  },[])
+  // Log products whenever they update
+  useEffect(() => {
+    console.log("Updated products:", products);
+  }, [products]); // Runs whenever `products` changes
 
   const contextValue = {
     products,
