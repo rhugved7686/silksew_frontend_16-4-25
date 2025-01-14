@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Popular.css';
+import '../components/Popular/Popular.css';
 import axios from 'axios';
-import Item from '../Item/Item';
+import Item from '../components/Item/Item';
 
-const Popular = () => {
+const Mens = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -18,7 +18,7 @@ const Popular = () => {
         const fetchedProducts = Array.isArray(response.data) ? response.data : response.data.products;
         
         // Filter products that belong to the 'Men' category
-        const menProducts = fetchedProducts.filter(product => product.category.includes('women'));
+        const menProducts = fetchedProducts.filter(product => product.category.includes('men'));
 
         setProducts(menProducts);
       } catch (error) {
@@ -42,11 +42,11 @@ const Popular = () => {
 
   return (
     <div className="popular">
-      <h1>POPULAR IN WOMEN</h1>
+      {/* <h1>POPULAR IN WOMEN</h1> */}
       <hr />
       <div className="popular-item">
         {products.length > 0 ? (
-          products.slice(0, 4).map((item) => ( // Limit to first 4 products
+          products.map((item) => (
             <div key={item._id} className="item-container">
               <center><Item
                 id={item._id}
@@ -68,4 +68,4 @@ const Popular = () => {
   );
 };
 
-export default Popular;
+export default Mens;
