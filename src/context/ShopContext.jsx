@@ -134,13 +134,31 @@ const ShopContextProvider = (props) => {
 
 
 
-  const removeFromCart = (id) => {
+  const removeFromCart = async (productId) => {
+
+    if (token) {
+      try {
+        const response = await axios.post(
+          BASEURL + '/api/cart/remove',
+          { productId },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        console.log('Response:', response.data);
+
+      } catch (error) {
+        console.error('Error:', error.message);
+        if (error.response) {
+          console.error('API Error:', error.response.data);
+        }
+      }
+    }
+
     setCartItems((prevItems) => {
       const updatedItems = { ...prevItems };
-      if (updatedItems[id].quantity > 1) {
-        updatedItems[id].quantity -= 1;
+      if (updatedItems[productId].quantity > 1) {
+        updatedItems[productId].quantity -= 1;
       } else {
-        delete updatedItems[id]; // Remove item if quantity reaches 0
+        delete updatedItems[productId]; // Remove item if quantity reaches 0
       }
       return updatedItems;
     });

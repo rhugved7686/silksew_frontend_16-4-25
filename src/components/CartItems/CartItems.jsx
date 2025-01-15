@@ -285,7 +285,7 @@ const CartItems = () => {
             <p>{quantity}</p>
             <p>{size}</p>
             <p>Rs {quantity * product.new_price}</p>
-            <button onClick={() => removeFromCart(id)}>Remove</button>
+            <button onClick={() => removeFromCart(product.id)}>Remove</button>
           </div>
         );
       })}
