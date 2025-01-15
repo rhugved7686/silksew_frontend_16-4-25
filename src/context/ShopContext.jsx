@@ -94,19 +94,45 @@ const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState([])
+  const [token, setToken] = useState('')
 
-  const addToCart = (id, size) => {
-    setCartItems((prevItems) => {
-      const updatedItems = { ...prevItems };
-      if (updatedItems[id]) {
-        updatedItems[id].quantity += 1;
-        updatedItems[id].size = size; // Update size in case it changes
-      } else {
-        updatedItems[id] = { quantity: 1, size }; // New product with size
+
+
+  const addToCart = async (productId, size) => {
+
+    if (token) {
+      try {
+        const response = await axios.post(
+          BASEURL + '/api/cart/add',
+          { productId, size },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        console.log('Response:', response.data);
+
+      } catch (error) {
+        console.error('Error:', error.message);
+        if (error.response) {
+          console.error('API Error:', error.response.data);
+        }
       }
-      return updatedItems;
-    });
+    }
+
+
+
+
+    // setCartItems((prevItems) => {
+    //   const updatedItems = { ...prevItems };
+    //   if (updatedItems[id]) {
+    //     updatedItems[id].quantity += 1;
+    //     updatedItems[id].size = size; // Update size in case it changes
+    //   } else {
+    //     updatedItems[id] = { quantity: 1, size }; // New product with size
+    //   }
+    //   return updatedItems;
+    // });
   };
+
+
 
   const removeFromCart = (id) => {
     setCartItems((prevItems) => {
@@ -127,9 +153,35 @@ const ShopContextProvider = (props) => {
     }, 0);
   };
 
+
+
   // New function to get total cart items
-  const getTotalCartItems = () => {
-    return Object.values(cartItems).reduce((total, { quantity }) => total + quantity, 0);
+  const getTotalCartItems = async (token) => {
+    
+    if(token){
+      try {
+        const response = await axios.get(
+          BASEURL + '/api/cart/',
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        console.log(response.data);
+        console.log(response.data.items);
+
+        const items = response.data.items;
+
+        // Calculate the total based on the items directly from the response
+        const totalItems = items.reduce((total, { quantity }) => total + quantity, 0);
+  
+        // Optionally update state if needed
+        setCartItems(items); // Store items in state if you want to use it elsewhere
+  
+        // Return the calculated total
+        return totalItems;
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
   };
 
 
@@ -148,6 +200,23 @@ const ShopContextProvider = (props) => {
       console.error("Error fetching products:", error.message);
     }
   };
+
+  useEffect(() => {
+    if (!token && localStorage.getItem('token')) {
+      setToken(localStorage.getItem('token'))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (token) {
+      getTotalCartItems(token)
+    }
+    else {
+
+      getTotalCartItems(localStorage.getItem('token'))
+    }
+  }, [])
+
 
   useEffect(() => {
     getProducts();

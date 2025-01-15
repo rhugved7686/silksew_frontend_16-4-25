@@ -124,7 +124,7 @@
 // export default Navbar;
 
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import "./Navbar.css";
 import logo from "../Assets/logo.png";
 import cart_icon from "../Assets/cart_icon.png";
@@ -137,7 +137,23 @@ const Navbar = () => {
   const [menu, setMenu] = useState("shop");
   const { getTotalCartItems, updateSearchTerm } = useContext(ShopContext);
   const [searchInput, setSearchInput] = useState('');
+  const [cartItemCount, setCartItemCount] = useState(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const count = await getTotalCartItems(); // Await the async function
+        console.log(count)
+        setCartItemCount(count); // Update the state with the cart count
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+        setCartItemCount(0); // Fallback in case of error
+      }
+    };
+
+    fetchCartItems();
+  }, [getTotalCartItems]);
 
   const handleLoginClick = () => {
     navigate("/signup");
@@ -240,7 +256,7 @@ const Navbar = () => {
         </motion.button>
 
         <Link to="/cart">
-        {/* Cart ({getTotalCartItems()}) */}
+        {/* ({getTotalCartItems}) */}
 
           <motion.img
             src={cart_icon}
@@ -251,7 +267,7 @@ const Navbar = () => {
          
         </Link>
 
-        <div className="nav-cart-count">{getTotalCartItems()}</div>
+        <div className="nav-cart-count">{cartItemCount}</div>
       </div>
     </motion.div>
   );
