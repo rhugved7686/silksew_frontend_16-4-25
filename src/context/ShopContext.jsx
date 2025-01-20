@@ -325,12 +325,12 @@ const ShopContextProvider = (props) => {
     }
   }, []);
 
-  const removeFromCart = useCallback(async (productId) => {
+  const removeFromCart = useCallback(async (productId,size) => {
     if (token) {
       try {
         const response = await axios.post(
           BASEURL + '/api/cart/remove',
-          { productId },
+          { productId, size },
           { headers: { Authorization: `Bearer ${token}` } }
         );
         console.log('Response:', response.data);

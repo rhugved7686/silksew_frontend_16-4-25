@@ -49,7 +49,7 @@ const CartItems = () => {
             <p>{quantity}</p>
             <p>{size}</p>
             <p>Rs {quantity * product.price}</p>
-            <button onClick={() => removeFromCart(productId)}>Remove</button>
+            <button onClick={() => removeFromCart(productId,size)}>Remove</button>
           </div>
         );
       })}
