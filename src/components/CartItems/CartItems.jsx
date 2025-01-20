@@ -1,265 +1,16 @@
-// // import React, { useContext } from "react";
-// // import "./CartItems.css";
-// // import { ShopContext } from "../../context/ShopContext";
-// // import remove_icon from "../Assets/cart_cross_icon.png";
-// // import { useNavigate } from "react-router-dom"; // Import useNavigate
-
-// // const CartItems = () => {
-// //   const { getTotalCartAmount, all_product, cartItems, removeFromCart, navigate } =
-// //     useContext(ShopContext);
-// //     const navigate = useNavigate(); // Use the hook to get the navigate function
-
-// //   return (
-// //     <div className="cartitems">
-// //       <div className="cartitems-format-main">
-// //         <p>Products</p>
-// //         <p>Title</p>
-// //         <p>Price</p>
-// //         <p>Quantity</p>
-// //         <p>Total</p>
-// //         <p>Remove</p>
-// //       </div>
-// //       <hr />
-// //       {all_product.map((e) => {
-// //         if (cartItems[e.id] > 0) {
-// //           return (
-// //             <div>
-// //               <div className="cartitems-format cartitems-format-main">
-// //                 <img src={e.image} alt="" className="carticon-product-icon" />
-// //                 <p>{e.name}</p>
-// //                 <p>${e.new_price}</p>
-// //                 <button className="cartitems-quantity">
-// //                   {cartItems[e.id]}
-// //                 </button>
-// //                 <p>${e.new_price * cartItems[e.id]}</p>
-// //                 <img
-// //                   className="cartitems-remove-icon"
-// //                   src={remove_icon}
-// //                   onClick={() => {
-// //                     removeFromCart(e.id);
-// //                   }}
-// //                   alt=""
-// //                 />
-// //               </div>
-// //               <hr />
-// //             </div>
-// //           );
-// //         }
-// //         return null;
-// //       })}
-// //       <div className="cartitems-down">
-// //         <div className="cartitems-total">
-// //           <h1>cart Totals</h1>
-// //           <div>
-// //             <div className="cartitems-total-item">
-// //               <p>Subtotal</p>
-// //               <p>${getTotalCartAmount()}</p>
-// //             </div>
-// //             <hr />
-// //             <div className="cartitems-total-item">
-// //               <p>Shipping Fee</p>
-// //               <p>Free</p>
-// //             </div>
-// //             <hr />
-// //             <div className="cartitems-total-item">
-// //               <h3>Total</h3>
-// //               <h3>${getTotalCartAmount()}</h3>
-// //             </div>
-// //           </div>
-// //           <button onClick={() => navigate("/checkout")}>PROCEED TO CHECKOUT</button>
-// //         </div>
-// //         <div className="cartitems-promocode">
-// //           <p>If you have a promo code, Enter it here</p>
-// //           <div className="cartitems-promobox">
-// //             <input type="text" placeholder="promo code" />
-// //             <button>Submit</button>
-// //           </div>
-// //         </div>
-// //       </div>
-// //     </div>
-// //   );
-// // };
-
-// // export default CartItems;
-
-
-// import React, { useContext } from "react";
-// import "./CartItems.css";
-// import { ShopContext } from "../../context/ShopContext";
-// import remove_icon from "../Assets/cart_cross_icon.png";
-// import { useNavigate } from "react-router-dom"; // Import useNavigate
-
-// const CartItems = () => {
-//   const { getTotalCartAmount, all_product, cartItems, removeFromCart } =
-//     useContext(ShopContext);
-//   const navigate = useNavigate(); // Get the navigate function
-
-//   return (
-//     <div className="cartitems">
-//       <div className="cartitems-format-main">
-//         <p>Products</p>
-//         <p>Title</p>
-//         <p>Price</p>
-//         <p>Quantity</p>
-//         <p>Total</p>
-//         <p>Remove</p>
-//       </div>
-//       <hr />
-//       {all_product.map((e) => {
-//         if (cartItems[e.id] > 0) {
-//           return (
-//             <div key={e.id}>
-//               <div className="cartitems-format cartitems-format-main">
-//                 <img src={e.image} alt="" className="carticon-product-icon" />
-//                 <p>{e.name}</p>
-//                 <p>Rs {e.new_price}</p>
-//                 <button className="cartitems-quantity">
-//                   {cartItems[e.id]}
-//                 </button>
-//                 <p>Rs {e.new_price * cartItems[e.id]}</p>
-//                 <img
-//                   className="cartitems-remove-icon"
-//                   src={remove_icon}
-//                   onClick={() => {
-//                     removeFromCart(e.id);
-//                   }}
-//                   alt="remove"
-//                 />
-//               </div>
-//               <hr />
-//             </div>
-//           );
-//         }
-//         return null;
-//       })}
-//       <div className="cartitems-down">
-//         <div className="cartitems-total">
-//           <h1>Cart Totals</h1>
-//           <div>
-//             <div className="cartitems-total-item">
-//               <p>Subtotal</p>
-//               <p>Rs {getTotalCartAmount()}</p>
-//             </div>
-//             <hr />
-//             <div className="cartitems-total-item">
-//               <p>Shipping Fee</p>
-//               <p>Free</p>
-//             </div>
-//             <hr />
-//             <div className="cartitems-total-item">
-//               <h3>Total</h3>
-//               <h3>Rs {getTotalCartAmount()}</h3>
-//             </div>
-//           </div>
-//           <button onClick={() => navigate("/checkout")}>PROCEED TO CHECKOUT</button>
-//         </div>
-//         <div className="cartitems-promocode">
-//           <p>If you have a promo code, Enter it here</p>
-//           <div className="cartitems-promobox">
-//             <input type="text" placeholder="promo code" />
-//             <button>Submit</button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CartItems;
-
-// import React, { useContext } from "react";
-// import "./CartItems.css";
-// import { ShopContext } from "../../context/ShopContext";
-// import remove_icon from "../Assets/cart_cross_icon.png";
-// import { useNavigate } from "react-router-dom"; // Import useNavigate
-
-// const CartItems = () => {
-//   const { getTotalCartAmount, all_product, cartItems, removeFromCart, navigate } =
-//     useContext(ShopContext);
-//     const navigate = useNavigate(); // Use the hook to get the navigate function
-
-//   return (
-//     <div className="cartitems">
-//       <div className="cartitems-format-main">
-//         <p>Products</p>
-//         <p>Title</p>
-//         <p>Price</p>
-//         <p>Quantity</p>
-//         <p>Total</p>
-//         <p>Remove</p>
-//       </div>
-//       <hr />
-//       {all_product.map((e) => {
-//         if (cartItems[e.id] > 0) {
-//           return (
-//             <div>
-//               <div className="cartitems-format cartitems-format-main">
-//                 <img src={e.image} alt="" className="carticon-product-icon" />
-//                 <p>{e.name}</p>
-//                 <p>${e.new_price}</p>
-//                 <button className="cartitems-quantity">
-//                   {cartItems[e.id]}
-//                 </button>
-//                 <p>${e.new_price * cartItems[e.id]}</p>
-//                 <img
-//                   className="cartitems-remove-icon"
-//                   src={remove_icon}
-//                   onClick={() => {
-//                     removeFromCart(e.id);
-//                   }}
-//                   alt=""
-//                 />
-//               </div>
-//               <hr />
-//             </div>
-//           );
-//         }
-//         return null;
-//       })}
-//       <div className="cartitems-down">
-//         <div className="cartitems-total">
-//           <h1>cart Totals</h1>
-//           <div>
-//             <div className="cartitems-total-item">
-//               <p>Subtotal</p>
-//               <p>${getTotalCartAmount()}</p>
-//             </div>
-//             <hr />
-//             <div className="cartitems-total-item">
-//               <p>Shipping Fee</p>
-//               <p>Free</p>
-//             </div>
-//             <hr />
-//             <div className="cartitems-total-item">
-//               <h3>Total</h3>
-//               <h3>${getTotalCartAmount()}</h3>
-//             </div>
-//           </div>
-//           <button onClick={() => navigate("/checkout")}>PROCEED TO CHECKOUT</button>
-//         </div>
-//         <div className="cartitems-promocode">
-//           <p>If you have a promo code, Enter it here</p>
-//           <div className="cartitems-promobox">
-//             <input type="text" placeholder="promo code" />
-//             <button>Submit</button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CartItems;
-
-
 import React, { useContext } from "react";
 import "./CartItems.css";
 import { ShopContext } from "../../context/ShopContext";
 import { useNavigate } from "react-router-dom";
 
 const CartItems = () => {
-  const { cartItems, removeFromCart, getTotalCartAmount, all_product } = useContext(ShopContext);
+  const { cartItems, removeFromCart, getTotalCartAmount, all_product, products } = useContext(ShopContext);
   const navigate = useNavigate();
+  
+  console.log(products)
+  console.log(cartItems)
+  console.log(typeof products)
+  console.log(typeof cartItems)
 
   return (
     <div className="cartitems">
@@ -273,19 +24,32 @@ const CartItems = () => {
         <p>Remove</p>
       </div>
       <hr />
-      {Object.entries(cartItems).map(([id, { quantity, size }]) => {
-        const product = all_product.find((p) => p.id === Number(id));
-        if (!product) return null;
+      {
+      // Object.entries(cartItems).map(([productId, { quantity, size }]) => {
+      //   const product = Object.entries(products).map((p) => p._id === (productId)); 
+      
+      cartItems.map((cartItem) => {
+        const { productId, quantity, size } = cartItem;
+      
+        // Find the corresponding product in the products array
+        const product = products.find((p) => p._id === productId);
+
+        console.log("Product ID from cartItems:", typeof productId, productId);
+        console.log("Product ID from cartItems:", typeof product, product);
+        if (!product) {
+          console.warn(`Product with ID ${productId} not found.`);
+          return null;
+        }
 
         return (
-          <div key={id} className="cartitem">
-            <img src={product.image} alt={product.name} />
+          <div key={productId} className="cartitem">
+            <img src={product.images[0]} alt={product.name} />
             <p>{product.name}</p>
-            <p>Rs {product.new_price}</p>
+            <p>Rs {product.price}</p>
             <p>{quantity}</p>
             <p>{size}</p>
-            <p>Rs {quantity * product.new_price}</p>
-            <button onClick={() => removeFromCart(product.id)}>Remove</button>
+            <p>Rs {quantity * product.price}</p>
+            <button onClick={() => removeFromCart(productId)}>Remove</button>
           </div>
         );
       })}

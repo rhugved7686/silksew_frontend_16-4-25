@@ -143,9 +143,9 @@ const Navbar = () => {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const count = await getTotalCartItems(); // Await the async function
-        console.log(count)
-        setCartItemCount(count); // Update the state with the cart count
+        const { items, totalItems } = await getTotalCartItems(); // Await the async function
+        console.log(totalItems)
+        setCartItemCount(totalItems); // Update the state with the cart count
       } catch (error) {
         console.error("Error fetching cart items:", error);
         setCartItemCount(0); // Fallback in case of error
