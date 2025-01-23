@@ -1,0 +1,24 @@
+.admin-orders {
+    padding: 20px;
+  }
+  
+  .admin-orders table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .admin-orders th,
+  .admin-orders td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .admin-orders th {
+    background-color: #f4f4f4;
+  }
+  
+  .admin-orders tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }

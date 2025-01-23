@@ -1,0 +1,250 @@
+.offer-banner {
+  background: linear-gradient(45deg, #4c4f69, #2c2e43);
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 15px 0;
+  z-index: 1000;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 100px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 120px;
+}
+
+.offer-content p {
+  font-weight: bold;
+  font-size: 24px;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  text-transform: uppercase;
+  color: #fff;
+  animation: fadeInUp 1s ease-in-out, bounce 2s infinite, colorPulse 2s ease-in-out infinite;
+}
+
+/* Fade-in effect */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Bouncing animation */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Light color pulsing animation */
+@keyframes colorPulse {
+  0% {
+    color: #f85206;
+  }
+  50% {
+    color: #00bcd4;
+  }
+  100% {
+    color: #fff;
+  }
+}
+
+.offer-content {
+  text-align: center;
+  font-size: 18px;
+}
+
+.offer-timer {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 10px;
+  display: flex;
+  gap: 15px;
+  color: #fff;
+  animation: pulseGlow 2s ease-in-out infinite, slideIn 1s ease-out;
+}
+
+/* Glowing Pulse Animation */
+@keyframes pulseGlow {
+  0% {
+    text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 15px #00bcd4, 0 0 20px #00bcd4;
+    color: #00bcd4;
+  }
+  50% {
+    text-shadow: 0 0 10px #00bcd4, 0 0 15px #00bcd4, 0 0 20px #00bcd4, 0 0 25px #00bcd4;
+    color: #00bcd4;
+  }
+  100% {
+    text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 15px #00bcd4, 0 0 20px #00bcd4;
+    color: #00bcd4;
+  }
+}
+
+/* Sliding In Animation */
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.offer-timer span {
+  background-color: #2c2e43;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+/* Scrolling Banner */
+.scrolling-banner-container {
+  position: fixed;
+  top: 220px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  background: #333;
+  z-index: 999;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.scrolling-banner {
+  display: flex;
+  white-space: nowrap;
+  animation: scrollLeft 30s linear infinite;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+}
+
+.scrolling-banner span {
+  margin-right: 60px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: "Arial", sans-serif;
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.scrolling-banner-container:hover .scrolling-banner {
+  animation-play-state: paused;
+}
+
+body {
+  padding-top: 240px; /* Add padding to prevent overlapping with banners */
+}
+
+/* Media Queries for Responsiveness */
+
+/* For Tablet screens */
+@media (max-width: 1024px) {
+  .offer-banner {
+    top: 80px; /* Adjust top position on smaller screens */
+    height: 100px; /* Reduce height */
+  }
+
+  .offer-content p {
+    font-size: 20px; /* Reduce font size */
+  }
+
+  .offer-timer {
+    font-size: 18px; /* Reduce font size */
+    gap: 10px; /* Adjust spacing */
+  }
+
+  .scrolling-banner {
+    font-size: 18px; /* Smaller font size for the scrolling banner */
+    padding: 15px;
+  }
+
+  .scrolling-banner span {
+    margin-right: 40px; /* Reduce margin for smaller screens */
+  }
+}
+
+/* For Mobile screens */
+@media (max-width: 768px) {
+  .offer-banner {
+    top: 60px; /* Adjust top position for mobile */
+    height: 80px; /* Reduce height */
+  }
+
+  .offer-content p {
+    font-size: 18px; /* Smaller font size */
+  }
+
+  .offer-timer {
+    font-size: 16px; /* Smaller font size */
+    gap: 8px; /* Reduce spacing */
+  }
+
+  .scrolling-banner {
+    font-size: 16px; /* Smaller font size */
+    padding: 10px;
+  }
+
+  .scrolling-banner span {
+    margin-right: 30px; /* Reduce margin */
+  }
+
+  body {
+    padding-top: 200px; /* Adjust padding to prevent overlap */
+  }
+}
+
+/* For Very Small Mobile Screens */
+@media (max-width: 480px) {
+  .offer-banner {
+    top: 50px; /* Adjust top position */
+    height: 70px; /* Reduce height */
+  }
+
+  .offer-content p {
+    font-size: 16px; /* Further reduce font size */
+  }
+
+  .offer-timer {
+    font-size: 14px; /* Further reduce font size */
+    gap: 6px; /* Reduce gap */
+  }
+
+  .scrolling-banner {
+    font-size: 14px; /* Smaller font size */
+    padding: 8px;
+  }
+
+  .scrolling-banner span {
+    margin-right: 20px; /* Reduce margin */
+  }
+
+  body {
+    padding-top: 180px; /* Adjust padding */
+  }
+}
