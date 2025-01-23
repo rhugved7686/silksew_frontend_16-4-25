@@ -52,15 +52,15 @@ const SaleCountdown = () => {
             <ul className="space-y-2">
               <li className="flex items-center">
                 <span className="mr-2">🔥</span>
-                Electronics Collection
+                Women Collection
               </li>
               <li className="flex items-center">
                 <span className="mr-2">🔥</span>
-                Fashion Trends
+                kid's Trends
               </li>
               <li className="flex items-center">
                 <span className="mr-2">🔥</span>
-                Home Essentials
+                Men Collection
               </li>
             </ul>
           </div>

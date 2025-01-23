@@ -1,23 +1,23 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useLocation, useNavigate } from "react-router-dom";
 import "./ProductDisplay.css";
 import { ShopContext } from "../../context/ShopContext";
-import { toast, ToastContainer } from "react-toastify"; // Import Toastify
-import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const colors = require('../ProductDisplay/colorPalette.js');
 
 const ProductDisplay = () => {
-  const { state } = useLocation(); // Access passed state
-  const product = state?.product; // Safely access product
+  const { state } = useLocation();
+  const product = state?.product;
 
   const { addToCart } = useContext(ShopContext);
   const [selectedSize, setSelectedSize] = useState("");
-  const [mainImage, setMainImage] = useState(product?.images[0] || ""); // Fallback to an empty string if product is undefined
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [mainImage, setMainImage] = useState(product?.images[0] || "");
+  const navigate = useNavigate();
   const colorPalette = {colors};
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Scrolls to the top-left corner of the page
+    window.scrollTo(0, 0);
   }, []);
 
   if (!product) {
@@ -40,7 +40,6 @@ const ProductDisplay = () => {
 
     addToCart(product._id, selectedSize);
 
-    // Show success toast notification
     toast.success("Product added to cart!", {
       position: "top-right",
       autoClose: 3000,
@@ -51,17 +50,15 @@ const ProductDisplay = () => {
       progress: undefined,
     });
 
-    // Navigate to cart page after 1 second
     setTimeout(() => {
-      navigate("/cart"); // Navigate to the cart page
+      navigate("/cart");
     }, 1000);
   };
 
   return (
     <>
       <div className="productdisplay">
-        <ToastContainer />{" "}
-        {/* Add ToastContainer for displaying toast messages */}
+        <ToastContainer />
         <div className="productdisplay-left">
           <div className="productdisplay-img-list">
             {product.images.map((img, index) => (
@@ -69,7 +66,7 @@ const ProductDisplay = () => {
                 key={index}
                 src={img}
                 alt={`Product ${index + 1}`}
-                onClick={() => setMainImage(img)} // Update main image on click
+                onClick={() => setMainImage(img)}
               />
             ))}
           </div>
@@ -84,9 +81,7 @@ const ProductDisplay = () => {
         <div className="productdisplay-right">
           <h2>{product.name}</h2>
           <br />
-          <p style={{ textAlign: "justify", fontFamily: "Georgia, serif" }}>
-            {product.description}
-          </p>
+          <p className="description">{product.description}</p>
           <div className="productdisplay-right-prices">
             <p>Price :</p>
             <div className="productdisplay-right-price-new">
@@ -100,15 +95,15 @@ const ProductDisplay = () => {
             <h2>Available Colors</h2>
             <div className="productdisplay-right-colors">
               {product.availableColors.map((color, index) => {
-                const mappedColor = colorPalette[color.toLowerCase()] || color; // Use mapped color or raw value
+                const mappedColor = colorPalette[color.toLowerCase()] || color;
                 return (
                   <div
                     key={index}
                     className="color-circle"
                     style={{
-                      backgroundColor: mappedColor, // Use the mapped or raw color
+                      backgroundColor: mappedColor,
                     }}
-                    title={color} // Show original color name as tooltip
+                    title={color}
                   ></div>
                 );
               })}
@@ -136,7 +131,7 @@ const ProductDisplay = () => {
           <div className="descriptionbox-nav-box">Description</div>
           <div className="descriptionbox-nav-box fade">Reviews (122)</div>
         </div>
-        <div className="descriptionbox-description" style={{textAlign:"justify"}}>
+        <div className="descriptionbox-description">
           <p>{product.description}</p>
         </div>
       </div>
