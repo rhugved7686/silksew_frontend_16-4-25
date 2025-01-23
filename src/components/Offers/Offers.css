@@ -1,256 +1,218 @@
-/* General Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.deals__banner--content {
-  padding: 4rem 2rem;
-}
-
-@media only screen and (min-width: 576px) {
-  .deals__banner--content {
-    padding: 4rem 3rem;
-  }
-}
-
-@media only screen and (min-width: 768px) {
-  .deals__banner--content {
-    padding: 5rem 3rem;
-  }
-}
-
-@media only screen and (min-width: 992px) {
-  .deals__banner--content {
-    padding: 6rem 4rem;
-    background-color: #1C1C1C;
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-  .deals__banner--content {
-    padding: 5rem 4rem;
-  }
-}
-
-@media only screen and (max-width: 575px) {
-  .deals__banner--content {
-    text-align: center;
-    background-color: #1C1C1C;
-  }
-
-  .deals__banner--content__subtitle {
-    font-size: 1.4rem;
-    color: #BDC3C7;
-  }
-
-  .deals__banner--content__maintitle {
-    font-size: 2rem;
-  }
-}
-
-.deals__banner--content__subtitle {
-  font-weight: 500;
-  margin-bottom: 0.8rem;
-  color: #BDC3C7;
-}
-
-@media only screen and (min-width: 992px) {
-  .deals__banner--content__subtitle {
-    margin-bottom: 1.2rem;
-    color:#BDC3C7;
-  }
-}
-
-.deals__banner--content__maintitle {
-  font-size: 2rem;
-  line-height: 2.4rem;
-  color: #F5B7B1;
-  margin-bottom: 1.5rem;
-}
-
-@media only screen and (min-width: 576px) {
-  .deals__banner--content__maintitle {
-    font-size: 2.2rem;
-  }
-}
-
-@media only screen and (min-width: 768px) {
-  .deals__banner--content__maintitle {
-    font-size: 2.5rem;
-    line-height: 3rem;
-    color: #F5B7B1;
-  }
-}
-
-@media only screen and (min-width: 992px) {
-  .deals__banner--content__maintitle {
-    font-size: 3rem;
-    line-height: 3.5rem;
-    color: #F5B7B1;
-  }
-}
-
-.deals__banner--countdown {
-  margin-bottom: 2rem;
+/* General container styling */
+.sale-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  flex-direction: row; /* Sections side by side */
+  flex-wrap: nowrap; /* No wrapping */
+  margin: 20px auto;
+  max-width: 1200px;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  background-color: white;
+  animation: fadeIn 1s ease-in-out;
 }
 
-@media only screen and (max-width: 575px) {
-  .deals__banner--countdown .countdown__item {
-    width: 3.5rem;
-    height: 3.5rem;
-  }
-}
-
-@media only screen and (min-width: 768px) {
-  .deals__banner--countdown .countdown__item {
-    width: 4.5rem;
-    height: 4.5rem;
-  }
-}
-
-@media only screen and (min-width: 992px) {
-  .deals__banner--countdown .countdown__item {
-    width: 5rem;
-    height: 5rem;
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-  .deals__banner--countdown .countdown__item {
-    width: 6rem;
-    height: 6rem;
-  }
-}
-
-@media only screen and (min-width: 1600px) {
-  .deals__banner--countdown .countdown__item {
-    width: 7rem;
-    height: 7rem;
-  }
-}
-
-.deals__banner--countdown .countdown__item {
+/* Left section styling */
+.left-section {
+  flex: 1; /* Ensures the left section takes up equal space */
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  background: whitesmoke;
-  box-shadow: 0 0 59px rgba(209, 209, 209, 0.19);
-  border-radius: 0.5rem;
+  padding: 40px;
+  background: linear-gradient(to right, #2C3E50, #9c27b0); /* Gradient background */
+  color: white;
+  text-align: left;
+  animation: slideInLeft 1s ease-in-out;
 }
 
-.deals__banner--countdown .countdown__item::before {
-  position: absolute;
-  right: -1.5rem;
-  top: 50%;
-  font-size: 3rem;
-  font-weight: 700;
-  transform: translateY(-50%);
+.left-section h2 {
+  font-size: 2.5rem;
+  line-height: 1.3;
+  margin-bottom: 20px;
 }
 
-@media only screen and (max-width: 767px) {
-  .deals__banner--countdown .countdown__item::before {
-    display: none;
-  }
+.left-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
 }
 
-.deals__banner--countdown .countdown__item:last-child {
-  margin-right: 0;
+.left-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.deals__banner--countdown .countdown__number {
-  font-weight: 500;
-  font-size: 1.8rem;
-  line-height: 1.8rem;
+.left-section li {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  margin-bottom: 10px;
 }
 
-@media only screen and (min-width: 768px) {
-  .deals__banner--countdown .countdown__number {
-    font-size: 2.5rem;
-  }
+.left-section li span {
+  font-size: 1.2rem;
 }
 
-.sale-live-text {
-  margin-bottom: 1.5rem;
-  font-size: 40px;
-  animation: blink 3s step-end infinite;
-  background: linear-gradient(to right, #ff0000, #FDF3E7);
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
+/* Right section styling */
+.right-section {
+  flex: 1; /* Ensures the right section takes up equal space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: #f9f9f9; /* Light background for contrast */
+  animation: slideInRight 1s ease-in-out;
 }
 
-/* Slower Blink animation */
-@keyframes blink {
-  0%, 50%, 100% {
-    opacity: 1;
-  }
-  25%, 75% {
+.sale-live-banner {
+  font-size: 1rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  background-color: #e53935;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  animation: pulse 1.5s infinite;
+}
+
+.countdown-timer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.timer-box {
+  text-align: center;
+  animation: fadeInScale 0.8s ease;
+}
+
+.timer-box .text-4xl {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #9c27b0;
+}
+
+.timer-box .text-sm {
+  font-size: 0.9rem;
+  margin-top: 5px;
+  color: #757575;
+}
+
+button {
+  cursor: pointer;
+  /* background: linear-gradient(to right, #9c27b0, #f50057); */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 6px 20px rgba(54, 54, 54, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 1.2s ease;
+}
+
+/* button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 30px rgba(128, 0, 128, 0.7);
+} */
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+  from {
     opacity: 0;
   }
-}
-
-/* Additional Styles for Small Devices */
-@media only screen and (max-width: 575px) {
-  .deals__banner--countdown .countdown__item {
-    width: 3rem;
-    height: 3rem;
-  }
-
-  .sale-live-text {
-    font-size: 24px;
+  to {
+    opacity: 1;
   }
 }
 
-.countdown-container {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
-  flex-wrap: wrap;
-}
-
-/* New Styles from Inline CSS */
-.deals__banner--section {
-  padding-top: 0;
-}
-
-.deals__banner--inner {
-  background-color: #1C1C1C;
-  border-radius: 8px;
-  padding: 2rem;
-}
-
-.deals-wrapper {
-  background-color: #1C1C1C;
-  padding: 2rem;
-  border-radius: 8px;
-}
-
-.deals__banner--countdown {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-}
-
-.countdown-container {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 1rem;
-  flex-wrap: wrap;
-}
-
-@media only screen and (max-width: 575px) {
-  .deals__banner--countdown {
-    gap: 0.5rem;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(229, 57, 53, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(229, 57, 53, 0.9);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .sale-container {
+    flex-direction: column; /* Stack sections vertically on smaller screens */
+  }
+
+  .left-section,
+  .right-section {
+    width: 100%; /* Take full width */
+    padding: 30px;
+  }
+
+  .left-section h2 {
+    font-size: 2rem;
+  }
+
+  .left-section h3 {
+    font-size: 1.3rem;
+  }
+}
+
+.offers-heading {
+  color: #4A4A4A;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.heading-container {
+  margin-top: 20px;
 }

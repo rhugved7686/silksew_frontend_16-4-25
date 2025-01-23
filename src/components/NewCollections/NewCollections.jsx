@@ -38,6 +38,7 @@ const NewCollections = () => {
   return (
     <div className="new-collections-container">
       <h1 className="title">New Collections</h1>
+      <div className="gradient-line"></div>
       <div className="product-list">
         {displayedProducts.length > 0 ? (
           displayedProducts.map((item, i) => (

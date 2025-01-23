@@ -1,10 +1,12 @@
+/* General Styles */
 .loginsignup {
   width: 100%;
   height: 100vh;
-  background: #7F8C8D;
+  background: #7f8c8d;
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .loginsignup-container {
@@ -13,6 +15,7 @@
   padding: 40px 60px;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.8s ease-out;
 }
 
 /* Title */
@@ -21,6 +24,7 @@
   font-size: 32px;
   text-align: center;
   color: #333;
+  animation: fadeInUp 1s ease-out;
 }
 
 /* Fields Container */
@@ -40,6 +44,8 @@
   outline: none;
   color: #5c5c5c;
   font-size: 16px;
+  transition: border-color 0.3s ease;
+  animation: fadeInUp 1.2s ease-out;
 }
 
 .loginsignup-fields input:focus {
@@ -58,13 +64,47 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s;
+  animation: fadeInUp 1.4s ease-out;
 }
 
-.login-forgotpassword {
-  margin-top: 20px;
-  text-align: center;
-  color: #5c5c5c;
+.loginsignup-container button:hover {
+  background-color: #e04e4e;
+}
+
+/* Error Message */
+.error-message {
+  color: #ff4141;
   font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Forgot Password Section */
+.forgot-password {
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 0;
+}
+
+.forgot-password-link {
+  color: #ff4141;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.forgot-password-link:hover {
+  color: #d23e3e; /* Slightly darker shade for hover effect */
+  text-decoration: none; /* Remove underline on hover */
+}
+
+/* Login link and Signup Link */
+.loginsignup-login {
+  text-align: center;
+  margin-top: 20px;
 }
 
 .loginsignup-login span {
@@ -73,10 +113,37 @@
   cursor: pointer;
 }
 
-.login-forgotpassword-link {
-  color: red;
+.loginsignup-login span:hover {
   text-decoration: underline;
-  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(50px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Media Queries for Responsiveness */

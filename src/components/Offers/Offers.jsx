@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import './Offers.css';
+import { Clock } from 'lucide-react';
+import "../Offers/Offers.css";
 
-const Offers = () => {
+const SaleCountdown = () => {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -10,7 +11,7 @@ const Offers = () => {
   });
 
   useEffect(() => {
-    const targetDate = new Date('Jan 25, 2025 00:00:00').getTime();
+    const targetDate = new Date('Jan 27, 2025 00:00:00').getTime();
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
@@ -33,69 +34,59 @@ const Offers = () => {
   }, []);
 
   return (
-    <section className="deals__banner--section section--padding pt-0">
-      <div className="container-fluid">
-        <div className="deals__banner--inner banner__bg">
-          <div className="deals-wrapper">
-            <div className="row align-items-center">
-              {/* Left content column */}
-              <div className="col-lg-6">
-                <div className="deals__banner--content position__relative">
-                  <span className="deals__banner--content__subtitle text__secondary">
-                    Hurry up and Get 25% Discount
-                  </span>
-                  <h2 className="deals__banner--content__maintitle">
-                    Deals Of The Day
-                  </h2>
-                  <a className="primary__btn" href="shop.html" style={{backgroundColor:"#2C3E50"}}>
-                    Show Collection
-                    <svg
-                      className="primary__btn--arrow__icon"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20.2"
-                      height="12.2"
-                      viewBox="0 0 6.2 6.2"
-                    >
-                      <path
-                        d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z"
-                        transform="translate(-4 -4)"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </a>
-                </div>
-              </div>
+    <div>
+      {/* Centered Heading */}
+      <div className="heading-container flex justify-center items-center mb-6">
+        <h1 className="offers-heading text-4xl font-bold" style={{textAlign:'center'}}>
+          Exclusive Offers for You
+        </h1>
+        <div className="gradient-line"></div>
+      </div>
 
-              {/* Right countdown column */}
-              <div className="col-lg-6">
-                <div className="deals__banner--countdown d-flex flex-column justify-content-center align-items-center">
-                  <h2 className="sale-live-text">Sale Live Now</h2>
-                  <div className="countdown-container">
-                    <div className="countdown__item">
-                      <span className="countdown__number">{timeLeft.days}</span><br/>
-                      <span className="countdown__text" style={{color:'#2C3E50'}}>Days</span>
-                    </div>
-                    <div className="countdown__item">
-                      <span className="countdown__number">{timeLeft.hours}</span><br/>
-                      <span className="countdown__text" style={{color:'#2C3E50'}}>Hours</span>
-                    </div>
-                    <div className="countdown__item">
-                      <span className="countdown__number">{timeLeft.minutes}</span><br/>
-                      <span className="countdown__text" style={{color:'#2C3E50'}}>Minutes</span>
-                    </div>
-                    <div className="countdown__item">
-                      <span className="countdown__number">{timeLeft.seconds}</span><br/>
-                      <span className="countdown__text" style={{color:'#2C3E50'}}>Seconds</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div className="sale-container flex bg-white shadow-lg rounded-lg overflow-hidden">
+        {/* Left Section */}
+        <div className="left-section w-1/2 bg-gradient-to-r from-pink-500 to-purple-600 p-6 text-white">
+          <h2 className="text-3xl font-bold mb-4">Hurry up and Get 25% Discount!</h2>
+          <div className="deals-section">
+            <h3 className="text-xl font-semibold mb-2">Deals Of The Day</h3>
+            <ul className="space-y-2">
+              <li className="flex items-center">
+                <span className="mr-2">🔥</span>
+                Electronics Collection
+              </li>
+              <li className="flex items-center">
+                <span className="mr-2">🔥</span>
+                Fashion Trends
+              </li>
+              <li className="flex items-center">
+                <span className="mr-2">🔥</span>
+                Home Essentials
+              </li>
+            </ul>
           </div>
         </div>
+
+        {/* Right Section */}
+        <div className="right-section w-1/2 flex flex-col justify-center items-center p-6 bg-gray-50">
+          <div className="sale-live-banner mb-4 bg-red-500 text-white px-4 py-2 rounded-full flex items-center">
+            <Clock className="mr-2" />
+            Sale is Live!
+          </div>
+          <div className="countdown-timer flex space-x-4">
+            {Object.entries(timeLeft).map(([unit, value]) => (
+              <div key={unit} className="timer-box text-center">
+                <div className="text-4xl font-bold text-purple-600">{value.toString().padStart(2, '0')}</div>
+                <div className="text-sm text-gray-600">{unit.charAt(0).toUpperCase() + unit.slice(1)}</div>
+              </div>
+            ))}
+          </div>
+          <button className="mt-6 bg-gradient-to-r from-purple-600 to-pink-500 text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all" style={{backgroundColor:"#453966"}}>
+            Shop Now
+          </button>
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 
-export default Offers;
+export default SaleCountdown;

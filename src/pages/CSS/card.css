@@ -1,0 +1,152 @@
+/* General container styling */
+.popular {
+  padding: 20px;
+  text-align: center;
+  background-color: #f8f9fa;
+}
+
+.popular hr {
+  width: 60px;
+  height: 4px;
+  background: #007bff;
+  border: none;
+  margin: 10px auto 30px;
+  border-radius: 2px;
+}
+
+/* Cards layout */
+.popular-item {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  padding: 0 10px;
+}
+
+/* Card container styling */
+.item-container {
+  background: #ffffff;
+  border-radius: 15px;
+  overflow: hidden;
+  max-width: 300px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item-container:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Product image */
+.item-container img {
+  width: 100%;
+  height: 200px;
+  object-fit:contain;
+  transition: transform 0.3s ease;
+}
+
+.item-container:hover img {
+  transform: scale(1.05);
+}
+
+/* Product details */
+.item-container h4 {
+  font-size: 1rem;
+  color: #333;
+  margin: 15px 10px 5px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.item-container .prices {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* Space between new and old price */
+  margin-bottom: 15px;
+}
+
+/* Styling for the new price */
+.item-container .prices .new-price {
+  color: red;  /* Apply red color */
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Styling for the old price */
+.item-container .prices .old-price {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* Floating discount badge */
+.item-container .badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff6b6b;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 50px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* View Product button */
+.item-container .add-to-cart-btn {
+  width: 80%;
+  margin: 10px auto 20px;
+  display: block;
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+.item-container .add-to-cart-btn:hover {
+  background: linear-gradient(90deg, #0056b3, #003f7f);
+  transform: translateY(-3px);
+}
+
+/* Loading and error messages */
+.loading,
+.error {
+  font-size: 1.2rem;
+  color: #555;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .item-container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .popular h1 {
+    font-size: 1.5rem;
+  }
+
+  .item-container {
+    max-width: 100%;
+  }
+
+  .popular-item {
+    grid-template-columns: 1fr;
+  }
+}

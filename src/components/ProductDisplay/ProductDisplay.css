@@ -4,22 +4,18 @@
   padding-top: 30px;
 }
 
+/* Set .productdisplay-left to be positioned beside the main image */
 .productdisplay-left {
   display: flex;
+  flex-direction: column; /* Align image thumbnails vertically */
   gap: 17px;
   transition: border 0.3s ease;
+  width: 200px; /* Adjust this value to set the width of the thumbnail column */
 }
-
-/* Hover effect on productdisplay-left */
-/* .productdisplay-left:hover {
-  padding: 10px;
-  border: 2px solid #ff4141; 
-  border-radius: 5px;
-} */
 
 .productdisplay-img-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Keep images vertically stacked */
   gap: 16px;
 }
 
@@ -30,21 +26,18 @@
   transition: transform 0.3s ease;
 }
 
-.productdisplay-img-list img:hover {
-  transform: scale(1.1);
-  border: 2px solid #ff4141; /* Slight zoom on hover */
-}
-
 .productdisplay-main-img {
   width: 586px;
   height: 700px;
   border: 1px solid #000000;
 }
 
+/* Adjust the .productdisplay-right to align beside the images */
 .productdisplay-right {
   margin: 0px 70px;
   display: flex;
   flex-direction: column;
+  width: calc(100% - 270px); /* Adjust the width to make room for the left column */
 }
 
 .productdisplay-right h1 {
@@ -130,14 +123,12 @@
   }
 
   .productdisplay-left {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
     width: 100%;
-    gap: 10px; /* Reduced gap for better space utilization */
   }
 
   .productdisplay-img-list {
-    flex-direction: row;
+    flex-direction: row; /* Change images to be aligned horizontally on smaller screens */
     justify-content: center;
     gap: 10px;
     margin-top: 15px;
@@ -156,6 +147,7 @@
   .productdisplay-right {
     align-items: center;
     text-align: center;
+    margin-top: 30px; /* Add margin for better spacing on smaller screens */
   }
 }
 
@@ -226,6 +218,8 @@
     width: auto;
   }
 }
+
+/* Description Box CSS */
 .descriptionbox {
   margin: 120px 170px;
 }
@@ -262,93 +256,95 @@
 /* Mobile and Tablet Responsiveness */
 @media (max-width: 1024px) {
   .descriptionbox {
-      margin: 60px 80px;
+    margin: 60px 80px;
   }
 
   .descriptionbox-navigator {
-      flex-direction: column;
-      gap: 1rem;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .descriptionbox-nav-box {
-      width: 100%;
-      height: auto;
-      font-size: 14px;
-      padding: 10px;
+    width: 100%;
+    height: auto;
+    font-size: 14px;
+    padding: 10px;
   }
 
   .descriptionbox-description {
-      padding: 32px;
-      padding-bottom: 50px;
+    padding: 32px;
+    padding-bottom: 50px;
   }
 }
 
 @media (max-width: 768px) {
   .descriptionbox {
-      margin: 40px 30px;
+    margin: 40px 30px;
   }
 
   .descriptionbox-navigator {
-      flex-direction: column;
-      gap: 0.8rem;
+    flex-direction: column;
+    gap: 0.8rem;
   }
 
   .descriptionbox-nav-box {
-      width: 100%;
-      height: auto;
-      font-size: 14px;
-      padding: 8px;
+    width: 100%;
+    height: auto;
+    font-size: 14px;
+    padding: 8px;
   }
 
   .descriptionbox-description {
-      padding: 25px;
-      padding-bottom: 40px;
+    padding: 25px;
+    padding-bottom: 40px;
   }
 }
 
 @media (max-width: 480px) {
   .descriptionbox {
-      margin: 20px 15px;
+    margin: 20px 15px;
   }
 
   .descriptionbox-navigator {
-      flex-direction: column;
-      gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   .descriptionbox-nav-box {
-      width: 100%;
-      height: auto;
-      font-size: 12px;
-      padding: 6px;
+    width: 100%;
+    height: auto;
+    font-size: 12px;
+    padding: 6px;
   }
 
   .descriptionbox-description {
-      padding: 18px;
-      padding-bottom: 30px;
+    padding: 18px;
+    padding-bottom: 30px;
   }
 }
+
+/* Color Circle */
 .productdisplay-right-colors {
-  display: flex; /* Flexbox ensures horizontal layout */
-  gap: 10px; /* Space between the color circles */
+  display: flex;
+  gap: 10px;
   margin-top: 10px;
-  align-items: center; 
-  /* Center-align circles vertically (if needed) */
+  align-items: center;
 }
 
 .color-circle {
-  width: 30px; /* Diameter of the circle */
+  width: 30px;
   height: 30px;
-  border-radius: 50%; /* Make it circular */
-  border: 1px solid #ccc; /* Optional border */
-  cursor: pointer; /* Show pointer on hover */
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  cursor: pointer;
   transition: transform 0.2s;
 }
 
 .color-circle:hover {
-  transform: scale(1.1); /* Slightly enlarge on hover */
+  transform: scale(1.1);
   border: 3px solid #ff4141;
 }
+
 .color-container {
   display: inline-block;
   text-align: center;
@@ -359,5 +355,5 @@
   display: block;
   font-size: 12px;
   margin-top: 5px;
-  color: #333; /* You can choose a color that contrasts with the color circle */
+  color: #333;
 }

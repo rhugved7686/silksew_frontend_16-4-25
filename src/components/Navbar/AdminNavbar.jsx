@@ -1,19 +1,22 @@
 import React, { useState, useContext, useEffect } from "react";
 import "./Navbar.css";
 import logo from "../Assets/logo.png";
-import profile_icon from "../Assets/profile_icon.png";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 const AdminNavbar = () => {
+  // eslint-disable-next-line no-unused-vars
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const [showDropdown, setShowDropdown] = useState(false);
 
+  // eslint-disable-next-line no-unused-vars
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleLogoutClick = () => {
     logout(); // Call logout from AuthContext
     navigate("/login"); // Redirect to login page

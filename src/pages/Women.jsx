@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../components/Popular/Popular.css';
+import "../pages/CSS/card.css";
 import axios from 'axios';
 import Item from '../components/Item/Item';
 
@@ -41,20 +41,27 @@ function Women() {
   if (error) return <div className="error">{error}</div>;
   return (
     <div className="popular">
-      {/* <h1>POPULAR IN WOMEN</h1> */}
+      <h1>POPULAR IN WOMEN</h1>
       <hr />
       <div className="popular-item">
         {products.length > 0 ? (
           products.map((item) => (
             <div key={item._id} className="item-container">
-              <center><Item
-                id={item._id}
-                name={shortenName(item.name)}
-                image={item.images[0]}
-                new_price={item.price}
-                old_price={item.oldPrice}
-              /></center>
-              <button onClick={() => handleViewProduct(item)} className="add-to-cart-btn">
+              {/* {item.discount && (
+                <div className="badge">{item.discount}% OFF</div>
+              )} */}
+              <img src={item.images[0]} alt={item.name} />
+              <h4>{shortenName(item.name)}</h4>
+              <div className="prices">
+                <span className="new-price">Rs.{item.price.toFixed(2)}</span>
+                {item.oldPrice && (
+                  <span className="old-price">Rs.{item.oldPrice.toFixed(2)}</span>
+                )}
+              </div>
+              <button
+                onClick={() => handleViewProduct(item)}
+                className="add-to-cart-btn"
+              >
                 View Product
               </button>
             </div>
