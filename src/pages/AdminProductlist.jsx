@@ -369,35 +369,40 @@ function AdminProductlist() {
       productData.append("subcategory", values.subcategory)
       productData.append("availableStock", values.stock)
       productData.append("availableSizes", JSON.stringify(values.sizes))
-      productData.append("availableColors", JSON.stringify(values.colors))
+
+      // Handle colors properly
+      const colors = values.colors || []
+      productData.append("availableColors", JSON.stringify(colors.map((color) => ({ name: color }))))
 
       const uploadedImagesByColor = {}
-      for (const [color, images] of Object.entries(colorImages)) {
-        const uploadedImages = await Promise.all(
-          images.map(async (file) => {
-            if (file.url) {
-              return file.url // Image already uploaded, use existing URL
-            }
-            // Upload new image
-            const data = new FormData()
-            data.append("file", file.originFileObj)
-            data.append("upload_preset", "Silksew")
-            data.append("cloud_name", "dvpk4sbzi")
+      for (const color of colors) {
+        if (colorImages[color]) {
+          const uploadedImages = await Promise.all(
+            colorImages[color].map(async (file) => {
+              if (file.url) {
+                return file.url // Image already uploaded, use existing URL
+              }
+              // Upload new image
+              const data = new FormData()
+              data.append("file", file.originFileObj)
+              data.append("upload_preset", "Silksew")
+              data.append("cloud_name", "dvpk4sbzi")
 
-            const res = await fetch("https://api.cloudinary.com/v1_1/dvpk4sbzi/image/upload", {
-              method: "POST",
-              body: data,
-            })
+              const res = await fetch("https://api.cloudinary.com/v1_1/dvpk4sbzi/image/upload", {
+                method: "POST",
+                body: data,
+              })
 
-            if (!res.ok) {
-              throw new Error("Image upload failed")
-            }
+              if (!res.ok) {
+                throw new Error("Image upload failed")
+              }
 
-            const uploadedImage = await res.json()
-            return uploadedImage.secure_url
-          }),
-        )
-        uploadedImagesByColor[color] = uploadedImages
+              const uploadedImage = await res.json()
+              return uploadedImage.secure_url
+            }),
+          )
+          uploadedImagesByColor[color] = uploadedImages
+        }
       }
 
       productData.append("images", JSON.stringify(uploadedImagesByColor))
@@ -539,7 +544,7 @@ function AdminProductlist() {
                 </Select>
               </Form.Item>
 
-              {/* <Form.Item name="colors" label="Colors" rules={[{ required: true }]}>
+              <Form.Item name="colors" label="Colors" rules={[{ required: true }]}>
                 <Select mode="multiple" placeholder="Select colors" onChange={handleColorChange}>
                   {colorOptions.map(({ name }) => (
                     <Option key={name} value={name}>
@@ -547,9 +552,9 @@ function AdminProductlist() {
                     </Option>
                   ))}
                 </Select>
-              </Form.Item> */}
+              </Form.Item>
 
-              {/* {form.getFieldValue("colors")?.map((color) => (
+              {form.getFieldValue("colors")?.map((color) => (
                 <Form.Item key={color} label={`Images for ${color}`}>
                   <Upload
                     listType="picture-card"
@@ -565,7 +570,7 @@ function AdminProductlist() {
                     </div>
                   </Upload>
                 </Form.Item>
-              ))} */}
+              ))}
 
               <Form.Item>
                 <Button type="primary" htmlType="submit">
@@ -665,4 +670,3 @@ function AdminProductlist() {
 }
 
 export default AdminProductlist
-
