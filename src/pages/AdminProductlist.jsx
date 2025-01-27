@@ -539,7 +539,7 @@ function AdminProductlist() {
                 </Select>
               </Form.Item>
 
-              <Form.Item name="colors" label="Colors" rules={[{ required: true }]}>
+              {/* <Form.Item name="colors" label="Colors" rules={[{ required: true }]}>
                 <Select mode="multiple" placeholder="Select colors" onChange={handleColorChange}>
                   {colorOptions.map(({ name }) => (
                     <Option key={name} value={name}>
@@ -547,9 +547,9 @@ function AdminProductlist() {
                     </Option>
                   ))}
                 </Select>
-              </Form.Item>
+              </Form.Item> */}
 
-              {form.getFieldValue("colors")?.map((color) => (
+              {/* {form.getFieldValue("colors")?.map((color) => (
                 <Form.Item key={color} label={`Images for ${color}`}>
                   <Upload
                     listType="picture-card"
@@ -565,7 +565,7 @@ function AdminProductlist() {
                     </div>
                   </Upload>
                 </Form.Item>
-              ))}
+              ))} */}
 
               <Form.Item>
                 <Button type="primary" htmlType="submit">

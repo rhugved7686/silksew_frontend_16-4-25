@@ -25,7 +25,7 @@ const Checkout = () => {
     firstName: "",
     lastName: "",
     street: "",
-    landMark:"",
+    landMark: "",
     city: "",
     zipcode: "",
     country: "",
@@ -111,12 +111,28 @@ const Checkout = () => {
           );
           console.log(response.data.success);
 
+          // if (response.data.success) {
+          //   toast.success("Order Placed Successfully!");
+          //   setCartItems([]);
+          //   // Show success message
+        
+          //   navigate("/");
+          //   console.log("orderData:", orderData.items);
+          // } else {
+          //   toast.error(response.data.message);
+          // }
+
           if (response.data.success) {
-            setCartItems([]);
-            navigate("/orderItems");
-            console.log("orderData:", orderData.items);
+           
+  
+            setCartItems([]); // Clear cart items
+  
+            // Delay navigation to allow toast message to be displayed
+            setTimeout(() => {
+              navigate("/");
+            }, 3000);
           } else {
-            toast.error(response.data.message);
+            toast.error(response.data.message || "Failed to place order.");
           }
 
           break;

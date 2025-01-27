@@ -82,7 +82,7 @@ const Navbar = () => {
           </li>
         </ul>
 
-        <div className="nav-search-bar">
+        {/* <div className="nav-search-bar">
           <form onSubmit={handleSearch}>
             <input
               type="text"
@@ -92,7 +92,7 @@ const Navbar = () => {
             />
             <button type="submit">Search</button>
           </form>
-        </div>
+        </div> */}
       </div>
 
       <div className="nav-right">

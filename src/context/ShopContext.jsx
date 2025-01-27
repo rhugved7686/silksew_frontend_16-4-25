@@ -4,6 +4,9 @@ import axios from "axios";
 import { BASEURL } from "../config";
 import { jwtDecode } from "jwt-decode";
 
+const delivery_fee = 0;
+
+
 export const ShopContext = createContext(null);
 
 const ShopContextProvider = (props) => {
@@ -154,6 +157,9 @@ const ShopContextProvider = (props) => {
     searchTerm,
     setSearchTerm,
     setToken,
+    delivery_fee,
+    setCartItems,
+    getTotalCartItems
   };
 
   return (
