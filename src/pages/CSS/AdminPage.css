@@ -23,7 +23,7 @@ body {
   transition: transform 0.3s ease; /* Smooth transition for sidebar */
   position:absolute;
   left: 0;
-  height: 740px;
+  height: 100%;
   top: 70px; /* Adjusted for header height */
   bottom: 0;
   z-index: 10;

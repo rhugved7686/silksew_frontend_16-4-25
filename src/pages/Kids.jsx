@@ -8,21 +8,22 @@ function Kids() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Fetch products and filter only those in the 'Men' category
+        // Fetch products and filter only those in the 'Kids' category
         const response = await axios.get("http://localhost:5001/api/products");
         const fetchedProducts = Array.isArray(response.data)
           ? response.data
           : response.data.products;
 
-        // Filter products that belong to the 'Men' category
-        const menProducts = fetchedProducts.filter((product) =>
+        // Filter products that belong to the 'Kids' category
+        const kidsProducts = fetchedProducts.filter((product) =>
           product.category.includes("kid")
         );
 
-        setProducts(menProducts);
+        setProducts(kidsProducts);
       } catch (error) {
         setError("Failed to load products");
       } finally {
@@ -33,6 +34,7 @@ function Kids() {
     fetchProducts();
   }, []);
 
+  // Shorten product names if they exceed 25 characters
   const shortenName = (name) =>
     name.length > 25 ? name.substring(0, 25) + "..." : name;
 
@@ -40,35 +42,65 @@ function Kids() {
     navigate(`/product/${product._id}`, { state: { product } });
   };
 
+  // Function to get the first image URL from the images array
+  const getImage = (images, availableColors) => {
+    if (images && images.length > 0 && availableColors && availableColors.length > 0) {
+      try {
+        // Iterate over the available colors to find the first color with images
+        for (const color of availableColors) {
+          // Parse the image data for the current color
+          const parsedImages = JSON.parse(images[0]);
+          if (parsedImages[color.name] && parsedImages[color.name].length > 0) {
+            // Return the first image of the available color
+            return parsedImages[color.name][0];
+          }
+        }
+
+        // If no specific images found for any color, return the first available image
+        const parsedImages = JSON.parse(images[0]);
+        const firstAvailableColor = Object.keys(parsedImages)[0];
+        if (parsedImages[firstAvailableColor] && parsedImages[firstAvailableColor].length > 0) {
+          return parsedImages[firstAvailableColor][0];
+        }
+      } catch (error) {
+        console.error('Error parsing image JSON:', error);
+      }
+    }
+    return 'https://via.placeholder.com/150'; // Default placeholder image if no valid image found
+  };
+
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;
+
   return (
     <div className="popular">
-      {/* <h1>POPULAR IN WOMEN</h1> */}
       <hr />
       <div className="popular-item">
         {products.length > 0 ? (
-          products.map((item) => (
-            <div key={item._id} className="item-container">
-              {/* {item.discount && (
-                <div className="badge">{item.discount}% OFF</div>
-              )} */}
-              <img src={item.images[0]} alt={item.name} />
-              <h4>{shortenName(item.name)}</h4>
-              <div className="prices">
-                <span className="new-price">Rs.{item.price.toFixed(2)}</span>
-                {item.oldPrice && (
-                  <span className="old-price">Rs.{item.oldPrice.toFixed(2)}</span>
-                )}
+          products.map((item) => {
+            const imageUrl = getImage(item.images, item.availableColors); // Get the image URL
+            return (
+              <div key={item._id} className="item-container">
+                <img
+                  src={imageUrl || item.images[0]} // Show image URL or fallback to original
+                  alt={item.name}
+                />
+                <h4>{shortenName(item.name)}</h4>
+                <div className="prices">
+                  <span className="new-price">Rs.{item.price.toFixed(2)}</span>
+                  {item.oldPrice && (
+                    <span className="old-price">Rs.{item.oldPrice.toFixed(2)}</span>
+                  )}
+                </div>
+                <button
+                  onClick={() => handleViewProduct(item)}
+                  className="add-to-cart-btn"
+                >
+                  View Product
+                </button>
               </div>
-              <button
-                onClick={() => handleViewProduct(item)}
-                className="add-to-cart-btn"
-              >
-                View Product
-              </button>
-            </div>
-          ))
+            );
+          })
         ) : (
           <div>No products available.</div>
         )}

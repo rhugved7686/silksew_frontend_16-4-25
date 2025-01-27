@@ -74,12 +74,13 @@ const ShopContextProvider = (props) => {
   const addToCart = async (productId, size) => {
     if (token) {
       try {
+        // eslint-disable-next-line no-unused-vars
         const response = await axios.post(
           BASEURL + "/api/cart/add",
           { productId, size },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        console.log("Add to cart response:", response.data);
+        // console.log("Add to cart response:", response.data);
         await getTotalCartItems();
       } catch (error) {
         console.error("Error adding to cart:", error.message);
@@ -97,12 +98,13 @@ const ShopContextProvider = (props) => {
     async (productId, size) => {
       if (token) {
         try {
+          // eslint-disable-next-line no-unused-vars
           const response = await axios.post(
             BASEURL + "/api/cart/remove",
             { productId, size },
             { headers: { Authorization: `Bearer ${token}` } }
           );
-          console.log("Remove from cart response:", response.data);
+          // console.log("Remove from cart response:", response.data);
           await getTotalCartItems();
         } catch (error) {
           console.error("Error removing from cart:", error.message);
@@ -151,6 +153,7 @@ const ShopContextProvider = (props) => {
     all_product,
     searchTerm,
     setSearchTerm,
+    setToken,
   };
 
   return (

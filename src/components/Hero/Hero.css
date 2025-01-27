@@ -56,17 +56,17 @@
 
 .home1__slider--bg {
   background: linear-gradient(rgba(32, 31, 31, 0.2), rgba(32, 31, 31, 0.7)),
-              url('../Assets/2.png');
+              url('../Assets/1.png');
 }
 
 .home1__slider--bg.two {
   background: linear-gradient(rgba(32, 31, 31, 0.2), rgba(32, 31, 31, 0.7)),
-              url('../Assets/3.png');
+              url('../Assets/3_.png');
 }
 
 .home1__slider--bg.three {
   background: linear-gradient(rgba(32, 31, 31, 0.2), rgba(32, 31, 31, 0.7)),
-              url('../Assets/1.png');
+              url('../Assets/2_.png');
 }
 
 /* Slider section styles */

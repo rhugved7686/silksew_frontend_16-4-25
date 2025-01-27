@@ -12,9 +12,10 @@ const Popular = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/products');
+        const response = await axios.get('http://localhost:5001/api/products/list');
+        console.log(response);
         const fetchedProducts = Array.isArray(response.data) ? response.data : response.data.products;
-        const womenProducts = fetchedProducts.filter(product => product.category.includes('women'));
+        const womenProducts = fetchedProducts.filter((product) => product.category.includes('women'));
         setProducts(womenProducts);
       } catch (error) {
         setError('Failed to load products');
@@ -30,6 +31,32 @@ const Popular = () => {
 
   const handleViewProduct = (product) => {
     navigate(`/product/${product._id}`, { state: { product } });
+  };
+
+  const getImage = (images, availableColors) => {
+    if (images && images.length > 0 && availableColors && availableColors.length > 0) {
+      try {
+        // Iterate over the available colors to find the first color with images
+        for (const color of availableColors) {
+          // Parse the image data for the current color
+          const parsedImages = JSON.parse(images[0]);
+          if (parsedImages[color.name] && parsedImages[color.name].length > 0) {
+            // Return the first image of the available color
+            return parsedImages[color.name][0];
+          }
+        }
+
+        // If no specific images found for any color, return the first available image
+        const parsedImages = JSON.parse(images[0]);
+        const firstAvailableColor = Object.keys(parsedImages)[0];
+        if (parsedImages[firstAvailableColor] && parsedImages[firstAvailableColor].length > 0) {
+          return parsedImages[firstAvailableColor][0];
+        }
+      } catch (error) {
+        console.error('Error parsing image JSON:', error);
+      }
+    }
+    return 'https://via.placeholder.com/150'; // Default placeholder image if no valid image found
   };
 
   if (loading) return <div className="loading">Loading...</div>;
@@ -57,7 +84,12 @@ const Popular = () => {
               }}
             >
               <div className="card-image-wrapper">
-                <img src={item.images[0]} alt={item.name} className="product-image" />
+                {/* Fetch the image based on the color and available images */}
+                <img
+                  src={getImage(item.images, item.availableColors)}
+                  alt={item.name}
+                  className="product-image"
+                />
               </div>
               <div className="card-info">
                 <h2 className="card-title">{shortenName(item.name)}</h2>

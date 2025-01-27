@@ -1,19 +1,22 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
-import '../pages/CSS/AdminPage.css';
-import { AuthContext } from '../context/AuthContext'; // Ensure you have AuthContext imported
-import AdminAddProduct from './AdminAddProduct'; // Import the AdminAddProduct component
-import AdminProductlist from './AdminProductlist'; // Import the AdminProductlist component
-import AdminNavbar from '../components/Navbar/AdminNavbar';
-import AdminOrders from './AdminOrders'; // Import the AdminOrders component
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import "../pages/CSS/AdminPage.css";
+import { AuthContext } from "../context/AuthContext"; // Ensure you have AuthContext imported
+import AdminAddProduct from "./AdminAddProduct"; // Import the AdminAddProduct component
+import AdminProductlist from "./AdminProductlist"; // Import the AdminProductlist component
+import AdminNavbar from "../components/Navbar/AdminNavbar";
+import AdminOrders from "./AdminOrders"; // Import the AdminOrders component
+import AdminUser from "./AdminUser"; // Import the AdminOrders component
 
 const Dashboard = () => {
+  // eslint-disable-next-line no-unused-vars
   const { user, token, logout } = useContext(AuthContext); // Destructure logout from AuthContext
   const navigate = useNavigate(); // Initialize the useNavigate hook
 
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false); // Track dropdown state for Products
-  const [selectedOption, setSelectedOption] = useState('Dashboard'); // Set default to 'Dashboard'
+  const [selectedOption, setSelectedOption] = useState("Dashboard"); // Set default to 'Dashboard'
+  // eslint-disable-next-line no-unused-vars
   const [srno, setSrno] = useState(1); // Track srno value
   const [totalProducts, setTotalProducts] = useState(0); // Track the total number of products
 
@@ -42,7 +45,7 @@ const Dashboard = () => {
   useEffect(() => {
     // Redirect to login page if the user is not authenticated
     if (!token) {
-      navigate('/login'); // Redirect to the login page
+      navigate("/login"); // Redirect to the login page
     }
   }, [token, navigate]);
 
@@ -55,24 +58,25 @@ const Dashboard = () => {
     <>
       <AdminNavbar />
       <div className="dashboard-container">
-        <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
           <div className="sidebar-logo">Admin Panel</div>
           <ul className="sidebar-menu">
-            <li onClick={() => handleMenuClick('Dashboard')}>Dashboard</li>
+            <li onClick={() => handleMenuClick("Dashboard")}>Dashboard</li>
             <li>
               Products
               <span
-                className={`dropdown-icon ${isDropdownOpen ? 'open' : ''}`}
+                className={`dropdown-icon ${isDropdownOpen ? "open" : ""}`}
                 onClick={toggleDropdown}
               >
                 &#9660;
               </span>
-              <ul className={`submenu ${isDropdownOpen ? 'open' : ''}`}>
-                <li onClick={() => handleMenuClick('AddProduct')}>Add Product</li>
-                <li onClick={() => handleMenuClick('ListProducts')}>List of Products</li>
+              <ul className={`submenu ${isDropdownOpen ? "open" : ""}`}>
+                <li onClick={() => handleMenuClick("AddProduct")}>Add Product</li>
+                <li onClick={() => handleMenuClick("ListProducts")}>List of Products</li>
               </ul>
             </li>
-            <li onClick={() => handleMenuClick('Orders')}>Orders</li>
+            <li onClick={() => handleMenuClick("Orders")}>Orders</li>
+            <li onClick={() => handleMenuClick("Users")}>Users</li> 
             <li onClick={handleLogoutClick}>Logout</li>
           </ul>
         </div>
@@ -82,7 +86,7 @@ const Dashboard = () => {
         </div>
 
         <div className="main-content">
-          {selectedOption === 'Dashboard' && (
+          {selectedOption === "Dashboard" && (
             <section className="stats-cards">
               <div className="stat-card">
                 <h3>Total Sales</h3>
@@ -102,14 +106,15 @@ const Dashboard = () => {
               </div>
             </section>
           )}
-
-          {selectedOption === 'AddProduct' && <AdminAddProduct srno={srno} />} {/* Pass srno to AdminAddProduct */}
-
-          {selectedOption === 'ListProducts' && (
-            <AdminProductlist updateTotalProducts={updateTotalProducts} srno={srno} /> // Pass updateTotalProducts function to AdminProductlist
+          {selectedOption === "AddProduct" && <AdminAddProduct srno={srno} />} {/* Pass srno to AdminAddProduct */}
+          {selectedOption === "ListProducts" && (
+            <AdminProductlist
+              updateTotalProducts={updateTotalProducts}
+              srno={srno}
+            /> // Pass updateTotalProducts function to AdminProductlist
           )}
-
-          {selectedOption === 'Orders' && <AdminOrders />} {/* Render AdminOrders when 'Orders' is selected */}
+          {selectedOption === "Orders" && <AdminOrders />} 
+          {selectedOption === "User" && <AdminUser />} {/* Render OrderItems when 'Users' is selected */}
         </div>
       </div>
     </>

@@ -9,6 +9,40 @@ const CartItems = () => {
   const [localProducts, setLocalProducts] = useState(products); // Local state for products
   const navigate = useNavigate();
 
+  const getImage = (images, availableColors) => {
+    if (
+      images &&
+      images.length > 0 &&
+      availableColors &&
+      availableColors.length > 0
+    ) {
+      try {
+        // Iterate over the available colors to find the first color with images
+        for (const color of availableColors) {
+          // Parse the image data for the current color
+          const parsedImages = JSON.parse(images[0]);
+          if (parsedImages[color.name] && parsedImages[color.name].length > 0) {
+            // Return the first image of the available color
+            return parsedImages[color.name][0];
+          }
+        }
+
+        // If no specific images found for any color, return the first available image
+        const parsedImages = JSON.parse(images[0]);
+        const firstAvailableColor = Object.keys(parsedImages)[0];
+        if (
+          parsedImages[firstAvailableColor] &&
+          parsedImages[firstAvailableColor].length > 0
+        ) {
+          return parsedImages[firstAvailableColor][0];
+        }
+      } catch (error) {
+        console.error("Error parsing image JSON:", error);
+      }
+    }
+    return "https://via.placeholder.com/150"; // Default placeholder image if no valid image found
+  };
+
   // Sync local state with context changes
   useEffect(() => {
     setLocalCartItems(cartItems);
@@ -40,7 +74,8 @@ const CartItems = () => {
 
         return (
           <div key={`${productId}-${size}`} className="cartitem">
-            <img src={product.images[0]} alt={product.name} />
+            {/* <img src={product.images[0]} alt={product.name} /> */}
+            <img src={getImage(product.images, product.availableColors)} alt={product.name} className="product-image" style={{ height: "50px" }} />
             <p>{product.name}</p>
             <p>Rs {product.price}</p>
             <p>{quantity}</p>

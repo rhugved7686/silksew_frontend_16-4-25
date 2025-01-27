@@ -50,10 +50,9 @@
 /* Edit Button Style (Small) */
 .product-table td .edit-btn,
 .product-table td .delete-btn {
-    /* padding: 6px 12px; Reduce padding for smaller buttons */
-    font-size: 12px;   /* Smaller font size */
-    height: 30px;      /* Adjust height */
-    width: 30px;       /* Adjust width */
+    font-size: 12px;
+    height: 30px;
+    width: 30px;
     border-radius: 5px;
     cursor: pointer;
     margin: 5px;
@@ -61,13 +60,13 @@
 }
 
 .product-table td .edit-btn {
-    background-color: #28a745; /* Green color */
+    background-color: #28a745;
     color: white;
     border: none;
 }
 
 .product-table td .edit-btn:hover {
-    background-color: #218838; /* Darker green */
+    background-color: #218838;
 }
 
 .product-table td .edit-btn:focus {
@@ -76,13 +75,13 @@
 
 /* Delete Button Style (Small) */
 .product-table td .delete-btn {
-    background-color: #dc3545; /* Red color */
+    background-color: #dc3545;
     color: white;
     border: none;
 }
 
 .product-table td .delete-btn:hover {
-    background-color: #c82333; /* Darker red */
+    background-color: #c82333;
 }
 
 .product-table td .delete-btn:focus {
@@ -102,17 +101,12 @@
     }
 
     .product-table td button {
-        padding: 10px 12px; /* Slightly larger buttons for better accessibility */
+        padding: 10px 12px;
     }
 
-    /* Stack rows into a card-like layout */
     .product-table {
         display: block;
     }
-
-    /* .product-table thead {
-        display: none;
-    } */
 
     .product-table tr {
         display: block;
@@ -141,7 +135,6 @@
     }
 }
 
-/* Mobile devices under 480px */
 @media screen and (max-width: 480px) {
     .product-table th, .product-table td {
         padding: 8px;
@@ -154,7 +147,7 @@
     }
 
     .product-table td button {
-        padding: 4px 8px; /* Make buttons smaller for very small screens */
+        padding: 4px 8px;
     }
 }
 
@@ -191,92 +184,85 @@
     outline: none;
 }
 
-/* CSS for AdminProductlist component */
+/* AdminProductlist Component */
 .search-container {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 20px;
-  }
-  
-  .search-container input {
+}
+
+.search-container input {
     padding: 10px;
     font-size: 16px;
     width: 250px;
     border-radius: 5px;
     border: 1px solid #ccc;
-  }
-  
-  /* Your existing styles for the table and pagination */
-  .product-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .product-table th, .product-table td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .pagination button {
-    padding: 8px 16px;
-    margin: 0 5px;
-    cursor: pointer;
-  }
-  
-  .pagination button:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-  /* Edit Product Form Styling */
-  .product-form {
-    max-height: 600px; /* Adjust the height as needed */
-    overflow-y: auto; /* Enables vertical scrolling if content exceeds max-height */
+}
+
+/* Edit Product Form Styling */
+.product-form {
+    max-height: 600px;
+    overflow-y: auto;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #f9f9f9;
     margin-bottom: 20px;
-  }
-  
-  .product-form input,
-  .product-form select {
+}
+
+.product-form input,
+.product-form select {
     width: 100%;
     padding: 8px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
-  
-  .product-form button {
+}
+
+.product-form button {
     padding: 10px 15px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  .product-form button:hover {
+}
+
+.product-form button:hover {
     background-color: #0056b3;
-  }
-  
-  /* Optional: You can also style the image previews if needed */
-  .image-previews {
+}
+
+/* Optional: Image Previews */
+.image-previews {
     display: flex;
     flex-wrap: wrap;
     margin-top: 10px;
-  }
-  
-  .image-previews img {
+}
+
+.image-previews img {
     margin: 5px;
     width: 100px;
     height: 100px;
     object-fit: cover;
-  }
+}
+
+/* Table Hover Effect */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd; /* Add border to table cells */
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}

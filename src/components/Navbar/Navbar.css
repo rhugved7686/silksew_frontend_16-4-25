@@ -110,10 +110,15 @@
   position: relative;
 }
 
+.cart-icon, .profile-icon, .hamburger-menu span {
+  width: 30px; /* Set width for all icons */
+  height: 30px; /* Set height for all icons */
+}
+
+/* Cart icon */
 .cart-icon {
-  width: 30px;
-  height: 30px;
-  color: white;
+  width: 30px; /* Adjust the size */
+  height: 30px; /* Adjust the size */
 }
 
 .cart-item-count {
@@ -127,15 +132,15 @@
   font-size: 12px;
 }
 
-/* Profile info and dropdown */
+/* Profile icon */
 .profile-info {
   position: relative;
 }
 
 .profile-icon {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
+  width: 30px; /* Adjust the size */
+  height: 30px; /* Adjust the size */
+  border-radius: 50%; /* Ensure it's circular */
   cursor: pointer;
 }
 
@@ -191,21 +196,20 @@
 
 /* Hamburger Menu */
 .hamburger-menu {
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 2rem;
-  height: 2rem;
+  width: 30px; /* Ensure the wrapper width matches the icon size */
+  height: 30px; /* Ensure the wrapper height matches the icon size */
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 10;
 }
 
 .hamburger-menu span {
-  width: 2rem;
-  height: 0.25rem;
+  width: 30px; /* Match the width of other icons */
+  height: 3px; /* Adjust height for better visibility */
   background: white;
   border-radius: 10px;
   transition: all 0.3s linear;
@@ -213,6 +217,7 @@
   transform-origin: 1px;
 }
 
+/* Adjusting hamburger menu wrapper */
 .hamburger-wrapper {
   display: none;
 }

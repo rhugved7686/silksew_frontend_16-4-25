@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './NewCollections.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Item from '../Item/Item'; // If you no longer need the image in Item, you can remove it from there
 
 const NewCollections = () => {
   const [products, setProducts] = useState([]);
@@ -17,6 +16,7 @@ const NewCollections = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get('http://localhost:5001/api/products/list'); // Replace with your API endpoint
+        
         const fetchedProducts = Array.isArray(response.data) ? response.data : response.data.products;
         setProducts(fetchedProducts);
       } catch (err) {
@@ -28,6 +28,32 @@ const NewCollections = () => {
 
     fetchProducts();
   }, []);
+
+  const getImage = (images, availableColors) => {
+    if (images && images.length > 0 && availableColors && availableColors.length > 0) {
+      try {
+        // Iterate over the available colors to find the first color with images
+        for (const color of availableColors) {
+          // Parse the image data for the current color
+          const parsedImages = JSON.parse(images[0]);
+          if (parsedImages[color.name] && parsedImages[color.name].length > 0) {
+            // Return the first image of the available color
+            return parsedImages[color.name][0];
+          }
+        }
+
+        // If no specific images found for any color, return the first available image
+        const parsedImages = JSON.parse(images[0]);
+        const firstAvailableColor = Object.keys(parsedImages)[0];
+        if (parsedImages[firstAvailableColor] && parsedImages[firstAvailableColor].length > 0) {
+          return parsedImages[firstAvailableColor][0];
+        }
+      } catch (error) {
+        console.error('Error parsing image JSON:', error);
+      }
+    }
+    return 'https://via.placeholder.com/150'; // Default placeholder image if no valid image found
+  };
 
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;
@@ -45,8 +71,19 @@ const NewCollections = () => {
             <div className="product-card" key={i}>
               {/* Wrap the image with a Link to make it clickable */}
               <Link to={`/product/${item._id}`} state={{ product: item }}>
-                <img src={item.images[0]} alt={item.name} className="product-image" />
-              </Link>
+                <img
+                  src={getImage(item.images, item.availableColors)} // Get image using the adjusted logic
+                  alt={item.name}
+                  className="product-image"
+                />
+              </Link><br></br>
+              <h4>{shortenName(item.name)}</h4>
+              <div className="prices">
+                <span className="new-price">Rs.{item.price.toFixed(2)}</span>
+                {item.oldPrice && (
+                  <span className="old-price">Rs.{item.oldPrice.toFixed(2)}</span>
+                )}
+              </div>
               <Link to={`/product/${item._id}`} state={{ product: item }}>
                 <button className="view-product-btn">View Product</button>
               </Link>

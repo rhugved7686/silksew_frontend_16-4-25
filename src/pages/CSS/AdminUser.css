@@ -1,0 +1,49 @@
+/* Styling for the table header */
+.admin-orders table thead th {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 12px;
+  }
+  
+  /* Styling for the dropdowns */
+  .admin-orders select {
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  /* Focus effect on dropdown */
+  .admin-orders select:focus {
+    outline: none;
+    border-color: #2563eb; /* Blue outline on focus */
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.5);
+  }
+  
+  /* Hover effect for dropdown */
+  .admin-orders select:hover {
+    border-color: black;
+  }
+  
+  /* Add some spacing and rounded corners */
+  .admin-orders table {
+    border-radius: 10px;
+    overflow: hidden;
+    border-collapse: collapse;
+  }
+  
+  .admin-orders th,
+  .admin-orders td {
+    border-bottom: 1px solid #ddd;
+    padding: 12px;
+  }
+  
+  .admin-orders tr:hover {
+    background-color: #f3f4f6; /* Light gray on hover */
+  }
+  

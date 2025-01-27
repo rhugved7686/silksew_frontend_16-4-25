@@ -2,15 +2,30 @@ import React, { useContext, useState } from "react";
 import { ShopContext } from "../../context/ShopContext";
 import razorpay from "../Assets/razorpay_logo.png";
 import stripe from "../Assets/stripe_logo.png";
-import './Checkout.css';
+import "./Checkout.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { BASEURL } from "../../config";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Checkout = () => {
+  const navigate = useNavigate(); // Initialize navigate
+  const [method, setMethod] = useState("Cash on Delivery");
   // eslint-disable-next-line no-unused-vars
-  const { cartItems, getTotalCartAmount } = useContext(ShopContext);
+  const {
+    cartItems,
+    delivery_fee,
+    setCartItems,
+    getTotalCartAmount,
+    products,
+    token,
+  } = useContext(ShopContext);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     street: "",
+    landMark:"",
     city: "",
     zipcode: "",
     country: "",
@@ -19,31 +34,100 @@ const Checkout = () => {
   });
 
   // Delivery charge (can also be passed from context if dynamic)
-  const delivery_free = 0; // Fixed delivery charge, can be dynamic if needed
+  //const delivery_free = 0; // Fixed delivery charge, can be dynamic if needed
 
   // Calculate the subtotal and total amount (cart total + delivery charge)
   const subtotal = getTotalCartAmount();
-  const totalAmount = subtotal + delivery_free;
+  const totalAmount = subtotal + delivery_fee;
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
     setFormData((data) => ({ ...data, [name]: value }));
   };
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     try {
+      const token = localStorage.getItem("token"); // Get token from storage
+      console.log(token);
+      if (!token) {
+        toast.error("You are not authorized. Please log in.");
+        // Optional: Redirect to login
+        window.location.href = "/login";
+        return;
+      }
+
+      // Ensure cartItems exists and is an array
+      if (!cartItems || !Array.isArray(cartItems) || cartItems.length === 0) {
+        console.error("Cart is empty or invalid.");
+        toast.error("Your cart is empty!");
+        return;
+      }
+
+      // Prepare order items
+      let orderItems = cartItems
+        .map((cartItem) => {
+          // Find the corresponding product in the products array
+          const product = products.find((p) => p._id === cartItem.productId);
+
+          if (!product) {
+            console.warn(
+              `Product not found for productId: ${cartItem.productId}`
+            );
+            return null; // Skip items without matching products
+          }
+
+          // Create order item with additional details
+          return {
+            productId: cartItem.productId, // Correct syntax
+            size: cartItem.size,
+            quantity: cartItem.quantity,
+          };
+        })
+        .filter((item) => item !== null); // Remove null items
+
+      // Check if orderItems is empty
+      if (orderItems.length === 0) {
+        toast.error("No valid products found in cart.");
+        return;
+      }
+
       let orderData = {
         address: formData,
-        amount: totalAmount, // Pass total amount including delivery fee
+        items: orderItems,
+        totalAmount: getTotalCartAmount() + delivery_fee,
+        paymentMethod: method,
       };
+      console.log("order data", orderData);
 
-      // Process the order here...
+      switch (method) {
+        // api call for cod
+        case "Cash on Delivery":
+          const response = await axios.post(
+            BASEURL + "/api/orders/place",
+            orderData,
+            { headers: { Authorization: ` Bearer ${token}` } }
+          );
+          console.log(response.data.success);
+
+          if (response.data.success) {
+            setCartItems([]);
+            navigate("/orderItems");
+            console.log("orderData:", orderData.items);
+          } else {
+            toast.error(response.data.message);
+          }
+
+          break;
+
+        default:
+          break;
+      }
       console.log(orderData);
-
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
     }
   };
 
@@ -60,7 +144,10 @@ const Checkout = () => {
             <div className="payment-option selected">
               <img src={razorpay} alt="Razorpay" className="payment-logo" />
             </div>
-            <div className="payment-option">
+            <div
+              onClick={() => setMethod("Cash on Delivery")}
+              className="payment-option"
+            >
               <span className="payment-text">CASH ON DELIVERY</span>
             </div>
           </div>
@@ -112,6 +199,14 @@ const Checkout = () => {
           placeholder="Street Address"
           onChange={onChangeHandler}
         />
+        <input
+          type="text"
+          name="landMark"
+          value={formData.landMark}
+          className="form-input"
+          placeholder="Landmark"
+          onChange={onChangeHandler}
+        />
         <div className="form-row">
           <input
             type="text"
@@ -160,7 +255,7 @@ const Checkout = () => {
           </div>
           <div className="cart-total-item">
             <span>Shipping Fee: </span>
-            <span> Rs {delivery_free} </span>
+            <span> Rs {delivery_fee} </span>
           </div>
           <div className="cart-total-item">
             <span>Total: </span>
@@ -169,7 +264,9 @@ const Checkout = () => {
         </div>
 
         <div className="form-submit">
-          <button type="submit" className="submit-button">PLACE ORDER</button>
+          <button type="submit" className="submit-button">
+            PLACE ORDER
+          </button>
         </div>
       </div>
     </form>

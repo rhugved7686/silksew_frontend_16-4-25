@@ -1,6 +1,6 @@
-const colors = [
+const colorslist = [
     [
-        {"name": "Alice blue", "hex": "#F0F8FF"},
+    {"name": "Alice blue", "hex": "#F0F8FF"},
     {"name": "Antique white", "hex": "#FAEBD7"},
     {"name": "Aqua", "hex": "#00FFFF"},
     {"name": "Aquamarine", "hex": "#7FFFD4"},
