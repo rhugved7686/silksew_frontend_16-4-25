@@ -5,6 +5,7 @@ import { ShopContext } from "../../context/ShopContext";
 import { AuthContext } from "../../context/AuthContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import RelatedProducts from "../RelatedProducts/RelatedProducts";
 
 const ProductDisplay = () => {
   const { state } = useLocation();
@@ -88,6 +89,12 @@ const ProductDisplay = () => {
             <div className="productdisplay-right-price-old">Rs {product.oldPrice}</div>
           </div>
           <div className="productdisplay-right-colors">
+            <h3>Generic Name</h3>
+            <div className="color-options">
+              {product.subcategory}
+            </div>
+          </div>
+          <div className="productdisplay-right-colors">
             <h3>Available Colors</h3>
             <div className="color-options">
               {availableColors?.map((colorObj, i) => (
@@ -128,6 +135,7 @@ const ProductDisplay = () => {
           >
             Description
           </button>
+          &ensp;&ensp;
           <button
             className={`descriptionbox-nav-box ${activeTab === "reviews" ? "active" : ""}`}
             onClick={() => setActiveTab("reviews")}
@@ -143,6 +151,7 @@ const ProductDisplay = () => {
           )}
         </div>
       </div>
+      <RelatedProducts subcategory={product.subcategory} currentProductId={product._id} />
     </>
   );
 };

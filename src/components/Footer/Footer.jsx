@@ -1,67 +1,135 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
-import React from 'react';
-import './Footer.css';
-import footer_logo from '../Assets/logo_big.png';
-import instagram_icon from '../Assets/instagram_icon.png';
-import pintester_icon from '../Assets/pintester_icon.png';
-import whatsapp_icon from '../Assets/whatsapp_icon.png';
+import { Link } from "react-router-dom"
+import "./Footer.css"
+import footer_logo from "../Assets/logo_big.png"
+import instagram_icon from "../Assets/instagram_icon.png"
+import pintester_icon from "../Assets/pintester_icon.png"
+import whatsapp_icon from "../Assets/whatsapp_icon.png"
 
 const Footer = () => {
   return (
-    <footer className="footer" role="contentinfo" itemScope itemType="http://schema.org/Person">
-      <div className="footer-left" itemScope itemType="http://schema.org/Person">
-        <img src={footer_logo} alt="Profile Picture" itemProp="image" className="u-logo logo" />
-        <h3 itemProp="name" className="p-name">SILKSEW</h3>
-        <nav aria-label="Footer Navigation">
-          <p className="footer-links">
-            <a href="/" itemProp="url" className="link-1">Shop</a>
-            <a href="/mens" itemProp="url">Men</a>
-            <a href="/womens" itemProp="url">Women</a>
-            <a href="/kids" itemProp="url">Kids</a>
+    <footer className="footer" role="contentinfo">
+      <div className="footer-container">
+        <div className="footer-section footer-left">
+          <Link to="/" className="footer-brand">
+            <img src={footer_logo || "/placeholder.svg"} alt="SILKSEW logo" className="footer-logo" />
+            <h2 className="footer-title">SILKSEW</h2>
+          </Link>
+          <nav className="footer-nav" aria-label="Footer Navigation">
+            <ul className="footer-links">
+              <li>
+                <Link to="/" className="footer-link">
+                  Shop
+                </Link>
+              </li>
+              <li>
+                <Link to="/mens" className="footer-link">
+                  Men
+                </Link>
+              </li>
+              <li>
+                <Link to="/womens" className="footer-link">
+                  Women
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <p className="footer-copyright">
+            &copy; 2025{" "}
+            <Link to="https://www.cobaztech.com/" target="new" className="footer-link">
+            Cobaztech
+            </Link>
+            . All rights reserved.
           </p>
-        </nav>
-        <p className="footer-name">© 2025 <a style={{ color: 'inherit' }} href="/">WTL</a></p>
-      </div>
+        </div>
 
-      <div className="footer-center">
-        <div itemScope itemType="http://schema.org/PostalAddress" className="p-address">
-          <i className="fa fa-map-marker" aria-hidden="true"></i>
-          <p>
-            <span itemProp="streetAddress" className="p-street-address">123 This is a Street</span>
-            <span itemProp="addressLocality" className="p-locality">A Locality</span>
-            <span itemProp="addressRegion" className="p-region">Region state</span>
-            <span itemProp="postalCode" className="p-postal-code">12345</span>
+        <div className="footer-section footer-center">
+          <h3 className="footer-heading">Contact Us</h3>
+          <address className="footer-address">
+            <div className="footer-info">
+              <div className="footer-icon" aria-hidden="true">
+                <i className="fas fa-map-marker-alt"></i>
+              </div>
+              <p className="footer-text">
+                123 This is a Street A Locality,<br/> Region state 12345
+              </p>
+            </div>
+            <div className="footer-info">
+              <div className="footer-icon" aria-hidden="true">
+                <i className="fas fa-phone-alt"></i>
+              </div>
+              <p className="footer-text">
+                <a href="tel:+1234567890" className="footer-link">
+                  +1 234 567 890
+                </a>
+              </p>
+            </div>
+            <div className="footer-info">
+              <div className="footer-icon" aria-hidden="true">
+                <i className="fas fa-envelope"></i>
+              </div>
+              <p className="footer-text">
+                <a href="mailto:contact@silksew.com" className="footer-link">
+                  contact@silksew.com
+                </a>
+              </p>
+            </div>
+          </address>
+          
+        </div>
+
+        <div className="footer-section footer-right">
+          <h3 className="footer-heading">About Us</h3>
+          <p className="footer-about">
+            At SILKSEW, we're passionate about creating stunning fashion that empowers you to express your unique style.
+            Join us in redefining elegance and comfort.
           </p>
-        </div>
-        <div>
-          <i className="fa fa-phone" aria-hidden="true"></i>
-          <p itemProp="telephone" className="p-tel">+1 234567890</p>
-        </div>
-        <div>
-          <i className="fa fa-envelope" aria-hidden="true"></i>
-          <p><a href="mailto:myname@mail.com" itemProp="email" className="u-email">myname@mail.com</a></p>
+          <div className="footer-socials-wrapper">
+            <div className="footer-socials">
+              <a
+                href="https://whatsapp.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social-link"
+                aria-label="WhatsApp"
+              >
+                <img src={whatsapp_icon || "/placeholder.svg"} alt="" className="footer-social-icon" />
+              </a>
+              <a
+                href="https://pinterest.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social-link"
+                aria-label="Pinterest"
+              >
+                <img src={pintester_icon || "/placeholder.svg"} alt="" className="footer-social-icon" />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social-link"
+                aria-label="Instagram"
+              >
+                <img src={instagram_icon || "/placeholder.svg"} alt="" className="footer-social-icon" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className="footer-right">
-        <p className="footer-about">
-          <span>About Me</span>
-          Not a web developer, but have a knack for creating stunning websites and applications. Everywhere @sdavidprince
+      <div className="footer-bottom">
+        <p className="footer-legal">
+          <Link to="/" className="footer-link">
+            Privacy Policy
+          </Link>{" "}
+          |
+          <Link to="/" className="footer-link">
+            Terms of Service
+          </Link>
         </p>
-        <div className="footer-socials">
-          <a href="/" rel="me" aria-label="Whatsapp" itemProp="sameAs" className="u-url">
-            <img src={whatsapp_icon} alt="Whatsapp" />
-          </a>
-          <a href="/" rel="me" aria-label="Pintester" itemProp="sameAs" className="u-url">
-            <img src={pintester_icon} alt="Pintester" />
-          </a>
-          <a href="/" rel="me" aria-label="Instagram" itemProp="sameAs" className="u-url">
-            <img src={instagram_icon} alt="Instagram" />
-          </a>
-        </div>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer
+

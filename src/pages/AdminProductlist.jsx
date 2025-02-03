@@ -1,32 +1,33 @@
-import React, { useState, useEffect, useContext, useCallback } from "react"
+/* eslint-disable no-unused-vars */
+import { useState, useEffect, useContext, useCallback } from "react"
 import axios from "axios"
 import { AuthContext } from "../context/AuthContext"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import "font-awesome/css/font-awesome.min.css"
 import "../pages/CSS/AdminProductlist.css"
-import "../pages/CSS/CreateProductForm.css"
-import { Form, Input, Select, InputNumber, Button, Upload, Modal } from "antd"
-import { PlusOutlined } from "@ant-design/icons"
+import { Form, Input, Select, InputNumber, Button, Upload, Modal, Image } from "antd"
+import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from "@ant-design/icons"
 
 const { TextArea } = Input
 const { Option } = Select
 
-function AdminProductlist() {
+function AdminProductlist({ updateTotalProducts }) {
   const { token } = useContext(AuthContext)
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
-  const [productsPerPage] = useState(5)
-  const [searchTerm, setSearchTerm] = useState("")
+  const [productsPerPage] = useState(4)
   const [editingProduct, setEditingProduct] = useState(null)
+  const [isAdding, setIsAdding] = useState(false)
   const [form] = Form.useForm()
-  // eslint-disable-next-line no-unused-vars
-  const [updateTrigger, setUpdateTrigger] = useState(0)
   const [selectedCategory, setSelectedCategory] = useState(null)
   const [colorImages, setColorImages] = useState({})
+  const [sizeData, setSizeData] = useState({})
   const [previewVisible, setPreviewVisible] = useState(false)
   const [previewImage, setPreviewImage] = useState("")
   const [previewTitle, setPreviewTitle] = useState("")
+  const [showWarningModal, setShowWarningModal] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [previousSizes, setPreviousSizes] = useState([])
 
   const categories = ["men", "women", "kid"]
 
@@ -91,141 +92,134 @@ function AdminProductlist() {
     ],
   }
 
-  // eslint-disable-next-line no-unused-vars
-  const sizes = {
-    men: ["XS", "S", "M", "L", "XL", "XXL"],
-    women: ["XS", "S", "M", "L", "XL"],
-    kid: ["2T", "3T", "4T", "5", "6", "7", "8"],
-  }
-
   const colorOptions = [
-    { name: "Alice blue" },
-    { name: "Antique white" },
+    { name: "AliceBlue" },
+    { name: "AntiqueWhite" },
     { name: "Aqua" },
     { name: "Aquamarine" },
     { name: "Azure" },
     { name: "Beige" },
     { name: "Bisque" },
     { name: "Black" },
-    { name: "Blanched almond" },
+    { name: "BlanchedAlmond" },
     { name: "Blue" },
-    { name: "Blue violet" },
+    { name: "BlueViolet" },
     { name: "Brown" },
     { name: "Burlywood" },
-    { name: "Cadet blue" },
+    { name: "CadetBlue" },
     { name: "Chartreuse" },
     { name: "Chocolate" },
     { name: "Coral" },
-    { name: "Cornflower blue" },
+    { name: "CornflowerBlue" },
     { name: "Cornsilk" },
     { name: "Crimson" },
     { name: "Cyan" },
-    { name: "Dark blue" },
-    { name: "Dark cyan" },
-    { name: "Dark goldenrod" },
-    { name: "Dark gray" },
-    { name: "Dark green" },
-    { name: "Dark khaki" },
-    { name: "Dark magenta" },
-    { name: "Dark olive green" },
-    { name: "Dark orange" },
-    { name: "Dark orchid" },
-    { name: "Dark red" },
-    { name: "Dark salmon" },
-    { name: "Dark seagreen" },
-    { name: "Dark slate blue" },
-    { name: "Dark slate gray" },
-    { name: "Dark turquoise" },
-    { name: "Dark violet" },
-    { name: "Deep pink" },
-    { name: "Deep sky blue" },
-    { name: "Dim gray" },
-    { name: "Dodger blue" },
+    { name: "DarkBlue" },
+    { name: "DarkCyan" },
+    { name: "DarkGoldenrod" },
+    { name: "DarkGray" },
+    { name: "DarkGreen" },
+    { name: "DarkKhaki" },
+    { name: "DarkMagenta" },
+    { name: "DarkOliveGreen" },
+    { name: "DarkOrange" },
+    { name: "DarkOrchid" },
+    { name: "DarkRed" },
+    { name: "DarkSalmon" },
+    { name: "DarkSeagreen" },
+    { name: "DarkSlateBlue" },
+    { name: "DarkSlateGray" },
+    { name: "DarkTurquoise" },
+    { name: "DarkViolet" },
+    { name: "DeepPink" },
+    { name: "DeepSkyBlue" },
+    { name: "DimGray" },
+    { name: "DodgerBlue" },
     { name: "Firebrick" },
-    { name: "Floral white" },
-    { name: "Forest green" },
+    { name: "FloralWhite" },
+    { name: "ForestGreen" },
     { name: "Fuchsia" },
     { name: "Gainsboro" },
-    { name: "Ghost white" },
+    { name: "GhostWhite" },
     { name: "Gold" },
     { name: "Goldenrod" },
     { name: "Gray" },
     { name: "Green" },
-    { name: "Green yellow" },
+    { name: "GreenYellow" },
     { name: "Honeydew" },
-    { name: "Hot pink" },
-    { name: "Indian red" },
+    { name: "HotPink" },
+    { name: "IndianRed" },
     { name: "Indigo" },
     { name: "Ivory" },
     { name: "Khaki" },
     { name: "Lavender" },
-    { name: "Lavender blush" },
-    { name: "Lawn green" },
-    { name: "Lemon chiffon" },
-    { name: "Light blue" },
-    { name: "Light coral" },
-    { name: "Light cyan" },
-    { name: "Light goldenrod yellow" },
-    { name: "Light green" },
-    { name: "Light grey" },
-    { name: "Light pink" },
-    { name: "Light salmon" },
-    { name: "Light sea green" },
-    { name: "Light sky blue" },
-    { name: "Light slate gray" },
-    { name: "Light steel blue" },
-    { name: "Light yellow" },
+    { name: "LavenderBlush" },
+    { name: "LawnGreen" },
+    { name: "LemonChiffon" },
+    { name: "LightBlue" },
+    { name: "LightCoral" },
+    { name: "LightCyan" },
+    { name: "LightGoldenrodYellow" },
+    { name: "LightGreen" },
+    { name: "LightGrey" },
+    { name: "LightPink" },
+    { name: "LightSalmon" },
+    { name: "LightSeaGreen" },
+    { name: "LightSkyBlue" },
+    { name: "LightSlateGray" },
+    { name: "LightSteelBlue" },
+    { name: "LightYellow" },
     { name: "Lime" },
-    { name: "Lime green" },
+    { name: "LimeGreen" },
     { name: "Linen" },
     { name: "Magenta" },
     { name: "Maroon" },
-    { name: "Medium aquamarine" },
-    { name: "Medium blue" },
-    { name: "Medium orchid" },
-    { name: "Medium purple" },
-    { name: "Medium sea green" },
-    { name: "Medium slate blue" },
-    { name: "Medium spring green" },
-    { name: "Medium turquoise" },
-    { name: "Medium violet red" },
-    { name: "Midnight blue" },
-    { name: "Mint cream" },
-    { name: "Misty rose" },
+    { name: "MediumAquamarine" },
+    { name: "MediumBlue" },
+    { name: "MediumOrchid" },
+    { name: "MediumPurple" },
+    { name: "MediumSeaGreen" },
+    { name: "MediumSlateBlue" },
+    { name: "MediumSpringGreen" },
+    { name: "MediumTurquoise" },
+    { name: "MediumVioletRed" },
+    { name: "MidnightBlue" },
+    { name: "MintCream" },
+    { name: "MistyRose" },
     { name: "Moccasin" },
-    { name: "Navajo white" },
+    { name: "NavajoWhite" },
     { name: "Navy" },
-    { name: "Old lace" },
-    { name: "Olive drab" },
+    { name: "OldLace" },
+    { name: "OliveDrab" },
     { name: "Orange" },
-    { name: "Orange red" },
+    { name: "OrangeRed" },
     { name: "Orchid" },
-    { name: "Pale goldenrod" },
-    { name: "Pale green" },
-    { name: "Pale turquoise" },
-    { name: "Pale violet red" },
-    { name: "Papaya whip" },
-    { name: "Peach puff" },
+    { name: "PaleGoldenrod" },
+    { name: "PaleGreen" },
+    { name: "PaleTurquoise" },
+    { name: "PaleVioletRed" },
+    { name: "PapayaWhip" },
+    { name: "PeachPuff" },
     { name: "Peru" },
     { name: "Pink" },
     { name: "Plum" },
-    { name: "Powder blue" },
+    { name: "PowderBlue" },
     { name: "Purple" },
     { name: "Red" },
-    { name: "Rosy brown" },
-    { name: "Royal blue" },
-    { name: "Saddle brown" },
+    { name: "RosyBrown" },
+    { name: "RoyalBlue" },
+    { name: "SaddleBrown" },
     { name: "Salmon" },
-    { name: "Sandy brown" },
-    { name: "Sea green" },
-    { name: "Sea shell" },
+    { name: "SandyBrown" },
+    { name: "SeaGreen" },
+    { name: "SeaShell" },
     { name: "Sienna" },
     { name: "Silver" },
-    { name: "Sky blue" },
-    { name: "Slate blue" },
+    { name: "SkyBlue" },
+    { name: "SlateBlue" },
     { name: "Snow" },
-    { name: "Spring green" },
-    { name: "Steel blue" },
+    { name: "SpringGreen" },
+    { name: "SteelBlue" },
     { name: "Tan" },
     { name: "Thistle" },
     { name: "Teal" },
@@ -236,7 +230,7 @@ function AdminProductlist() {
     { name: "White" },
     { name: "Whitesmoke" },
     { name: "Yellow" },
-    { name: "Yellow green" },
+    { name: "YellowGreen" },
   ]
 
   const fetchProducts = useCallback(async () => {
@@ -246,11 +240,12 @@ function AdminProductlist() {
       })
       const data = Array.isArray(response.data) ? response.data : response.data.products || []
       setProducts(data)
+      updateTotalProducts(data.length)
     } catch (error) {
       console.error("Error fetching products:", error)
       toast.error("Failed to fetch products.")
     }
-  }, [token])
+  }, [token, updateTotalProducts])
 
   useEffect(() => {
     fetchProducts()
@@ -272,24 +267,83 @@ function AdminProductlist() {
     }
   }
 
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value)
-    setCurrentPage(1)
+  const getImage = (images, availableColors) => {
+    if (images && images.length > 0 && availableColors && availableColors.length > 0) {
+      try {
+        const parsedImages = JSON.parse(images[0])
+        for (const color of availableColors) {
+          if (parsedImages[color.name] && parsedImages[color.name].length > 0) {
+            return parsedImages[color.name][0]
+          }
+        }
+        const firstAvailableColor = Object.keys(parsedImages)[0]
+        if (parsedImages[firstAvailableColor] && parsedImages[firstAvailableColor].length > 0) {
+          return parsedImages[firstAvailableColor][0]
+        }
+      } catch (error) {
+        console.error("Error parsing image JSON:", error)
+      }
+    }
+    return "https://via.placeholder.com/150"
   }
 
   const handleEditProduct = (product) => {
     setEditingProduct(product)
+    setIsAdding(false)
     setSelectedCategory(product.category[0])
+
+    // Parse sizes properly
+    let sizes = []
+    if (Array.isArray(product.availableSizes)) {
+      sizes = product.availableSizes
+    } else if (typeof product.availableSizes === "string") {
+      try {
+        sizes = JSON.parse(product.availableSizes)
+      } catch {
+        sizes = product.availableSizes.split(",").map((size) => size.trim())
+      }
+    }
+    setPreviousSizes([])
+
+    let colors = []
+    if (Array.isArray(product.availableColors)) {
+      colors = product.availableColors.flatMap((color) => {
+        if (typeof color === "string") {
+          try {
+            return JSON.parse(color).map((c) => c.name)
+          } catch {
+            return color
+          }
+        } else if (color.name) {
+          return color.name
+        }
+        return []
+      })
+    } else if (typeof product.availableColors === "string") {
+      try {
+        const parsedColors = JSON.parse(product.availableColors)
+        colors = parsedColors.flatMap((color) => {
+          if (typeof color === "string") {
+            return color
+          } else if (color.name) {
+            return color.name
+          }
+          return []
+        })
+      } catch {
+        colors = [product.availableColors]
+      }
+    }
+
     form.setFieldsValue({
       ...product,
       category: product.category[0],
       subcategory: product.subcategory[0],
-      sizes: product.availableSizes,
-      colors: product.availableColors.map((color) => color.name),
+      colors: colors,
       stock: product.availableStock,
     })
+    form.setFieldValue("sizes", undefined)
 
-    // Set initial color images
     const initialColorImages = {}
     if (product.images && product.images.length > 0) {
       try {
@@ -307,6 +361,15 @@ function AdminProductlist() {
       }
     }
     setColorImages(initialColorImages)
+  }
+
+  const handleAddProduct = () => {
+    setEditingProduct(null)
+    setIsAdding(true)
+    setSelectedCategory(null)
+    form.resetFields()
+    setColorImages({})
+    setSizeData({})
   }
 
   const handleCategoryChange = (value) => {
@@ -330,6 +393,23 @@ function AdminProductlist() {
       }
     })
     setColorImages(newColorImages)
+  }
+
+  const handleSizeChange = (selectedSizes) => {
+    const newSizeData = { ...sizeData }
+    selectedSizes.forEach((size) => {
+      if (!newSizeData[size]) {
+        newSizeData[size] = { stock: 0 }
+      }
+    })
+    Object.keys(newSizeData).forEach((size) => {
+      if (!selectedSizes.includes(size)) {
+        delete newSizeData[size]
+      }
+    })
+    setSizeData(newSizeData)
+    setPreviousSizes(selectedSizes)
+    form.setFieldsValue({ sizes: selectedSizes })
   }
 
   const handleImageChange = (color, { fileList }) => {
@@ -358,21 +438,49 @@ function AdminProductlist() {
     })
   }
 
-  const handleUpdateProduct = async (values) => {
+  const handleSubmitProduct = async (values) => {
+    if (!isAdding) {
+      const originalSizes = editingProduct.availableSizes || []
+      const originalColors = (editingProduct.availableColors || []).map((c) => c.name || c)
+      const newSizes = values.sizes || previousSizes
+      const newColors = values.colors || []
+
+      const sizesChanged = JSON.stringify(originalSizes) !== JSON.stringify(newSizes)
+      const colorsChanged = JSON.stringify(originalColors) !== JSON.stringify(newColors)
+
+      if (!sizesChanged && !colorsChanged) {
+        setShowWarningModal(true)
+        return
+      }
+    }
+
+    submitProductData({ ...values, sizes: values.sizes || previousSizes })
+  }
+
+  const handleWarningConfirm = () => {
+    setShowWarningModal(false)
+    const formValues = form.getFieldsValue()
+    submitProductData(formValues)
+  }
+
+  const submitProductData = async (values) => {
     try {
       const productData = new FormData()
       productData.append("name", values.name)
       productData.append("description", values.description)
       productData.append("price", values.price)
+
       productData.append("oldPrice", values.oldPrice)
       productData.append("category", values.category)
       productData.append("subcategory", values.subcategory)
       productData.append("availableStock", values.stock)
-      productData.append("availableSizes", JSON.stringify(values.sizes))
 
-      // Handle colors properly
+      const sizes = values.sizes || previousSizes
+      productData.append("availableSizes", JSON.stringify(sizes))
+
       const colors = values.colors || []
-      productData.append("availableColors", JSON.stringify(colors.map((color) => ({ name: color }))))
+      const formattedColors = colors.map((color) => ({ name: color }))
+      productData.append("availableColors", JSON.stringify(formattedColors))
 
       const uploadedImagesByColor = {}
       for (const color of colors) {
@@ -380,9 +488,8 @@ function AdminProductlist() {
           const uploadedImages = await Promise.all(
             colorImages[color].map(async (file) => {
               if (file.url) {
-                return file.url // Image already uploaded, use existing URL
+                return file.url
               }
-              // Upload new image
               const data = new FormData()
               data.append("file", file.originFileObj)
               data.append("upload_preset", "Silksew")
@@ -407,66 +514,62 @@ function AdminProductlist() {
 
       productData.append("images", JSON.stringify(uploadedImagesByColor))
 
-      const response = await axios.put(`http://localhost:5001/api/products/${editingProduct._id}`, productData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      let response
+      if (isAdding) {
+        response = await axios.post("http://localhost:5001/api/products", productData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        })
+      } else {
+        response = await axios.put(`http://localhost:5001/api/products/${editingProduct._id}`, productData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        })
+      }
 
       if (response.data) {
-        toast.success("Product updated successfully!")
+        toast.success(isAdding ? "Product added successfully!" : "Product updated successfully!")
         setEditingProduct(null)
+        setIsAdding(false)
         setColorImages({})
-        fetchProducts() // Fetch products to update the table
+        setSizeData({})
+        fetchProducts()
       }
     } catch (error) {
-      console.error("Error updating product:", error)
-      toast.error("Failed to update product. " + (error.response?.data?.message || ""))
+      console.error("Error submitting product:", error)
+      toast.error(`Failed to ${isAdding ? "add" : "update"} product. ${error.response?.data?.message || ""}`)
     }
   }
 
   const handleCancelEdit = () => {
     setEditingProduct(null)
+    setIsAdding(false)
     setColorImages({})
+    setSizeData({})
     form.resetFields()
   }
 
-  const getImage = (images, availableColors) => {
-    if (images && images.length > 0 && availableColors && availableColors.length > 0) {
-      try {
-        const parsedImages = JSON.parse(images[0])
-        for (const color of availableColors) {
-          if (parsedImages[color] && parsedImages[color].length > 0) {
-            return parsedImages[color][0]
-          }
-        }
-        const firstAvailableColor = Object.keys(parsedImages)[0]
-        if (parsedImages[firstAvailableColor] && parsedImages[firstAvailableColor].length > 0) {
-          return parsedImages[firstAvailableColor][0]
-        }
-      } catch (error) {
-        console.error("Error parsing image JSON:", error)
-      }
-    }
-    return "https://via.placeholder.com/150"
-  }
+  const getFilteredProducts = useCallback(() => {
+    return products.filter((product) => {
+      const searchRegex = new RegExp(searchTerm, "i")
+      return (
+        searchRegex.test(product.name) ||
+        searchRegex.test(product.category.join(", ")) ||
+        searchRegex.test(product.subcategory.join(", ")) ||
+        searchRegex.test(product.availableColors.map((c) => c.name || c).join(", ")) ||
+        searchRegex.test(product.availableSizes.join(", ")) ||
+        searchRegex.test(product.price.toString()) ||
+        searchRegex.test(product.oldPrice ? product.oldPrice.toString() : "") ||
+        searchRegex.test(product.availableStock.toString())
+      )
+    })
+  }, [products, searchTerm])
 
-  const filteredProducts = products.filter((product) => {
-    const searchLower = searchTerm.toLowerCase()
-    return (
-      product.name.toLowerCase().includes(searchLower) ||
-      (Array.isArray(product.category) && product.category.some((cat) => cat.toLowerCase().includes(searchLower))) ||
-      product.price.toString().includes(searchLower) ||
-      product.oldPrice.toString().includes(searchLower) ||
-      product.availableStock.toString().includes(searchLower) ||
-      (Array.isArray(product.availableSizes) &&
-        product.availableSizes.some((size) => size.toLowerCase().includes(searchLower))) ||
-      (Array.isArray(product.availableColors) &&
-        product.availableColors.some((color) => color.toLowerCase().includes(searchLower)))
-    )
-  })
-
+  const filteredProducts = getFilteredProducts()
   const indexOfLastProduct = currentPage * productsPerPage
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct)
@@ -474,191 +577,254 @@ function AdminProductlist() {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
-  return (
-    <div>
+  const renderSearchSection = () => (
+    <div className="search-section">
+      <Input
+        placeholder="Search products..."
+        prefix={<SearchOutlined />}
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        allowClear
+      />
+    </div>
+  )
+
+  const renderProductTable = () => (
+    <>
       <h2>Admin Product List</h2>
+      {renderSearchSection()}
+      <table className="product-table">
+        <thead>
+          <tr>
+            <th>Sr. No</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Sub Category</th>
+            <th>Colors</th>
+            <th>Sizes</th>
+            <th>Price</th>
+            <th>Old Price</th>
+            <th>Stock</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentProducts.map((product, index) => (
+            <tr key={product._id}>
+              <td data-label="Sr. No">{(currentPage - 1) * 4 + index + 1}</td>
+              <td data-label="Image">
+                <Image
+                  src={getImage(product.images, product.availableColors) || "/placeholder.svg"}
+                  alt={product.name}
+                  width={50}
+                  height={50}
+                />
+              </td>
+              <td data-label="Name">{product.name}</td>
+              <td data-label="Category">{product.category.join(", ")}</td>
+              <td data-label="Sub Category">{product.subcategory.join(", ")}</td>
+              <td data-label="Colors">
+                {Array.isArray(product.availableColors)
+                  ? product.availableColors.map((color) => (typeof color === "string" ? color : color.name)).join(", ")
+                  : product.availableColors}
+              </td>
+              <td data-label="Sizes">
+                {Array.isArray(product.availableSizes) ? product.availableSizes.join(", ") : product.availableSizes}
+              </td>
+              <td data-label="Price">Rs.{product.price}</td>
+              <td data-label="Old Price">{product.oldPrice ? `Rs.${product.oldPrice}` : "N/A"}</td>
+              <td data-label="Stock">{product.availableStock}</td>
+              <td data-label="Actions">
+                <Button
+                  type="primary"
+                  icon={<EditOutlined />}
+                  onClick={() => handleEditProduct(product)}
+                  className="edit-btn"
+                />
+                <Button
+                  type="primary"
+                  danger
+                  icon={<DeleteOutlined />}
+                  onClick={() => handleDeleteProduct(product._id)}
+                  className="delete-btn"
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  )
 
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search by Name, Category, Price, Old Price, or Stock"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-      </div>
+  return (
+    <div className="product-list">
+      {editingProduct || isAdding ? (
+        <div className="product-form" style={{ maxHeight: "80vh", overflowY: "auto" }}>
+          <h2>{isAdding ? "Add New Product" : "Edit Product"}</h2>
+          <Form form={form} layout="vertical" onFinish={handleSubmitProduct}>
+            <Form.Item name="name" label="Product Name" rules={[{ required: true }]}>
+              <Input placeholder="Enter product name" />
+            </Form.Item>
 
-      {editingProduct ? (
-        <>
-          <h2>Edit Product</h2>
-          <div style={{ maxHeight: "600px", overflowY: "auto", padding: "20px" }}>
-            <Form form={form} layout="vertical" onFinish={handleUpdateProduct}>
-              <Form.Item name="name" label="Product Name" rules={[{ required: true }]}>
-                <Input placeholder="Enter product name" />
-              </Form.Item>
+            <Form.Item name="category" label="Category" rules={[{ required: true }]}>
+              <Select placeholder="Select category" onChange={handleCategoryChange}>
+                {categories.map((cat) => (
+                  <Option key={cat} value={cat}>
+                    {cat}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
 
-              <Form.Item name="category" label="Category" rules={[{ required: true }]}>
-                <Select placeholder="Select category" onChange={handleCategoryChange}>
-                  {categories.map((cat) => (
-                    <Option key={cat} value={cat}>
-                      {cat}
+            {selectedCategory && (
+              <Form.Item name="subcategory" label="Subcategory" rules={[{ required: true }]}>
+                <Select placeholder="Select subcategory">
+                  {subcategories[selectedCategory].map((sub) => (
+                    <Option key={sub} value={sub}>
+                      {sub}
                     </Option>
                   ))}
                 </Select>
               </Form.Item>
+            )}
 
-              {selectedCategory && (
-                <Form.Item name="subcategory" label="Subcategory" rules={[{ required: true }]}>
-                  <Select placeholder="Select subcategory">
-                    {subcategories[selectedCategory].map((sub) => (
-                      <Option key={sub} value={sub}>
-                        {sub}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              )}
+            <Form.Item name="description" label="Description" rules={[{ required: true }]}>
+              <TextArea rows={4} placeholder="Enter product description" />
+            </Form.Item>
 
-              <Form.Item name="description" label="Description" rules={[{ required: true }]}>
-                <TextArea rows={4} placeholder="Enter product description" />
-              </Form.Item>
+            <Form.Item name="price" label="Price" rules={[{ required: true }]}>
+              <InputNumber style={{ width: "100%" }} min={0} placeholder="Enter price" />
+            </Form.Item>
 
-              <Form.Item name="price" label="Price" rules={[{ required: true }]}>
-                <InputNumber style={{ width: "100%" }} min={0} placeholder="Enter price" />
-              </Form.Item>
+            <Form.Item name="oldPrice" label="Old Price">
+              <InputNumber style={{ width: "100%" }} min={0} placeholder="Enter old price" />
+            </Form.Item>
 
-              <Form.Item name="oldPrice" label="Old Price">
-                <InputNumber style={{ width: "100%" }} min={0} placeholder="Enter old price" />
-              </Form.Item>
+            <Form.Item name="stock" label="Available Stock" rules={[{ required: true }]}>
+              <InputNumber style={{ width: "100%" }} min={0} placeholder="Enter available stock" />
+            </Form.Item>
 
-              <Form.Item name="stock" label="Available Stock" rules={[{ required: true }]}>
-                <InputNumber style={{ width: "100%" }} min={0} placeholder="Enter available stock" />
-              </Form.Item>
+            <Form.Item
+              name="sizes"
+              label="Available Sizes"
+              rules={[{ required: true, message: "Please select at least one size" }]}
+            >
+              <Select
+                mode="multiple"
+                placeholder="Select available sizes"
+                style={{ width: "100%" }}
+                onChange={handleSizeChange}
+                value={previousSizes}
+              >
+                {["XS", "S", "M", "L", "XL", "XXL", "2T", "3T", "4T", "5", "6", "7", "8"].map((size) => (
+                  <Option key={size} value={size}>
+                    {size}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
 
-              <Form.Item name="sizes" label="Available Sizes" rules={[{ required: true }]}>
-                <Select mode="multiple" placeholder="Select available sizes">
-                  {["XS", "S", "M", "L", "XL", "XXL", "2T", "3T", "4T", "5", "6", "7", "8"].map((size) => (
-                    <Option key={size} value={size}>
-                      {size}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
+            <Form.Item name="colors" label="Colors" rules={[{ required: true }]}>
+              <Select mode="multiple" placeholder="Select colors" onChange={handleColorChange}>
+                {colorOptions.map(({ name }) => (
+                  <Option key={name} value={name}>
+                    {name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
 
-              <Form.Item name="colors" label="Colors" rules={[{ required: true }]}>
-                <Select mode="multiple" placeholder="Select colors" onChange={handleColorChange}>
-                  {colorOptions.map(({ name }) => (
-                    <Option key={name} value={name}>
-                      {name}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-
-              {form.getFieldValue("colors")?.map((color) => (
-                <Form.Item key={color} label={`Images for ${color}`}>
-                  <Upload
-                    listType="picture-card"
-                    fileList={colorImages[color] || []}
-                    onPreview={handlePreview}
-                    onChange={(info) => handleImageChange(color, info)}
-                    beforeUpload={() => false}
-                    multiple={true}
-                  >
+            {form.getFieldValue("colors")?.map((color) => (
+              <Form.Item key={color} label={`Images for ${color}`}>
+                <Upload
+                  listType="picture-card"
+                  fileList={colorImages[color] || []}
+                  onPreview={handlePreview}
+                  onChange={(info) => handleImageChange(color, info)}
+                  beforeUpload={() => false}
+                  multiple={true}
+                >
+                  {(colorImages[color]?.length || 0) < 5 && (
                     <div>
                       <PlusOutlined />
                       <div style={{ marginTop: 8 }}>Upload</div>
                     </div>
-                  </Upload>
-                </Form.Item>
-              ))}
-
-              <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  Update Product
-                </Button>
-                <Button onClick={handleCancelEdit} style={{ marginLeft: 8 }}>
-                  Cancel
-                </Button>
+                  )}
+                </Upload>
               </Form.Item>
-            </Form>
-          </div>
-        </>
+            ))}
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                {isAdding ? "Add Product" : "Update Product"}
+              </Button>
+              <Button onClick={handleCancelEdit} style={{ marginLeft: 8 }}>
+                Cancel
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       ) : (
         <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Sr. No</th>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Sub Category</th>
-                <th>Available Colors</th>
-                <th>Available Sizes</th>
-                <th>Price</th>
-                <th>Old Price</th>
-                <th>Stock</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentProducts.map((product, index) => (
-                <tr key={product._id}>
-                  <td>{indexOfFirstProduct + index + 1}</td>
-                  <td>
-                    <img
-                      src={getImage(product.images, product.availableColors) || "/placeholder.svg"}
-                      alt={product.name}
-                      className="product-image"
-                      style={{ height: "50px" }}
-                    />
-                  </td>
-                  <td>{product.name}</td>
-                  <td>{product.category.join(", ")}</td>
-                  <td>{product.subcategory.join(", ")}</td>
-                  <td>{product.availableColors.join(", ")}</td>
-                  <td>{product.availableSizes.join(", ")}</td>
-                  <td>{product.price}</td>
-                  <td>{product.oldPrice ?? "N/A"}</td>
-                  <td>{product.availableStock}</td>
-                  <td>
-                    <div style={{ display: "flex", gap: "10px" }}>
-                      <Button
-                        type="primary"
-                        onClick={() => handleEditProduct(product)}
-                        icon={<i className="fa fa-edit"></i>}
-                      />
-                      <Button
-                        type="primary"
-                        danger
-                        onClick={() => handleDeleteProduct(product._id)}
-                        icon={<i className="fa fa-trash"></i>}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {renderProductTable()}
           <div className="pagination">
             <Button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
               Prev
             </Button>
-            {[...Array(totalPages)].map((_, index) => (
-              <Button
-                key={index}
-                onClick={() => paginate(index + 1)}
-                type={currentPage === index + 1 ? "primary" : "default"}
-              >
-                {index + 1}
-              </Button>
-            ))}
+            {totalPages <= 5 ? (
+              [...Array(totalPages)].map((_, index) => (
+                <Button
+                  key={index}
+                  onClick={() => paginate(index + 1)}
+                  type={currentPage === index + 1 ? "primary" : "default"}
+                >
+                  {index + 1}
+                </Button>
+              ))
+            ) : (
+              <>
+                {currentPage > 2 && (
+                  <>
+                    <Button onClick={() => paginate(1)}>1</Button>
+                    {currentPage > 3 && <span>...</span>}
+                  </>
+                )}
+                {[...Array(5)].map((_, index) => {
+                  const pageNumber = Math.min(Math.max(currentPage - 2 + index, 1), totalPages)
+                  return (
+                    <Button
+                      key={pageNumber}
+                      onClick={() => paginate(pageNumber)}
+                      type={currentPage === pageNumber ? "primary" : "default"}
+                    >
+                      {pageNumber}
+                    </Button>
+                  )
+                })}
+                {currentPage < totalPages - 1 && (
+                  <>
+                    {currentPage < totalPages - 2 && <span>...</span>}
+                    <Button onClick={() => paginate(totalPages)}>{totalPages}</Button>
+                  </>
+                )}
+              </>
+            )}
             <Button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>
               Next
             </Button>
           </div>
         </div>
       )}
+
+      <Modal
+        visible={showWarningModal}
+        title="Warning"
+        onOk={handleWarningConfirm}
+        onCancel={() => setShowWarningModal(false)}
+      >
+        <p>You haven't made any changes to the sizes or colors. Are you sure you want to update the product?</p>
+      </Modal>
 
       <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={() => setPreviewVisible(false)}>
         <img alt="example" style={{ width: "100%" }} src={previewImage || "/placeholder.svg"} />
@@ -670,3 +836,4 @@ function AdminProductlist() {
 }
 
 export default AdminProductlist
+

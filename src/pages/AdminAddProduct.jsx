@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import axios from "axios"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
@@ -16,6 +16,7 @@ const AdminProductForm = () => {
   const [colors, setColors] = useState([])
   const [selectedCategory, setSelectedCategory] = useState(null)
   const [colorImages, setColorImages] = useState({})
+  const [uniqueSubcategories, setUniqueSubcategories] = useState([])
 
   const categories = ["men", "women", "kid"]
 
@@ -87,133 +88,133 @@ const AdminProductForm = () => {
   }
 
   const colorOptions = [
-    { name: "Alice blue" },
-    { name: "Antique white" },
+    { name: "AliceBlue" },
+    { name: "AntiqueWhite" },
     { name: "Aqua" },
     { name: "Aquamarine" },
     { name: "Azure" },
     { name: "Beige" },
     { name: "Bisque" },
     { name: "Black" },
-    { name: "Blanched almond" },
+    { name: "BlanchedAlmond" },
     { name: "Blue" },
-    { name: "Blue violet" },
+    { name: "BlueViolet" },
     { name: "Brown" },
     { name: "Burlywood" },
-    { name: "Cadet blue" },
+    { name: "CadetBlue" },
     { name: "Chartreuse" },
     { name: "Chocolate" },
     { name: "Coral" },
-    { name: "Cornflower blue" },
+    { name: "CornflowerBlue" },
     { name: "Cornsilk" },
     { name: "Crimson" },
     { name: "Cyan" },
-    { name: "Dark blue" },
-    { name: "Dark cyan" },
-    { name: "Dark goldenrod" },
-    { name: "Dark gray" },
-    { name: "Dark green" },
-    { name: "Dark khaki" },
-    { name: "Dark magenta" },
-    { name: "Dark olive green" },
-    { name: "Dark orange" },
-    { name: "Dark orchid" },
-    { name: "Dark red" },
-    { name: "Dark salmon" },
-    { name: "Dark seagreen" },
-    { name: "Dark slate blue" },
-    { name: "Dark slate gray" },
-    { name: "Dark turquoise" },
-    { name: "Dark violet" },
-    { name: "Deep pink" },
-    { name: "Deep sky blue" },
-    { name: "Dim gray" },
-    { name: "Dodger blue" },
+    { name: "DarkBlue" },
+    { name: "DarkCyan" },
+    { name: "DarkGoldenrod" },
+    { name: "DarkGray" },
+    { name: "DarkGreen" },
+    { name: "DarkKhaki" },
+    { name: "DarkMagenta" },
+    { name: "DarkOliveGreen" },
+    { name: "DarkOrange" },
+    { name: "DarkOrchid" },
+    { name: "DarkRed" },
+    { name: "DarkSalmon" },
+    { name: "DarkSeagreen" },
+    { name: "DarkSlateBlue" },
+    { name: "DarkSlateGray" },
+    { name: "DarkTurquoise" },
+    { name: "DarkViolet" },
+    { name: "DeepPink" },
+    { name: "DeepSkyBlue" },
+    { name: "DimGray" },
+    { name: "DodgerBlue" },
     { name: "Firebrick" },
-    { name: "Floral white" },
-    { name: "Forest green" },
+    { name: "FloralWhite" },
+    { name: "ForestGreen" },
     { name: "Fuchsia" },
     { name: "Gainsboro" },
-    { name: "Ghost white" },
+    { name: "GhostWhite" },
     { name: "Gold" },
     { name: "Goldenrod" },
     { name: "Gray" },
     { name: "Green" },
-    { name: "Green yellow" },
+    { name: "GreenYellow" },
     { name: "Honeydew" },
-    { name: "Hot pink" },
-    { name: "Indian red" },
+    { name: "HotPink" },
+    { name: "IndianRed" },
     { name: "Indigo" },
     { name: "Ivory" },
     { name: "Khaki" },
     { name: "Lavender" },
-    { name: "Lavender blush" },
-    { name: "Lawn green" },
-    { name: "Lemon chiffon" },
-    { name: "Light blue" },
-    { name: "Light coral" },
-    { name: "Light cyan" },
-    { name: "Light goldenrod yellow" },
-    { name: "Light green" },
-    { name: "Light grey" },
-    { name: "Light pink" },
-    { name: "Light salmon" },
-    { name: "Light sea green" },
-    { name: "Light sky blue" },
-    { name: "Light slate gray" },
-    { name: "Light steel blue" },
-    { name: "Light yellow" },
+    { name: "LavenderBlush" },
+    { name: "LawnGreen" },
+    { name: "LemonChiffon" },
+    { name: "LightBlue" },
+    { name: "LightCoral" },
+    { name: "LightCyan" },
+    { name: "LightGoldenrodYellow" },
+    { name: "LightGreen" },
+    { name: "LightGrey" },
+    { name: "LightPink" },
+    { name: "LightSalmon" },
+    { name: "LightSeaGreen" },
+    { name: "LightSkyBlue" },
+    { name: "LightSlateGray" },
+    { name: "LightSteelBlue" },
+    { name: "LightYellow" },
     { name: "Lime" },
-    { name: "Lime green" },
+    { name: "LimeGreen" },
     { name: "Linen" },
     { name: "Magenta" },
     { name: "Maroon" },
-    { name: "Medium aquamarine" },
-    { name: "Medium blue" },
-    { name: "Medium orchid" },
-    { name: "Medium purple" },
-    { name: "Medium sea green" },
-    { name: "Medium slate blue" },
-    { name: "Medium spring green" },
-    { name: "Medium turquoise" },
-    { name: "Medium violet red" },
-    { name: "Midnight blue" },
-    { name: "Mint cream" },
-    { name: "Misty rose" },
+    { name: "MediumAquamarine" },
+    { name: "MediumBlue" },
+    { name: "MediumOrchid" },
+    { name: "MediumPurple" },
+    { name: "MediumSeaGreen" },
+    { name: "MediumSlateBlue" },
+    { name: "MediumSpringGreen" },
+    { name: "MediumTurquoise" },
+    { name: "MediumVioletRed" },
+    { name: "MidnightBlue" },
+    { name: "MintCream" },
+    { name: "MistyRose" },
     { name: "Moccasin" },
-    { name: "Navajo white" },
+    { name: "NavajoWhite" },
     { name: "Navy" },
-    { name: "Old lace" },
-    { name: "Olive drab" },
+    { name: "OldLace" },
+    { name: "OliveDrab" },
     { name: "Orange" },
-    { name: "Orange red" },
+    { name: "OrangeRed" },
     { name: "Orchid" },
-    { name: "Pale goldenrod" },
-    { name: "Pale green" },
-    { name: "Pale turquoise" },
-    { name: "Pale violet red" },
-    { name: "Papaya whip" },
-    { name: "Peach puff" },
+    { name: "PaleGoldenrod" },
+    { name: "PaleGreen" },
+    { name: "PaleTurquoise" },
+    { name: "PaleVioletRed" },
+    { name: "PapayaWhip" },
+    { name: "PeachPuff" },
     { name: "Peru" },
     { name: "Pink" },
     { name: "Plum" },
-    { name: "Powder blue" },
+    { name: "PowderBlue" },
     { name: "Purple" },
     { name: "Red" },
-    { name: "Rosy brown" },
-    { name: "Royal blue" },
-    { name: "Saddle brown" },
+    { name: "RosyBrown" },
+    { name: "RoyalBlue" },
+    { name: "SaddleBrown" },
     { name: "Salmon" },
-    { name: "Sandy brown" },
-    { name: "Sea green" },
-    { name: "Sea shell" },
+    { name: "SandyBrown" },
+    { name: "SeaGreen" },
+    { name: "SeaShell" },
     { name: "Sienna" },
     { name: "Silver" },
-    { name: "Sky blue" },
-    { name: "Slate blue" },
+    { name: "SkyBlue" },
+    { name: "SlateBlue" },
     { name: "Snow" },
-    { name: "Spring green" },
-    { name: "Steel blue" },
+    { name: "SpringGreen" },
+    { name: "SteelBlue" },
     { name: "Tan" },
     { name: "Thistle" },
     { name: "Teal" },
@@ -224,7 +225,7 @@ const AdminProductForm = () => {
     { name: "White" },
     { name: "Whitesmoke" },
     { name: "Yellow" },
-    { name: "Yellow green" },
+    { name: "YellowGreen" },
   ]
 
   const handleImageUpload =
@@ -245,6 +246,18 @@ const AdminProductForm = () => {
     form.setFieldsValue({
       subcategory: undefined,
       sizes: undefined,
+    })
+    // Reset unique subcategories when category changes
+    setUniqueSubcategories([])
+  }
+
+  const handleSubcategoryChange = (value) => {
+    // Update unique subcategories
+    setUniqueSubcategories((prev) => {
+      if (!prev.includes(value)) {
+        return [...prev, value]
+      }
+      return prev
     })
   }
 
@@ -268,7 +281,10 @@ const AdminProductForm = () => {
       productData.append("category", values.category)
       productData.append("subcategory", values.subcategory)
       productData.append("availableStock", values.stock)
+
+      // Store sizes as an array
       productData.append("availableSizes", JSON.stringify(values.sizes))
+
       productData.append(
         "availableColors",
         JSON.stringify(
@@ -280,6 +296,9 @@ const AdminProductForm = () => {
           }),
         ),
       )
+
+      // Add unique subcategories to the form data
+      productData.append("uniqueSubcategories", JSON.stringify(uniqueSubcategories))
 
       const uploadedImagesByColor = {}
       for (const [color, images] of Object.entries(colorImages)) {
@@ -331,6 +350,7 @@ const AdminProductForm = () => {
       form.resetFields()
       setColorImages({})
       setColors([])
+      setUniqueSubcategories([])
     } catch (error) {
       // Display error message
       toast.error(
@@ -380,7 +400,7 @@ const AdminProductForm = () => {
 
           {selectedCategory && (
             <Form.Item name="subcategory" label="Subcategory" rules={[{ required: true }]}>
-              <Select placeholder="Select subcategory">
+              <Select placeholder="Select subcategory" onChange={handleSubcategoryChange}>
                 {subcategories[selectedCategory].map((sub) => (
                   <Option key={sub} value={sub}>
                     {sub}

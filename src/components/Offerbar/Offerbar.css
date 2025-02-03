@@ -1,0 +1,218 @@
+:root {
+    --border-color: #1a237e;
+    --primary-color: #453966;
+    --text-color: #333;
+    --background-color: #f2d972;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --border-width: 2px;
+    --container-height: 64px;
+    --number-size: 1.5rem;
+    --label-size: 0.75rem;
+    --sale-text-size: 1.2rem;
+  }
+  
+  /* Wrapper to ensure full width */
+  .sale-wrapper {
+    width: 99.4vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: linear-gradient(to right, #1f1c2c, #928dab);
+  }
+  
+  .sale-container {
+    display: flex;
+    width: 100%;
+    height: var(--container-height);
+    background: linear-gradient(to right, #1f1c2c, #928dab);
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .timer-section {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-lg);
+    min-width: max-content;
+    border-right: var(--border-width) solid #fff;
+    gap: var(--spacing-lg);
+    height: 100%;
+  }
+  
+  .sale-text {
+    font-size: var(--sale-text-size);
+    font-weight: 800;
+    color: #fb0404ee;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  
+  .blink {
+    animation: blink-animation 1s steps(5, start) infinite;
+    text-shadow: 1px 1px 2px #000;
+  }
+  
+  @keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
+  
+  .countdown {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+    height: 100%;
+  }
+  
+  .time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    padding: var(--spacing-sm);
+    transition: transform 0.2s ease;
+  }
+  
+  .time-unit:hover {
+    transform: translateY(-2px);
+  }
+  
+  .number {
+    font-size: var(--number-size);
+    font-weight: 800;
+    color: #fff;
+    font-family: "JetBrains Mono", monospace;
+    line-height: 1.2;
+    display: block;
+  }
+  
+  .label {
+    font-size: var(--label-size);
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+    font-weight: 700;
+  }
+  
+  .marquee-section {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .marquee-content {
+    display: flex;
+    position: absolute;
+    animation: marquee 30s linear infinite;
+    white-space: nowrap;
+    will-change: transform;
+  }
+  
+  .marquee-item {
+    padding: 0 var(--spacing-md);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  
+  @keyframes marquee {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    :root {
+      --container-height: auto;
+      --number-size: 1.25rem;
+      --label-size: 0.7rem;
+      --sale-text-size: 1rem;
+    }
+  
+    .sale-container {
+      flex-direction: column;
+    }
+  
+    .timer-section {
+      border-right: none;
+      border-bottom: var(--border-width) solid #fff;
+      padding: var(--spacing-md);
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+      min-height: 80px;
+    }
+  
+    .countdown {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .time-unit {
+      min-width: 50px;
+    }
+  
+    .marquee-section {
+      padding: var(--spacing-sm) 0;
+      min-height: 40px;
+    }
+  }
+  
+  /* High-contrast mode support */
+  @media (prefers-contrast: high) {
+    :root {
+      --border-color: #000;
+      --primary-color: #000;
+      --text-color: #000;
+    }
+  }
+  
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-content {
+      animation: none;
+      position: static;
+      transform: none;
+    }
+  
+    .time-unit:hover {
+      transform: none;
+    }
+  
+    .blink {
+      animation: none;
+    }
+  }
+  
+  /* Print styles */
+  @media print {
+    .sale-wrapper {
+      position: static;
+      width: 100%;
+      margin: 0;
+    }
+  
+    .marquee-section {
+      display: none;
+    }
+  
+    .blink {
+      animation: none;
+    }
+  }
+  
+  

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import "./Navbar.css";
+import "./AdminNavbar.css";
 import logo from "../Assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";

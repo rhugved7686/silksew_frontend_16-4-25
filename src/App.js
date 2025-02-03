@@ -18,6 +18,9 @@ import "react-toastify/dist/ReactToastify.css"; // Import the styles for toast n
 import ProtectedRoute from "./pages/ProtectedRoute"; // Import ProtectedRoute component
 import PasswordReset from "./pages/PasswordReset";
 import ForgotPassword from "./pages/ForgotPassword";
+import UserProfileButtons from "./pages/UserProfileButtons";
+import UserProfileForm from "./pages/UserProfileForm";
+import YourOrder from "./pages/YourOrder";
 
 // Create a component to conditionally render Navbar
 const ConditionalNavbar = () => {
@@ -45,6 +48,9 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/password-reset" element={<PasswordReset />} />
             <Route path="/forgotPassword/:id/:token" element={<ForgotPassword />} />
+            <Route path="/user-profile-buttons" element={<UserProfileButtons />} />
+            <Route path="/user-profile-form" element={<UserProfileForm />} />
+            <Route path="/your-order" element={<YourOrder />} />
 
             {/* Protected Admin Route */}
             <Route

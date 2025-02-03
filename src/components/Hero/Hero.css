@@ -73,6 +73,7 @@
 .hero__slider--section {
   position: relative;
   overflow: hidden;
+  /* padding-top: 70px; */
 }
 
 .hero__slider--items {

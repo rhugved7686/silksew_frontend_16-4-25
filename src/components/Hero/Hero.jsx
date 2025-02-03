@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/autoplay";
 // Import required modules
 import { Navigation, Autoplay } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -41,7 +42,7 @@ const Hero = () => {
                         Up To 40% Off Final Sale Items. <br />
                         Caught in the Moment!
                       </p>
-                      <a className="primary__btn slider__btn" href="shop.html">
+                      <Link className="primary__btn slider__btn" to="/mens">
                         Show Collection
                         <svg 
                           className="primary__btn--arrow__icon" 
@@ -53,7 +54,7 @@ const Hero = () => {
                         >
                           <path d="M6.5 12H17.5M17.5 12L12.5 7M17.5 12L12.5 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -78,7 +79,7 @@ const Hero = () => {
                         Up To 40% Off Final Sale Items. <br />
                         Caught in the Moment!
                       </p>
-                      <a className="primary__btn slider__btn" href="shop.html">
+                      <Link className="primary__btn slider__btn" to="/womens">
                         Show Collection
                         <svg 
                           className="primary__btn--arrow__icon" 
@@ -90,7 +91,7 @@ const Hero = () => {
                         >
                           <path d="M6.5 12H17.5M17.5 12L12.5 7M17.5 12L12.5 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -115,7 +116,7 @@ const Hero = () => {
                         Up To 40% Off Final Sale Items. <br />
                         Caught in the Moment!
                       </p>
-                      <a className="primary__btn slider__btn" href="shop.html">
+                      <Link className="primary__btn slider__btn" to="/kids">
                         Show Collection
                         <svg 
                           className="primary__btn--arrow__icon" 
@@ -127,7 +128,7 @@ const Hero = () => {
                         >
                           <path d="M6.5 12H17.5M17.5 12L12.5 7M17.5 12L12.5 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>

@@ -1,20 +1,23 @@
 import React, { useState, useContext, useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import { ShopContext } from "../../context/ShopContext"
 import { AuthContext } from "../../context/AuthContext"
 import logo from "../Assets/logo.png"
 import cart_icon from "../Assets/cart_icon.png"
 import profile_icon from "../Assets/profile_icon.png"
+import "./Navbar.css"
 
 const Navbar = () => {
   const [menu, setMenu] = useState("shop")
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const { cartItems } = useContext(ShopContext)
   const { user, logout } = useContext(AuthContext)
   const navigate = useNavigate()
-  const [searchQuery, setSearchQuery] = useState("")
   const [isMobileView, setIsMobileView] = useState(false)
+
+  // eslint-disable-next-line no-unused-vars
+  const { cartItems, products, searchTerm, setSearchTerm } = useContext(ShopContext)
+  const location = useLocation()
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,16 +32,20 @@ const Navbar = () => {
     }
   }, [])
 
+  useEffect(() => {
+    // Update the menu state based on the current location
+    if (location.pathname === "/") {
+      setMenu("shop")
+    } else if (location.pathname === "/mens") {
+      setMenu("mens")
+    } else if (location.pathname === "/womens") {
+      setMenu("womens")
+    }
+  }, [location])
+
   const handleLogoutClick = () => {
     logout()
     navigate("/login")
-  }
-
-  const handleSearch = (e) => {
-    e.preventDefault()
-    if (searchQuery.trim()) {
-      navigate(`/search?query=${searchQuery}`)
-    }
   }
 
   const calculateTotalCartItems = () => {
@@ -55,11 +62,27 @@ const Navbar = () => {
     }
   }
 
+  // eslint-disable-next-line no-unused-vars
+  const handleSearch = (e) => {
+    e.preventDefault()
+    const trimmedQuery = searchTerm.trim().toLowerCase()
+
+    if (trimmedQuery) {
+      const product = products.find((product) => product.name.toLowerCase().includes(trimmedQuery))
+
+      if (product) {
+        navigate(`/product/${product._id}`, { state: { product } })
+      } else {
+        alert("No product found with this name!")
+      }
+    }
+  }
+
   return (
     <nav className="navbar">
       <div className="nav-logo">
         <img src={logo || "/placeholder.svg"} alt="Logo" />
-        <p>SILKSEW</p>
+        <Link to="/" style={{textDecoration:"none",color:'white'}}><p>SILKSEW</p></Link>
       </div>
 
       <div className={`nav-menu ${isMobileMenuOpen ? "active" : ""}`}>
@@ -76,23 +99,20 @@ const Navbar = () => {
             <Link to="/womens">Women</Link>
             {menu === "womens" && <hr />}
           </li>
-          <li onClick={() => handleMenuClick("kids")}>
-            <Link to="/kids">Kids</Link>
-            {menu === "kids" && <hr />}
-          </li>
         </ul>
 
-        {/* <div className="nav-search-bar">
-          <form onSubmit={handleSearch}>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search products"
-            />
-            <button type="submit">Search</button>
-          </form>
-        </div> */}
+        {/* {location.pathname === "/" && (
+          <div className="search-container">
+            <form onSubmit={handleSearch}>
+              <input
+                type="text"
+                placeholder="Search by Name"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </form>
+          </div>
+        )} */}
       </div>
 
       <div className="nav-right">
@@ -107,8 +127,10 @@ const Navbar = () => {
               <img src={profile_icon || "/placeholder.svg"} alt="Profile" className="profile-icon clickable" />
               {isDropdownOpen && (
                 <div className="dropdown-menu">
-                  <Link to="/profile" className="dropdown-item">
-                    Profile
+                  <Link to="/user-profile-buttons" style={{color:'#fff',textDecoration:'none'}}>
+                  <div className="dropdown-item">
+                  Profile
+                  </div>
                   </Link>
                   <div className="dropdown-item" onClick={handleLogoutClick}>
                     Logout

@@ -11,6 +11,7 @@
   display: flex;
   flex-direction: column;
   padding: 2rem;
+  /* padding-top: 80px; */
   max-width: 1920px;
   margin: 0 auto;
   animation: fadeIn 0.5s ease-out;
@@ -126,8 +127,8 @@
 }
 
 .color-circle {
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
   cursor: pointer;
   border: 2px solid transparent;

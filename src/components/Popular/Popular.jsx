@@ -13,7 +13,7 @@ const Popular = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get('http://localhost:5001/api/products/list');
-        console.log(response);
+        // console.log(response);
         const fetchedProducts = Array.isArray(response.data) ? response.data : response.data.products;
         const womenProducts = fetchedProducts.filter((product) => product.category.includes('women'));
         setProducts(womenProducts);

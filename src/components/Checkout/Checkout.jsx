@@ -1,26 +1,32 @@
-import React, { useContext, useState } from "react";
-import { ShopContext } from "../../context/ShopContext";
-import razorpay from "../Assets/razorpay_logo.png";
-import stripe from "../Assets/stripe_logo.png";
-import "./Checkout.css";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { BASEURL } from "../../config";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+// eslint-disable-next-line no-unused-vars
+import { useContext, useState } from "react"
+import { ShopContext } from "../../context/ShopContext"
+import razorpay from "../Assets/razorpay_logo.png"
+import CashonDelivery from "../Assets/CashonDelivery.jpg"
+import stripe from "../Assets/stripe_logo.png"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import axios from "axios"
+import { BASEURL } from "../../config"
+import { useNavigate } from "react-router-dom"
+import "./Checkout.css"
+
+const OrderSuccessPopup = () => {
+  return (
+    <div className="popup-overlay">
+      <div className="popup-content">
+        <h2>Order Placed Successfully!</h2>
+        <p>Thank you for your purchase. Your order has been placed and will be processed soon.</p>
+      </div>
+    </div>
+  )
+}
 
 const Checkout = () => {
-  const navigate = useNavigate(); // Initialize navigate
-  const [method, setMethod] = useState("Cash on Delivery");
-  // eslint-disable-next-line no-unused-vars
-  const {
-    cartItems,
-    delivery_fee,
-    setCartItems,
-    getTotalCartAmount,
-    products,
-    token,
-  } = useContext(ShopContext);
+  const navigate = useNavigate()
+  const [method, setMethod] = useState("Cash on Delivery")
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false)
+  const { cartItems, delivery_fee, setCartItems, getTotalCartAmount, products } = useContext(ShopContext)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -31,145 +37,113 @@ const Checkout = () => {
     country: "",
     state: "",
     phone: "",
-  });
+    email: "",
+  })
 
-  // Delivery charge (can also be passed from context if dynamic)
-  //const delivery_free = 0; // Fixed delivery charge, can be dynamic if needed
-
-  // Calculate the subtotal and total amount (cart total + delivery charge)
-  const subtotal = getTotalCartAmount();
-  const totalAmount = subtotal + delivery_fee;
+  const subtotal = getTotalCartAmount()
+  const totalAmount = subtotal + delivery_fee
 
   const onChangeHandler = (event) => {
-    const { name, value } = event.target;
-    setFormData((data) => ({ ...data, [name]: value }));
-  };
+    const { name, value } = event.target
+    setFormData((data) => ({ ...data, [name]: value }))
+  }
 
   const onSubmitHandler = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     try {
-      const token = localStorage.getItem("token"); // Get token from storage
-      console.log(token);
+      const token = localStorage.getItem("token")
       if (!token) {
-        toast.error("You are not authorized. Please log in.");
-        // Optional: Redirect to login
-        window.location.href = "/login";
-        return;
+        toast.error("You are not authorized. Please log in.")
+        navigate("/login")
+        return
       }
 
-      // Ensure cartItems exists and is an array
       if (!cartItems || !Array.isArray(cartItems) || cartItems.length === 0) {
-        console.error("Cart is empty or invalid.");
-        toast.error("Your cart is empty!");
-        return;
+        console.error("Cart is empty or invalid.")
+        toast.error("Your cart is empty!")
+        return
       }
 
-      // Prepare order items
-      let orderItems = cartItems
+      const orderItems = cartItems
         .map((cartItem) => {
-          // Find the corresponding product in the products array
-          const product = products.find((p) => p._id === cartItem.productId);
-
+          const product = products.find((p) => p._id === cartItem.productId)
           if (!product) {
-            console.warn(
-              `Product not found for productId: ${cartItem.productId}`
-            );
-            return null; // Skip items without matching products
+            console.warn(`Product not found for productId: ${cartItem.productId}`)
+            return null
           }
-
-          // Create order item with additional details
           return {
-            productId: cartItem.productId, // Correct syntax
+            productId: cartItem.productId,
             size: cartItem.size,
+            productName: product.name,
             quantity: cartItem.quantity,
-          };
+          }
         })
-        .filter((item) => item !== null); // Remove null items
+        .filter((item) => item !== null)
 
-      // Check if orderItems is empty
       if (orderItems.length === 0) {
-        toast.error("No valid products found in cart.");
-        return;
+        toast.error("No valid products found in cart.")
+        return
       }
 
-      let orderData = {
+      const orderData = {
         address: formData,
         items: orderItems,
         totalAmount: getTotalCartAmount() + delivery_fee,
         paymentMethod: method,
-      };
-      console.log("order data", orderData);
-
-      switch (method) {
-        // api call for cod
-        case "Cash on Delivery":
-          const response = await axios.post(
-            BASEURL + "/api/orders/place",
-            orderData,
-            { headers: { Authorization: ` Bearer ${token}` } }
-          );
-          console.log(response.data.success);
-
-          // if (response.data.success) {
-          //   toast.success("Order Placed Successfully!");
-          //   setCartItems([]);
-          //   // Show success message
-        
-          //   navigate("/");
-          //   console.log("orderData:", orderData.items);
-          // } else {
-          //   toast.error(response.data.message);
-          // }
-
-          if (response.data.success) {
-           
-  
-            setCartItems([]); // Clear cart items
-  
-            // Delay navigation to allow toast message to be displayed
-            setTimeout(() => {
-              navigate("/");
-            }, 3000);
-          } else {
-            toast.error(response.data.message || "Failed to place order.");
-          }
-
-          break;
-
-        default:
-          break;
       }
-      console.log(orderData);
+
+      const response = await axios.post(`${BASEURL}/api/orders/place`, orderData, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+
+      if (response.data.success) {
+        setCartItems([])
+        setShowSuccessPopup(true)
+
+        setTimeout(() => {
+          setShowSuccessPopup(false)
+          navigate("/")
+        }, 3000)
+      } else {
+        toast.error(response.data.message || "Failed to place order.")
+      }
     } catch (error) {
-      console.log(error);
-      toast.error(error.message);
+      console.error(error)
+      toast.error(error.response?.data?.message || "An error occurred while placing your order.")
     }
-  };
+  }
 
   return (
     <form className="form-container" onSubmit={onSubmitHandler}>
       <div className="form-left">
-        {/* Payment Options */}
         <fieldset className="payment-method">
           <legend>Payment Options</legend>
-          <div className="payment-option">
-            <div className="payment-option selected">
-              <img src={stripe} alt="Stripe" className="payment-logo" />
-            </div>
-            <div className="payment-option selected">
-              <img src={razorpay} alt="Razorpay" className="payment-logo" />
+          <div className="payment-options">
+            <div
+              className={`payment-option ${method === "Stripe" ? "selected" : ""}`}
+              onClick={() => setMethod("Stripe")}
+            >
+              <img src={stripe || "/placeholder.svg"} alt="Stripe" className="payment-logo" />
             </div>
             <div
-              onClick={() => setMethod("Cash on Delivery")}
-              className="payment-option"
+              className={`payment-option ${method === "Razorpay" ? "selected" : ""}`}
+              onClick={() => setMethod("Razorpay")}
             >
-              <span className="payment-text">CASH ON DELIVERY</span>
+              <img src={razorpay || "/placeholder.svg"} alt="Razorpay" className="payment-logo" />
+            </div>
+            <div
+              className={`payment-option ${method === "CashonDelivery" ? "selected" : ""}`}
+              onClick={() => setMethod("Cash on Delivery")}
+            >
+              <img src={CashonDelivery || "/placeholder.svg"} alt="CashonDelivery" className="payment-logo" />
+              {/* <span className="payment-text">
+                CASH ON DELIVERY
+              </span> */}
             </div>
           </div>
         </fieldset>
 
-        {/* Shipping Address */}
         <div className="form-title">
           <h2>Shipping Address</h2>
         </div>
@@ -181,6 +155,7 @@ const Checkout = () => {
             className="form-input"
             placeholder="First Name"
             onChange={onChangeHandler}
+            required
           />
           <input
             type="text"
@@ -189,6 +164,7 @@ const Checkout = () => {
             className="form-input"
             placeholder="Last Name"
             onChange={onChangeHandler}
+            required
           />
         </div>
         <input
@@ -198,14 +174,16 @@ const Checkout = () => {
           className="form-input"
           placeholder="Email Address"
           onChange={onChangeHandler}
+          required
         />
         <input
-          type="phone"
+          type="tel"
           name="phone"
           value={formData.phone}
           className="form-input"
           placeholder="Phone Number"
           onChange={onChangeHandler}
+          required
         />
         <input
           type="text"
@@ -214,6 +192,7 @@ const Checkout = () => {
           className="form-input"
           placeholder="Street Address"
           onChange={onChangeHandler}
+          required
         />
         <input
           type="text"
@@ -231,6 +210,7 @@ const Checkout = () => {
             className="form-input"
             placeholder="City"
             onChange={onChangeHandler}
+            required
           />
           <input
             type="text"
@@ -239,6 +219,7 @@ const Checkout = () => {
             className="form-input"
             placeholder="State"
             onChange={onChangeHandler}
+            required
           />
         </div>
         <div className="form-row">
@@ -249,6 +230,7 @@ const Checkout = () => {
             className="form-input"
             placeholder="Zipcode"
             onChange={onChangeHandler}
+            required
           />
           <input
             type="text"
@@ -257,11 +239,11 @@ const Checkout = () => {
             className="form-input"
             placeholder="Country"
             onChange={onChangeHandler}
+            required
           />
         </div>
       </div>
 
-      {/* Cart Totals */}
       <div className="form-right">
         <div className="cart-total">
           <h3>Cart Totals</h3>
@@ -279,14 +261,15 @@ const Checkout = () => {
           </div>
         </div>
 
-        <div className="form-submit">
-          <button type="submit" className="submit-button">
-            PLACE ORDER
-          </button>
-        </div>
+        <button type="submit" className="submit-button">
+          PLACE ORDER
+        </button>
       </div>
-    </form>
-  );
-};
 
-export default Checkout;
+      {showSuccessPopup && <OrderSuccessPopup />}
+    </form>
+  )
+}
+
+export default Checkout
+
