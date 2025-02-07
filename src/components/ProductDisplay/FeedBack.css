@@ -1,0 +1,219 @@
+.flex {
+  display: flex;
+  gap: 2rem;
+  height: 600px; /* Set a fixed height for the container */
+}
+
+.feedback-container {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  overflow-y: auto; /* Add vertical scrollbar if content overflows */
+}
+
+.review-box {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 600px;
+  min-width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto; /* Center the box if it's smaller than its container */
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+  .review-box {
+    max-width: 100%;
+    padding: 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .review-box {
+    padding: 10px;
+  }
+}
+
+.review-list-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 10px; /* Add some padding for the scrollbar */
+}
+
+h2, .customer {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+  /* position: sticky; */
+  top: 0;
+  /* background: #fff; */
+  padding: 10px 0;
+  z-index: 1;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 35px;
+}
+
+.star {
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s;
+  font-size: 24px;
+}
+
+.star.selected {
+  color: #ffc107;
+}
+
+.review-textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: none;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.submit-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background: #0056b3;
+}
+
+.success-msg {
+  color: #28a745;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.review-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.review-item {
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+}
+
+.review-item:last-child {
+  border-bottom: none;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.review-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.review-text {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.no-reviews {
+  font-style: italic;
+  color: #999;
+}
+
+/* Scrollbar Styles */
+.review-list-container::-webkit-scrollbar,
+.feedback-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.review-list-container::-webkit-scrollbar-track,
+.feedback-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.review-list-container::-webkit-scrollbar-thumb,
+.feedback-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.review-list-container::-webkit-scrollbar-thumb:hover,
+.feedback-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .flex {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .feedback-container, .review-box {
+    max-width: 100%;
+    height: 400px; /* Set a fixed height for mobile */
+  }
+
+  .stars {
+    gap: 3px;
+  }
+
+  .review-textarea {
+    font-size: 12px;
+  }
+
+  .submit-btn {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  h2, .customer {
+    font-size: 20px;
+  }
+
+  .stars {
+    font-size: 20px;
+  }
+
+  .review-textarea {
+    min-height: 60px;
+  }
+
+  .review-name {
+    font-size: 16px;
+  }
+
+  .review-text {
+    font-size: 12px;
+  }
+}

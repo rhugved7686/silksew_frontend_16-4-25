@@ -18,7 +18,7 @@
   .cartitems-header,
   .cartitem {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
     gap: 1rem;
     padding: 1rem 0;

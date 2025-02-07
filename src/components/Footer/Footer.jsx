@@ -50,7 +50,7 @@ const Footer = () => {
                 <i className="fas fa-map-marker-alt"></i>
               </div>
               <p className="footer-text">
-                123 This is a Street A Locality,<br/> Region state 12345
+                Pune
               </p>
             </div>
             <div className="footer-info">
@@ -58,8 +58,8 @@ const Footer = () => {
                 <i className="fas fa-phone-alt"></i>
               </div>
               <p className="footer-text">
-                <a href="tel:+1234567890" className="footer-link">
-                  +1 234 567 890
+                <a href="tel:+91457300054" className="footer-link">
+                  +91 91457300054
                 </a>
               </p>
             </div>
@@ -68,8 +68,8 @@ const Footer = () => {
                 <i className="fas fa-envelope"></i>
               </div>
               <p className="footer-text">
-                <a href="mailto:contact@silksew.com" className="footer-link">
-                  contact@silksew.com
+                <a href="mailto:info@cobazTech.com" className="footer-link">
+                  info@cobazTech.com
                 </a>
               </p>
             </div>

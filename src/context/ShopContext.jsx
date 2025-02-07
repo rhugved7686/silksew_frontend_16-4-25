@@ -1,150 +1,177 @@
-import React, { createContext, useEffect, useState, useCallback } from "react";
-import all_product from "../components/Assets/all_product";
-import axios from "axios";
-import { BASEURL } from "../config";
-import { jwtDecode } from "jwt-decode";
+import { createContext, useEffect, useState, useCallback } from "react"
+import all_product from "../components/Assets/all_product"
+import axios from "axios"
+import { BASEURL } from "../config"
+import { jwtDecode } from "jwt-decode"
 
-const delivery_fee = 0;
+const delivery_fee = 0
 
-
-export const ShopContext = createContext(null);
+export const ShopContext = createContext(null)
 
 const ShopContextProvider = (props) => {
-  const [cartItems, setCartItems] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [products, setProducts] = useState([]);
-  const [token, setToken] = useState("");
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCartItems = localStorage.getItem("cartItems")
+    return savedCartItems ? JSON.parse(savedCartItems) : []
+  })
+  const [searchTerm, setSearchTerm] = useState("")
+  const [products, setProducts] = useState(() => {
+    const savedProducts = localStorage.getItem("products")
+    return savedProducts ? JSON.parse(savedProducts) : []
+  })
+  const [token, setToken] = useState("")
 
-  // Function to validate and set token
-  const validateToken = () => {
-    const savedToken = localStorage.getItem("token");
+  const validateToken = useCallback(() => {
+    const savedToken = localStorage.getItem("token")
     if (savedToken) {
       try {
-        const decodedToken = jwtDecode(savedToken);
-        const currentTime = Date.now() / 1000; // Current time in seconds
+        const decodedToken = jwtDecode(savedToken)
+        const currentTime = Date.now() / 1000
         if (decodedToken.exp > currentTime) {
-          setToken(savedToken); // Set valid token
+          setToken(savedToken)
         } else {
-          console.error("Token has expired.");
-          localStorage.removeItem("token");
+          console.error("Token has expired.")
+          localStorage.removeItem("token")
         }
       } catch (error) {
-        console.error("Failed to decode token:", error);
-        localStorage.removeItem("token");
+        console.error("Failed to decode token:", error)
+        localStorage.removeItem("token")
       }
     }
-  };
+  }, [])
 
-  // Validate token on component mount
   useEffect(() => {
-    validateToken();
-  }, []);
+    validateToken()
+  }, [validateToken])
 
-  // Fetch products from API
-  const getProducts = async () => {
+  const getProducts = useCallback(async () => {
     try {
-      const response = await axios.get(BASEURL + "/api/products");
+      const response = await axios.get(BASEURL + "/api/products")
       if (response.status === 200) {
-        setProducts(response.data.products);
+        setProducts(response.data.products)
+        localStorage.setItem("products", JSON.stringify(response.data.products))
       } else {
-        console.error("Failed to fetch products. Status:", response.status);
+        console.error("Failed to fetch products. Status:", response.status)
       }
     } catch (error) {
-      console.error("Error fetching products:", error.message);
+      console.error("Error fetching products:", error.message)
     }
-  };
+  }, [])
 
-  // Fetch total cart items
   const getTotalCartItems = useCallback(async () => {
     if (token) {
       try {
         const response = await axios.get(BASEURL + "/api/cart/", {
           headers: { Authorization: `Bearer ${token}` },
-        });
-        setCartItems(response.data.items || []);
+        })
+        const serverCartItems = response.data.items || []
+        setCartItems(serverCartItems)
+        localStorage.setItem("cartItems", JSON.stringify(serverCartItems))
       } catch (error) {
-        console.error("Failed to fetch cart items:", error.message);
+        console.error("Failed to fetch cart items:", error.message)
         if (error.response) {
-          console.error("API Error:", error.response.data);
+          console.error("API Error:", error.response.data)
         }
       }
     } else {
-      console.error("No token provided.");
+      console.error("No token provided.")
     }
-  }, [token]);
+  }, [token])
 
-  // Add item to cart
-  const addToCart = async (productId, size) => {
-    if (token) {
-      try {
-        // eslint-disable-next-line no-unused-vars
-        const response = await axios.post(
-          BASEURL + "/api/cart/add",
-          { productId, size },
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        // console.log("Add to cart response:", response.data);
-        await getTotalCartItems();
-      } catch (error) {
-        console.error("Error adding to cart:", error.message);
-        if (error.response) {
-          console.error("API Error:", error.response.data);
+  const addToCart = useCallback(
+    async (productId, size, color) => {
+      const newItem = { productId, size, color, quantity: 1 }
+      setCartItems((prevItems) => {
+        const existingItemIndex = prevItems.findIndex(
+          (item) => item.productId === productId && item.size === size && item.color === color,
+        )
+        let newItems
+        if (existingItemIndex > -1) {
+          newItems = [...prevItems]
+          newItems[existingItemIndex].quantity += 1
+        } else {
+          newItems = [...prevItems, newItem]
         }
-      }
-    } else {
-      console.error("No token found. Please log in.");
-    }
-  };
+    
+        
+        localStorage.setItem("cartItems", JSON.stringify(newItems))
+        return newItems
+      })
 
-  // Remove item from cart
-  const removeFromCart = useCallback(
-    async (productId, size) => {
       if (token) {
         try {
-          // eslint-disable-next-line no-unused-vars
-          const response = await axios.post(
-            BASEURL + "/api/cart/remove",
-            { productId, size },
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          // console.log("Remove from cart response:", response.data);
-          await getTotalCartItems();
+          await axios.post(BASEURL + "/api/cart/add", newItem, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
         } catch (error) {
-          console.error("Error removing from cart:", error.message);
-          if (error.response) {
-            console.error("API Error:", error.response.data);
-          }
+          console.error("Failed to add item to cart on server:", error.message)
         }
       }
     },
-    [token, getTotalCartItems]
-  );
+    [token],
+  )
 
-  // Calculate total cart amount
-  const getTotalCartAmount = () => {
-    return cartItems.reduce((total, cartItem) => {
-      const product = products.find((p) => p._id === cartItem.productId);
-      if (product) {
-        total += product.price * cartItem.quantity;
+  const removeFromCart = useCallback(
+    async (productId, size, color) => {
+      setCartItems((prevItems) => {
+        const itemIndex = prevItems.findIndex(
+          (item) => item.productId === productId && item.size === size && item.color === color,
+        )
+
+        const newItems = [...prevItems]
+        if (itemIndex > -1) {
+          if (newItems[itemIndex].quantity > 1) {
+            newItems[itemIndex].quantity -= 1
+          } else {
+            newItems.splice(itemIndex, 1)
+          }
+        }
+
+        localStorage.setItem("cartItems", JSON.stringify(newItems))
+        return newItems
+      })
+
+      if (token) {
+        try {
+          await axios.post(
+            BASEURL + "/api/cart/remove",
+            { productId, size, color },
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            },
+          )
+        } catch (error) {
+          console.error("Failed to remove item from cart on server:", error.message)
+        }
       }
-      return total;
-    }, 0);
-  };
+    },
+    [token],
+  )
 
-  // Calculate total number of items in cart
-  const calculateTotalCartItems = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
-  };
+  const getTotalCartAmount = useCallback(() => {
+    return cartItems.reduce((total, cartItem) => {
+      const product = products.find((p) => p._id === cartItem.productId)
+      if (product) {
+        total += product.price * cartItem.quantity
+      }
+      return total
+    }, 0)
+  }, [cartItems, products])
+
+  const calculateTotalCartItems = useCallback(() => {
+    return cartItems.reduce((total, item) => total + item.quantity, 0)
+  }, [cartItems])
 
   useEffect(() => {
     if (token) {
-      getTotalCartItems();
+      getTotalCartItems()
     }
-  }, [token, getTotalCartItems]);
+  }, [token, getTotalCartItems])
 
   useEffect(() => {
-    getProducts();
-  }, []);
+    if (products.length === 0) {
+      getProducts()
+    }
+  }, [getProducts, products.length])
 
   const contextValue = {
     products,
@@ -159,14 +186,11 @@ const ShopContextProvider = (props) => {
     setToken,
     delivery_fee,
     setCartItems,
-    getTotalCartItems
-  };
+    getTotalCartItems,
+  }
 
-  return (
-    <ShopContext.Provider value={contextValue}>
-      {props.children}
-    </ShopContext.Provider>
-  );
-};
+  return <ShopContext.Provider value={contextValue}>{props.children}</ShopContext.Provider>
+}
 
-export default ShopContextProvider;
+export default ShopContextProvider
+

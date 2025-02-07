@@ -1,89 +1,153 @@
-.relatedproducts {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    height: 90vh;
+.related-products-container {
+  margin-top: 2rem;
+  padding: 0 1rem;
+  max-width: 1400px; /* Increased width to make better use of screen space */
+  margin: auto;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Auto adjusts to screen size */
+  gap: 1.5rem;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.product-card {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  width: 100%;
+  max-width: 320px; /* Increased max width for better alignment */
+}
+
+.product-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.product-image {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.product-details {
+  padding: 1rem;
+  text-align: left;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.product-description {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.product-price {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.new-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: red;
+}
+
+.old-price {
+  font-size: 1rem;
+  color: #888;
+  text-decoration: line-through;
+}
+
+.view-product-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.view-product-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.carousel-btn {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 2rem;
+  border: none;
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.carousel-btn.left {
+  left: 0; /* Align to the edge of the first card */
+}
+
+.carousel-btn.right {
+  right: 0; /* Align to the edge of the last card */
+}
+
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-btn:disabled {
+  display: none;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  .relatedproducts h1 {
-    color: #171717;
-    font-size: 50px;
-    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: 1fr;
   }
-  
-  .relatedproducts hr {
-    width: 200px;
-    height: 6px;
-    border-radius: 10px;
-    background: #252525;
+
+  .carousel-btn {
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
   }
-  
-  .relatedproducts-item {
-    margin-top: 50px;
-    display: flex;
-    gap: 30px;
-  }
-  
-  /* Media Queries for Responsiveness */
-  
-  /* For Tablet screens */
-  @media (max-width: 1024px) {
-    .relatedproducts {
-      height: auto; /* Remove fixed height on tablet */
-    }
-  
-    .relatedproducts h1 {
-      font-size: 36px; /* Adjust font size for tablets */
-    }
-  
-    .relatedproducts-item {
-      flex-direction: column; /* Stack items vertically on tablet */
-      gap: 20px;
-    }
-  }
-  
-  /* For Mobile screens */
-  @media (max-width: 768px) {
-    .relatedproducts {
-      height: auto;
-    }
-  
-    .relatedproducts h1 {
-      font-size: 28px; /* Smaller font size for mobile */
-    }
-  
-    .relatedproducts-item {
-      flex-direction: column; /* Stack items vertically on mobile */
-      gap: 15px;
-      align-items: center; /* Center align the items on mobile */
-    }
-  
-    .relatedproducts-item img {
-      width: 100%; /* Make images responsive */
-      height: auto;
-    }
-  }
-  
-  /* For Very Small Mobile Screens */
-  @media (max-width: 480px) {
-    .relatedproducts {
-      height: auto;
-    }
-  
-    .relatedproducts h1 {
-      font-size: 24px; /* Smaller font size for very small screens */
-    }
-  
-    .relatedproducts-item {
-      flex-direction: column; /* Stack items vertically */
-      gap: 10px;
-      align-items: center; /* Center align the items */
-    }
-  
-    .relatedproducts-item img {
-      width: 100%; /* Make images responsive */
-      height: auto;
-    }
-  }
-  
+}

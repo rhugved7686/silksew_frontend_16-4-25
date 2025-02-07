@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect, useContext, useCallback } from "react"
 import axios from "axios"
 import { AuthContext } from "../context/AuthContext"
@@ -15,7 +14,7 @@ function AdminProductlist({ updateTotalProducts }) {
   const { token } = useContext(AuthContext)
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
-  const [productsPerPage] = useState(4)
+  const [productsPerPage] = useState(3)
   const [editingProduct, setEditingProduct] = useState(null)
   const [isAdding, setIsAdding] = useState(false)
   const [form] = Form.useForm()
@@ -612,7 +611,7 @@ function AdminProductlist({ updateTotalProducts }) {
         <tbody>
           {currentProducts.map((product, index) => (
             <tr key={product._id}>
-              <td data-label="Sr. No">{(currentPage - 1) * 4 + index + 1}</td>
+              <td data-label="Sr. No">{(currentPage - 1) * 3 + index + 1}</td>
               <td data-label="Image">
                 <Image
                   src={getImage(product.images, product.availableColors) || "/placeholder.svg"}

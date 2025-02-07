@@ -36,7 +36,8 @@ const Hero = () => {
                   <div className="col">
                     <div className="slider__content">
                       <h2 className="slider__content--maintitle h1">
-                      Dressing Dreams <br />Stitching Stories
+                        Dressing Dreams <br />
+                        Stitching Stories
                       </h2>
                       <p className="slider__content--desc desc2 mb-40">
                         Up To 40% Off Final Sale Items. <br />
@@ -44,15 +45,21 @@ const Hero = () => {
                       </p>
                       <Link className="primary__btn slider__btn" to="/mens">
                         Show Collection
-                        <svg 
-                          className="primary__btn--arrow__icon" 
-                          width="20" 
-                          height="20" 
-                          viewBox="0 0 24 24" 
+                        <svg
+                          className="primary__btn--arrow__icon"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <path d="M6.5 12H17.5M17.5 12L12.5 7M17.5 12L12.5 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path
+                            d="M6.5 12H17.5M17.5 12L12.5 7M17.5 12L12.5 17"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                       </Link>
                     </div>
@@ -72,8 +79,8 @@ const Hero = () => {
                   <div className="hero__slider--items__inner">
                     <div className="slider__content">
                       <h2 className="slider__content--maintitle h1">
-                      Threads That <br />
-                      Define You.
+                        Threads That <br />
+                        Define You.
                       </h2>
                       <p className="slider__content--desc desc2 mb-40">
                         Up To 40% Off Final Sale Items. <br />
@@ -81,15 +88,21 @@ const Hero = () => {
                       </p>
                       <Link className="primary__btn slider__btn" to="/womens">
                         Show Collection
-                        <svg 
-                          className="primary__btn--arrow__icon" 
-                          width="20" 
-                          height="20" 
-                          viewBox="0 0 24 24" 
+                        <svg
+                          className="primary__btn--arrow__icon"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <path d="M6.5 12H17.5M17.5 12L12.5 7M17.5 12L12.5 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path
+                            d="M6.5 12H17.5M17.5 12L12.5 7M17.5 12L12.5 17"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                       </Link>
                     </div>
@@ -101,16 +114,16 @@ const Hero = () => {
         </SwiperSlide>
 
         {/* Slide 3 */}
-        <SwiperSlide>
-        <div className="hero__slider--items home1__slider--bg two">
+        {/* <SwiperSlide>
+          <div className="hero__slider--items home1__slider--bg two">
             <div className="container-fluid">
               <div className="hero__slider--items__inner">
                 <div className="row">
                   <div className="col">
                     <div className="slider__content">
                       <h2 className="slider__content--maintitle h1">
-                      Seamless Fashion <br />
-                      Tailored for All
+                        Seamless Fashion <br />
+                        Tailored for All
                       </h2>
                       <p className="slider__content--desc desc2 mb-40">
                         Up To 40% Off Final Sale Items. <br />
@@ -118,15 +131,21 @@ const Hero = () => {
                       </p>
                       <Link className="primary__btn slider__btn" to="/kids">
                         Show Collection
-                        <svg 
-                          className="primary__btn--arrow__icon" 
-                          width="20" 
-                          height="20" 
-                          viewBox="0 0 24 24" 
+                        <svg
+                          className="primary__btn--arrow__icon"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <path d="M6.5 12H17.5M17.5 12L12.5 7M17.5 12L12.5 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path
+                            d="M6.5 12H17.5M17.5 12L12.5 7M17.5 12L12.5 17"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                       </Link>
                     </div>
@@ -135,7 +154,7 @@ const Hero = () => {
               </div>
             </div>
           </div>
-        </SwiperSlide>
+        </SwiperSlide> */}
       </Swiper>
       <div className="swiper__nav--btn swiper-button-next"></div>
       <div className="swiper__nav--btn swiper-button-prev"></div>

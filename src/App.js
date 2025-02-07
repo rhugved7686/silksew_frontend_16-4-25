@@ -1,3 +1,4 @@
+
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
@@ -21,7 +22,9 @@ import ForgotPassword from "./pages/ForgotPassword";
 import UserProfileButtons from "./pages/UserProfileButtons";
 import UserProfileForm from "./pages/UserProfileForm";
 import YourOrder from "./pages/YourOrder";
-
+import FilterProduct from "./components/Navbar/FilterProduct";
+import FloatingButtons from "./components/FloatingButtons/FloatingButtons";
+import OrderItems from "./components/OrderItems/OrderItems"
 // Create a component to conditionally render Navbar
 const ConditionalNavbar = () => {
   const location = useLocation();
@@ -50,7 +53,9 @@ function App() {
             <Route path="/forgotPassword/:id/:token" element={<ForgotPassword />} />
             <Route path="/user-profile-buttons" element={<UserProfileButtons />} />
             <Route path="/user-profile-form" element={<UserProfileForm />} />
+            <Route path="/category/:category" element={<FilterProduct />} />
             <Route path="/your-order" element={<YourOrder />} />
+            <Route path="/orders" element={<OrderItems />} />
 
             {/* Protected Admin Route */}
             <Route
@@ -62,6 +67,7 @@ function App() {
               }
             />
           </Routes>
+          <FloatingButtons/>
           <Footer />
           <ToastContainer /> {/* Add ToastContainer here to render the toasts */}
         </div>

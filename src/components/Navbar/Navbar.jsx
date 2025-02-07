@@ -1,4 +1,6 @@
-import React, { useState, useContext, useEffect } from "react"
+"use client"
+
+import { useState, useContext, useEffect } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
 import { ShopContext } from "../../context/ShopContext"
 import { AuthContext } from "../../context/AuthContext"
@@ -15,7 +17,6 @@ const Navbar = () => {
   const navigate = useNavigate()
   const [isMobileView, setIsMobileView] = useState(false)
 
-  // eslint-disable-next-line no-unused-vars
   const { cartItems, products, searchTerm, setSearchTerm } = useContext(ShopContext)
   const location = useLocation()
 
@@ -33,7 +34,6 @@ const Navbar = () => {
   }, [])
 
   useEffect(() => {
-    // Update the menu state based on the current location
     if (location.pathname === "/") {
       setMenu("shop")
     } else if (location.pathname === "/mens") {
@@ -45,6 +45,7 @@ const Navbar = () => {
 
   const handleLogoutClick = () => {
     logout()
+    setIsMobileMenuOpen(false) // Close mobile menu
     navigate("/login")
   }
 
@@ -62,7 +63,6 @@ const Navbar = () => {
     }
   }
 
-  // eslint-disable-next-line no-unused-vars
   const handleSearch = (e) => {
     e.preventDefault()
     const trimmedQuery = searchTerm.trim().toLowerCase()
@@ -71,7 +71,8 @@ const Navbar = () => {
       const product = products.find((product) => product.name.toLowerCase().includes(trimmedQuery))
 
       if (product) {
-        navigate(`/product/${product._id}`, { state: { product } })
+        setIsMobileMenuOpen(false) // Close mobile menu after search
+        navigate(`category/${trimmedQuery}`)
       } else {
         alert("No product found with this name!")
       }
@@ -82,7 +83,9 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="nav-logo">
         <img src={logo || "/placeholder.svg"} alt="Logo" />
-        <Link to="/" style={{textDecoration:"none",color:'white'}}><p>SILKSEW</p></Link>
+        <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+          <p>SILKSEW</p>
+        </Link>
       </div>
 
       <div className={`nav-menu ${isMobileMenuOpen ? "active" : ""}`}>
@@ -101,7 +104,7 @@ const Navbar = () => {
           </li>
         </ul>
 
-        {/* {location.pathname === "/" && (
+        {location.pathname === "/" && (
           <div className="search-container">
             <form onSubmit={handleSearch}>
               <input
@@ -112,7 +115,45 @@ const Navbar = () => {
               />
             </form>
           </div>
-        )} */}
+        )}
+
+        {/* Mobile menu items */}
+        <div className="mobile-menu-items">
+          <Link
+            to="/cart"
+            className="mobile-cart-icon-wrapper"
+            onClick={() => setIsMobileMenuOpen(false)} // Close when cart is clicked
+          >
+            <img src={cart_icon || "/placeholder.svg"} alt="Cart" className="mobile-cart-icon" />
+            {calculateTotalCartItems() > 0 && <div className="mobile-cart-item-count">{calculateTotalCartItems()}</div>}
+          </Link>
+
+          {user ? (
+            <div className="mobile-profile-info">
+              <img src={profile_icon || "/placeholder.svg"} alt="Profile" className="mobile-profile-icon" />
+              <Link
+                to="/user-profile-buttons"
+                className="mobile-profile-link"
+                onClick={() => setIsMobileMenuOpen(false)} // Close when profile is clicked
+              >
+                Profile
+              </Link>
+              <button onClick={handleLogoutClick} className="mobile-logout-btn">
+                Logout
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false) // Close when login is clicked
+                navigate("/login")
+              }}
+              className="mobile-login-btn"
+            >
+              Login
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="nav-right">
@@ -127,10 +168,8 @@ const Navbar = () => {
               <img src={profile_icon || "/placeholder.svg"} alt="Profile" className="profile-icon clickable" />
               {isDropdownOpen && (
                 <div className="dropdown-menu">
-                  <Link to="/user-profile-buttons" style={{color:'#fff',textDecoration:'none'}}>
-                  <div className="dropdown-item">
-                  Profile
-                  </div>
+                  <Link to="/user-profile-buttons" style={{ color: "#fff", textDecoration: "none" }}>
+                    <div className="dropdown-item">Profile</div>
                   </Link>
                   <div className="dropdown-item" onClick={handleLogoutClick}>
                     Logout

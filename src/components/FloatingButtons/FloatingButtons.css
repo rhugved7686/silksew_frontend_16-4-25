@@ -1,0 +1,41 @@
+.floating-btn {
+    position: fixed;
+    bottom: 20px;
+    width: 60px;  /* Increased size */
+    height: 60px; /* Increased size */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 30px; /* Increase icon size */
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    z-index: 1000;
+  }
+  
+  .floating-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* WhatsApp Button */
+  .whatsapp {
+    left: 20px;
+    background-color: #25d366;
+  }
+  
+  /* Chatbot Button */
+  .chatbot {
+    right: 20px;
+    background-color: #007bff;
+  }
+  
+  /* Ensuring the icon fills the circle */
+  .floating-btn img {
+    width: 70%;  /* Adjust icon size */
+    height: 70%;
+    object-fit: contain;
+  }
+  

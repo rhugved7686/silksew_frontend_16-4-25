@@ -2,6 +2,7 @@ import { useEffect, useState, useContext, useCallback, useMemo } from "react"
 import axios from "axios"
 import { ShopContext } from "../context/ShopContext"
 import moment from "moment"
+import profile_icon from "../components/Assets/profile_icon.png"
 import "../pages/CSS/UserProfile.css"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
@@ -148,20 +149,20 @@ const UserProfileButtons = () => {
   }
 
   const renderUserCard = () => (
-    <div className="user-card">
-      <p>
-        <strong>User Name:</strong> {userData?.name}
-      </p>
-      <p>
-        <strong>Email:</strong> {userData?.email}
-      </p>
-      <p>
-        <strong>Phone:</strong> {userData?.phone || "Not provided"}
-      </p>
-      <button className="edit-btn" onClick={() => setIsEditing(true)}>
-        Edit Profile
-      </button>
+<section className="container-fluid">
+  <div className="profile-bg container">
+    <div className="content">
+      <img src={profile_icon || "/placeholder.svg"} alt="Logo" />
+      <h4><strong>User Name : </strong>{userData?.name}</h4><br/>{/* Moved outside <p> */}
+      <h4><strong>Phone : </strong> {userData?.phone || "Not provided"}</h4><br/>
+      <h4><strong>Email : </strong> {userData?.email}</h4>
     </div>
+    <button className="btn btn-default" onClick={() => setIsEditing(true)}>
+      Edit Profile
+    </button>
+  </div>
+</section>
+
   )
 
   const renderUserForm = () => (
@@ -208,8 +209,8 @@ const UserProfileButtons = () => {
           <label htmlFor="street">Address:</label>
           <textarea id="street" name="street" value={userData?.street || ""} onChange={handleChange} required />
         </div>
-
-        <div className="form-actions">
+      </form>
+      <div className="form-actions">
           <button type="submit" className="submit-btn">
             Save
           </button>
@@ -217,7 +218,6 @@ const UserProfileButtons = () => {
             Cancel
           </button>
         </div>
-      </form>
     </>
   )
 
@@ -240,14 +240,13 @@ const UserProfileButtons = () => {
         )
       case "orders":
         return (
-          <div className="tab-content">
-            <h2 style={{ color: "#000" }}>Your Orders</h2>
+          <>
+          <h2 style={{ color: "#000" }}>Your Orders</h2>
+            <div className="tab-content">
             {loadingProducts ? (
               <div>Loading orders...</div>
             ) : (
               <>
-                {/* <p>Total orders: {userProducts.length}</p>
-                <p>Filtered orders: {filteredOrders.length}</p> */}
                 {filteredOrders.length > 0 ? (
                   <table className="user-products-table">
                     <thead>
@@ -257,6 +256,7 @@ const UserProfileButtons = () => {
                         <th>Total Amount</th>
                         <th>Status</th>
                         <th>Order Date</th>
+                        <th>Tentative Delivery Date</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -267,6 +267,7 @@ const UserProfileButtons = () => {
                             {order.items.map((item, index) => (
                               <div key={index}>
                                 <p>Product Name: {item.productName}</p>
+                                <p>Product Color : {item.color}</p>
                                 <p>Size: {item.size}</p>
                                 <p>Quantity: {item.quantity}</p>
                               </div>
@@ -278,6 +279,7 @@ const UserProfileButtons = () => {
                           <td>Rs.{order.totalAmount}</td>
                           <td>{order.status}</td>
                           <td>{moment(order.createdAt).format("MMMM D, YYYY")}</td>
+                          <td data-label="Tentative Delivery Date">{order.tentativeDeliveryDate ? moment(order.tentativeDeliveryDate).format("YYYY-MM-DD") : ""}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -288,6 +290,7 @@ const UserProfileButtons = () => {
               </>
             )}
           </div>
+          </>
         )
       default:
         return null
