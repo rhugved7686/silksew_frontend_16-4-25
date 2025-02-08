@@ -149,10 +149,10 @@ const OrderItems = () => {
         order.items.map((Item, index) => {
           const { productId, quantity, size, returnRequested, returnApproved } = Item
           const product = products.find((p) => p._id === productId)
-          console.log('-----------------------', Item);
 
           if (!product) return null
           let requestStatus = '';
+          // eslint-disable-next-line eqeqeq
           console.log(product.order == "select");
 
           if (Item.action === 'Select' && returnRequested && !returnApproved) { requestStatus = 'Return requested' }

@@ -75,10 +75,10 @@ const Dashboard = () => {
     if (token) {
       try {
         const [productsResponse, ordersResponse] = await Promise.all([
-          axios.get("http://localhost:5001/api/products", {
+          axios.get("https://api.silksew.com/api/products", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:5001/api/orders", {
+          axios.get("https://api.silksew.com/api/orders", {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ])
@@ -124,7 +124,7 @@ const Dashboard = () => {
 
   return (
     <>
-      {/* <AdminNavbar /> */}
+      <AdminNavbar />
       <div className="dashboard-container">
         <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
           <div className="sidebar-logo">Admin Panel</div>

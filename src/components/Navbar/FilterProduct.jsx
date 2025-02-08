@@ -8,38 +8,10 @@ const FilterProduct = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate()
 
-//   useEffect(() => {
-//     const fetchProducts = async () => {
-//       try {
-//         const response = await axios.get("http://localhost:5001/api/products");
-
-//         // console.log("API Response:", response); // Debugging API Response
-
-//         // Ensure API response is an array
-//         const fetchedProducts = Array.isArray(response.data.products) ? response.data.products : [];
-//         console.log("Fetched Products:", fetchedProducts);
-        
-//         // setProducts(fetchedProducts); // ✅ Correct variable used
-
-//         const filterProducts = products.filter(
-//             (pro) => pro?.name?.toLowerCase().includes(category?.toLowerCase()) );
-//           console.log("Fitered Array " ,filterProducts);
-            
-//           setProducts(filterProducts)
-
-//         // console.log('Products',products[0]?.name)
-//       } catch (error) {
-//         console.error("Error fetching products:", error);
-//       }
-//     };
-
-//     fetchProducts();
-//   }, [category]); // ✅ Re-fetch data when category changes
-
 useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/products");
+        const response = await axios.get("https://api.silksew.com/api/products");
   
         // Ensure API response is an array
         const fetchedProducts = Array.isArray(response.data.products)

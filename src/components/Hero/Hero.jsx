@@ -71,7 +71,7 @@ const Hero = () => {
         </SwiperSlide>
 
         {/* Slide 2 */}
-        <SwiperSlide>
+        {/* <SwiperSlide>
           <div className="hero__slider--items home1__slider--bg three">
             <div className="container-fluid">
               <div className="row">
@@ -111,10 +111,10 @@ const Hero = () => {
               </div>
             </div>
           </div>
-        </SwiperSlide>
+        </SwiperSlide> */}
 
         {/* Slide 3 */}
-        {/* <SwiperSlide>
+        <SwiperSlide>
           <div className="hero__slider--items home1__slider--bg two">
             <div className="container-fluid">
               <div className="hero__slider--items__inner">
@@ -129,7 +129,7 @@ const Hero = () => {
                         Up To 40% Off Final Sale Items. <br />
                         Caught in the Moment!
                       </p>
-                      <Link className="primary__btn slider__btn" to="/kids">
+                      <Link className="primary__btn slider__btn" to="/womens">
                         Show Collection
                         <svg
                           className="primary__btn--arrow__icon"
@@ -154,7 +154,7 @@ const Hero = () => {
               </div>
             </div>
           </div>
-        </SwiperSlide> */}
+        </SwiperSlide>
       </Swiper>
       <div className="swiper__nav--btn swiper-button-next"></div>
       <div className="swiper__nav--btn swiper-button-prev"></div>
