@@ -128,27 +128,27 @@ const ProductDisplay = () => {
     if (!token) {
       toast.warn("Log in to add to cart.", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 1000,
       })
       navigate("/login")
       return
     }
 
     if (!selectedSize) {
-      toast.error("Select a size.", { position: "top-right", autoClose: 3000 })
+      toast.error("Select a size.", { position: "top-right", autoClose: 1000 })
       return
     }
 
     if (!selectedColor) {
       toast.error("Select a color.", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 1000,
       })
       return
     }
 
     addToCart(product._id, selectedSize, selectedColor)
-    toast.success("Added to cart!", { position: "top-right", autoClose: 3000 })
+    toast.success("Added to cart!", { position: "top-right", autoClose: 1000 })
     setTimeout(() => navigate("/cart"), 1000)
   }
 
@@ -181,7 +181,7 @@ const ProductDisplay = () => {
             <img className="productdisplay-main-img" src={mainImage || "/placeholder.svg"} alt={product.name} />
           </div>
         </div>
-        <div className="productdisplay-right" style={{ textAlign: "justify" }}>
+        <div className="productdisplay-right">
           <h2>{product.name}</h2>
           <p className="description" style={{ textAlign: "justify" }}>
             {product.description}
@@ -209,7 +209,7 @@ const ProductDisplay = () => {
             </div>
           </div>
           <div className="productdisplay-right-sizes">
-            <h3>Select Size</h3>
+            <h3>Available Size</h3>
             <div className="size-options">
               {availableSizes?.map((size) => (
                 <button

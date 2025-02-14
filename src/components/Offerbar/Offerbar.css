@@ -113,7 +113,7 @@
   .marquee-content {
     display: flex;
     position: absolute;
-    animation: marquee 30s linear infinite;
+    animation: marquee 50s linear infinite;
     white-space: nowrap;
     will-change: transform;
   }
@@ -121,7 +121,7 @@
   .marquee-item {
     padding: 0 var(--spacing-md);
     color: #fff;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 1rem;
   }
   
@@ -149,6 +149,7 @@
   
     .timer-section {
       border-right: none;
+      min-width: 20px;
       border-bottom: var(--border-width) solid #fff;
       padding: var(--spacing-md);
       width: 100%;

@@ -7,7 +7,7 @@ import { AuthContext } from "../../context/AuthContext"
 import logo from "../Assets/logo.png"
 import cart_icon from "../Assets/cart_icon.png"
 import profile_icon from "../Assets/profile_icon.png"
-import "./Navbar.css"
+import "../Navbar/Navbar.css"
 
 const Navbar = () => {
   const [menu, setMenu] = useState("shop")
@@ -43,9 +43,16 @@ const Navbar = () => {
     }
   }, [location])
 
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = "auto"
+    }
+  }, [])
+
   const handleLogoutClick = () => {
     logout()
-    setIsMobileMenuOpen(false) // Close mobile menu
+    setIsMobileMenuOpen(false)
+    setIsDropdownOpen(false) // Close the dropdown menu
     navigate("/login")
   }
 
@@ -54,7 +61,10 @@ const Navbar = () => {
   }
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen)
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+    document.body.style.overflow = isMobileMenuOpen ? "auto" : "hidden"
+  }
 
   const handleMenuClick = (menuOption) => {
     setMenu(menuOption)
@@ -71,13 +81,18 @@ const Navbar = () => {
       const product = products.find((product) => product.name.toLowerCase().includes(trimmedQuery))
 
       if (product) {
-        setIsMobileMenuOpen(false) // Close mobile menu after search
+        setIsMobileMenuOpen(false)
         navigate(`category/${trimmedQuery}`)
       } else {
         alert("No product found with this name!")
       }
     }
   }
+
+  // Force re-render when user state changes
+  useEffect(() => {
+    // This effect will run every time the user state changes
+  }, []) // Removed unnecessary dependency: [user]
 
   return (
     <nav className="navbar">
@@ -88,11 +103,11 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className={`nav-menu ${isMobileMenuOpen ? "active" : ""}`}>
+      <div className={`nav-menu ${isMobileMenuOpen ? "active" : ""}`} role="navigation">
         <ul>
-          <li onClick={() => handleMenuClick("shop")}>
-            <Link to="/">Shop</Link>
-            {menu === "shop" && <hr />}
+          <li onClick={() => handleMenuClick("Home")}>
+            <Link to="/">Home</Link>
+            {menu === "Home" && <hr />}
           </li>
           <li onClick={() => handleMenuClick("mens")}>
             <Link to="/mens">Men</Link>
@@ -113,17 +128,15 @@ const Navbar = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
+              <button type="submit" className="search-button">
+                Search
+              </button>
             </form>
           </div>
         )}
 
-        {/* Mobile menu items */}
         <div className="mobile-menu-items">
-          <Link
-            to="/cart"
-            className="mobile-cart-icon-wrapper"
-            onClick={() => setIsMobileMenuOpen(false)} // Close when cart is clicked
-          >
+          <Link to="/cart" className="mobile-cart-icon-wrapper" onClick={() => setIsMobileMenuOpen(false)}>
             <img src={cart_icon || "/placeholder.svg"} alt="Cart" className="mobile-cart-icon" />
             {calculateTotalCartItems() > 0 && <div className="mobile-cart-item-count">{calculateTotalCartItems()}</div>}
           </Link>
@@ -134,7 +147,7 @@ const Navbar = () => {
               <Link
                 to="/user-profile-buttons"
                 className="mobile-profile-link"
-                onClick={() => setIsMobileMenuOpen(false)} // Close when profile is clicked
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Profile
               </Link>
@@ -145,7 +158,7 @@ const Navbar = () => {
           ) : (
             <button
               onClick={() => {
-                setIsMobileMenuOpen(false) // Close when login is clicked
+                setIsMobileMenuOpen(false)
                 navigate("/login")
               }}
               className="mobile-login-btn"

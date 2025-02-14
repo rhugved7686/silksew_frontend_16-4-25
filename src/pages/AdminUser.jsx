@@ -30,7 +30,7 @@ const AdminUser = ({ updateTotalOrders }) => {
       await fetchUserDetails()
       toast.success(`Order status has been updated to ${newStatus}!`, {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -40,7 +40,7 @@ const AdminUser = ({ updateTotalOrders }) => {
       console.log(error)
       toast.error("Failed to update order status. Please try again.", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -58,7 +58,7 @@ const AdminUser = ({ updateTotalOrders }) => {
       await fetchUserDetails()
       toast.success("Payment status has been updated!", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -68,7 +68,7 @@ const AdminUser = ({ updateTotalOrders }) => {
       console.log(error)
       toast.error("Failed to update payment status. Please try again.", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -97,7 +97,7 @@ const AdminUser = ({ updateTotalOrders }) => {
       console.error("Error fetching orders:", err)
       toast.error("Failed to fetch orders. Please try again.", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -119,8 +119,8 @@ const AdminUser = ({ updateTotalOrders }) => {
         order.address.firstName.toLowerCase().includes(searchTerm.toLowerCase()) && order.status !== "ConfirmedOrder",
     )
     .sort((a, b) => {
-      if (a.status === "shipped" && b.status !== "shipped") return 1
-      if (a.status !== "shipped" && b.status === "shipped") return -1
+      if (a.status === "Confirmed" && b.status !== "Confirmed") return 1
+      if (a.status !== "Confirmed" && b.status === "Confirmed") return -1
       return moment(b.createdAt).valueOf() - moment(a.createdAt).valueOf()
     })
 
@@ -161,7 +161,7 @@ const AdminUser = ({ updateTotalOrders }) => {
           <tbody>
             {currentItems.length > 0 ? (
               currentItems.map((order, index) => (
-                <tr key={order._id} className={order.status === "shipped" ? "bg-gray-100" : ""}>
+                <tr key={order._id} className={order.status === "Confirmed" ? "bg-gray-100" : ""}>
                   <td data-label="Sr. No">{index + 1}</td>
                   <td data-label="Product Details">
                     <div>
@@ -200,8 +200,8 @@ const AdminUser = ({ updateTotalOrders }) => {
                   <td data-label="Payment Method">{order.paymentMethod}</td>
                   <td data-label="Total Amount">Rs.{order.totalAmount}</td>
                   <td data-label="Status">
-                    {order.status === "shipped" ? (
-                      <span className="text-green-600 font-semibold">Shipped</span>
+                    {order.status === "Confirmed" ? (
+                      <span className="text-green-600 font-semibold">Confirmed</span>
                     ) : (
                       <select
                         onChange={(event) => statusHandler(event, order._id)}
@@ -209,7 +209,7 @@ const AdminUser = ({ updateTotalOrders }) => {
                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       >
                         <option value="pending">Pending</option>
-                        <option value="shipped">Shipped</option>
+                        <option value="Confirmed">Confirmed</option>
                       </select>
                     )}
                   </td>
@@ -228,7 +228,7 @@ const AdminUser = ({ updateTotalOrders }) => {
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          style={{ backgroundColor: "black" }}
+          style={{ backgroundColor: "black",color:"white" }}
           className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Previous
@@ -241,7 +241,7 @@ const AdminUser = ({ updateTotalOrders }) => {
         <button
           onClick={() => setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev))}
           disabled={currentPage >= totalPages}
-          style={{ backgroundColor: "black" }}
+          style={{ backgroundColor: "black",color:"white"  }}
           className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Next

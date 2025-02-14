@@ -1,11 +1,14 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState, useContext, useCallback, useMemo } from "react"
 import axios from "axios"
 import { ShopContext } from "../context/ShopContext"
 import moment from "moment"
 import profile_icon from "../components/Assets/profile_icon.png"
 import "../pages/CSS/UserProfile.css"
+// eslint-disable-next-line no-unused-vars
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import OrderItems from "../components/OrderItems/OrderItems"
 
 const UserProfileButtons = () => {
   // eslint-disable-next-line no-unused-vars
@@ -22,7 +25,7 @@ const UserProfileButtons = () => {
 
   const menuItems = [
     { id: "info", title: "Info", icon: "👤" },
-    { id: "orders", title: "Your Orders", icon: "📦" },
+    { id: "orders", title: "My Orders", icon: "📦" },
   ]
 
   const fetchUserData = useCallback(async () => {
@@ -77,9 +80,6 @@ const UserProfileButtons = () => {
   }, [fetchUserData, fetchUserProducts])
 
   useEffect(() => {
-    // console.log("userProducts or userData changed:")
-    // console.log("userProducts:", userProducts)
-    // console.log("userData:", userData)
   }, [userProducts, userData])
 
   const filteredOrders = useMemo(() => {
@@ -241,55 +241,7 @@ const UserProfileButtons = () => {
       case "orders":
         return (
           <>
-          <h2 style={{ color: "#000" }}>Your Orders</h2>
-            <div className="tab-content">
-            {loadingProducts ? (
-              <div>Loading orders...</div>
-            ) : (
-              <>
-                {filteredOrders.length > 0 ? (
-                  <table className="user-products-table">
-                    <thead>
-                      <tr>
-                        <th>Order ID</th>
-                        <th>Product Details</th>
-                        <th>Total Amount</th>
-                        <th>Status</th>
-                        <th>Order Date</th>
-                        <th>Tentative Delivery Date</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredOrders.map((order) => (
-                        <tr key={order._id}>
-                          <td>{order._id}</td>
-                          <td>
-                            {order.items.map((item, index) => (
-                              <div key={index}>
-                                <p>Product Name: {item.productName}</p>
-                                <p>Product Color : {item.color}</p>
-                                <p>Size: {item.size}</p>
-                                <p>Quantity: {item.quantity}</p>
-                              </div>
-                            ))}
-                            {/* <div>
-                              <p>Email: {order.address.email}</p>
-                            </div> */}
-                          </td>
-                          <td>Rs.{order.totalAmount}</td>
-                          <td>{order.status}</td>
-                          <td>{moment(order.createdAt).format("MMMM D, YYYY")}</td>
-                          <td data-label="Tentative Delivery Date">{order.tentativeDeliveryDate ? moment(order.tentativeDeliveryDate).format("YYYY-MM-DD") : ""}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                ) : (
-                  <p>No orders found for your email address. Your email: {userData?.email}</p>
-                )}
-              </>
-            )}
-          </div>
+          <OrderItems/>
           </>
         )
       default:
@@ -322,14 +274,12 @@ const UserProfileButtons = () => {
         <h1>Welcome to Your Profile</h1>
         {renderContent()}
       </main>
-      <ToastContainer position="top-center" autoClose={2000} hideProgressBar={true} />
-      {/* Debug mode toggle */}
-      {/* <button onClick={() => setDebugMode(!debugMode)} style={{ position: "fixed", bottom: "10px", right: "10px" }}>
-        {debugMode ? "Disable Debug" : "Enable Debug"}
-      </button> */}
     </div>
   )
 }
 
 export default UserProfileButtons
+
+
+
 

@@ -7,7 +7,7 @@ import axios from "axios"
 import "../pages/CSS/AdminPage.css"
 import { AuthContext } from "../context/AuthContext"
 import AdminComplaints from "../pages/AdminComplaints"
-import ConfirmedOrder from "../pages/ConfirmedOrder"
+import ConfirmedOrder from "./ShippedOrders"
 import AdminAddProduct from "./AdminAddProduct"
 import AdminProductlist from "./AdminProductlist"
 import AdminNavbar from "../components/Navbar/AdminNavbar"
@@ -20,9 +20,10 @@ import {
   faComments,
   faTruck,
   faCheck,
+  faUndo
 } from "@fortawesome/free-solid-svg-icons"
 import AdminUser from "./AdminUser"
-import ShippedOrders from "./ShippedOrders"
+import ShippedOrders from "./ConfirmedOrders"
 import ReturnOrderList from "../components/ReturnOrderList/ReturnOrderList"
 
 const Dashboard = () => {
@@ -147,16 +148,16 @@ const Dashboard = () => {
             </li>
             <li onClick={() => handleMenuClick("ReturnRequest")}>
            
-              {/* <FontAwesomeIcon icon={faShoppingCart} /> */}
+              <FontAwesomeIcon icon={faUndo} />
               Return Request
             </li>
             <li onClick={() => handleMenuClick("ShippedOrders")}>
-              <FontAwesomeIcon icon={faTruck} />
-              Shipped Orders
-            </li>
-            <li onClick={() => handleMenuClick("ConfirmedOrder")}>
               <FontAwesomeIcon icon={faCheck} />
               Confirmed Order
+            </li>
+            <li onClick={() => handleMenuClick("ConfirmedOrder")}>
+              <FontAwesomeIcon icon={faTruck} />
+              Shipped Orders
             </li>
             <li onClick={() => handleMenuClick("complaints")}>
               <FontAwesomeIcon icon={faComments} />

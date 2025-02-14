@@ -99,9 +99,9 @@ const RelatedProducts = ({ subcategory, currentProductId }) => {
                     {truncateDescription(item.description)}
                   </p>
                   <div className="product-price">
-                    <span className="new-price">{`$${item.price}`}</span>
+                    <span className="new-price">{`Rs.${item.price}`}</span>
                     {item.oldPrice && (
-                      <span className="old-price">{`$${item.oldPrice}`}</span>
+                      <span className="old-price">{`Rs.${item.oldPrice}`}</span>
                     )}
                   </div>
                   <button

@@ -4,14 +4,17 @@ import { ShopContext } from "../context/ShopContext"
 import { BASEURL } from "../config"
 import "../pages/CSS/AdminUser.css"
 import moment from "moment"
-import { ToastContainer, toast } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
 
-function ShippedOrders({ updateTotalOrders }) {
+function ShippedOrders({ updateTotalOrders, updateTotalSales }) {
   const [addresses, setAddresses] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
+  // eslint-disable-next-line no-unused-vars
   const [tentativeDeliveryDates, setTentativeDeliveryDates] = useState({})
+  // eslint-disable-next-line no-unused-vars
+  const [totalConfirmedOrders, setTotalConfirmedOrders] = useState(0)
+  // eslint-disable-next-line no-unused-vars
+  const [totalSalesAmount, setTotalSalesAmount] = useState(0)
   const itemsPerPage = 3
   // eslint-disable-next-line no-unused-vars
   const { token } = useContext(ShopContext)
@@ -19,44 +22,6 @@ function ShippedOrders({ updateTotalOrders }) {
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value)
     setCurrentPage(1)
-  }
-
-  const statusHandler = async (event, _id) => {
-    const tentativeDeliveryDate = tentativeDeliveryDates[_id]
-    if (!tentativeDeliveryDate) {
-      toast.error("Please select a tentative delivery date before confirming the order.")
-      return
-    }
-
-    try {
-      await axios.post(BASEURL + "/api/updateOrderStatus/order-status", {
-        _id,
-        status: "ConfirmedOrder",
-        tentativeDeliveryDate: tentativeDeliveryDate,
-      })
-      await fetchUserDetails()
-      toast.success("Your order has been confirmed!")
-    } catch (error) {
-      console.error("Error updating order status:", error)
-      toast.error("Failed to update order status. Please try again.")
-    }
-  }
-
-  // eslint-disable-next-line no-unused-vars
-  const paymentStatusHandler = async (event, _id) => {
-    try {
-      await axios.post(BASEURL + "/api/updatePayment/payment-status", {
-        _id,
-        payment: event.target.value,
-      })
-      await fetchUserDetails()
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const handleDateChange = async (date, orderId) => {
-    setTentativeDeliveryDates((prev) => ({ ...prev, [orderId]: date }))
   }
 
   const fetchUserDetails = useCallback(async () => {
@@ -76,14 +41,23 @@ function ShippedOrders({ updateTotalOrders }) {
       setAddresses(response.data)
       updateTotalOrders(response.data.length)
       const dates = {}
+      let totalSales = 0
+      let confirmedOrdersCount = 0
       response.data.forEach((order) => {
         dates[order._id] = order.tentativeDeliveryDate || ""
+        if (order.status === "ConfirmedOrder") {
+          totalSales += order.totalAmount
+          confirmedOrdersCount++
+        }
       })
       setTentativeDeliveryDates(dates)
+      setTotalConfirmedOrders(confirmedOrdersCount)
+      setTotalSalesAmount(totalSales)
+      updateTotalSales(totalSales)
     } catch (err) {
       console.error("Error fetching orders:", err)
     }
-  }, [updateTotalOrders])
+  }, [updateTotalOrders, updateTotalSales])
 
   useEffect(() => {
     const localStorageToken = localStorage.getItem("token")
@@ -94,10 +68,12 @@ function ShippedOrders({ updateTotalOrders }) {
 
   const filteredOrders = addresses
     .filter(
-      (order) => order.address.firstName.toLowerCase().includes(searchTerm.toLowerCase()) && order.status === "shipped",
+      (order) =>
+        order.address.firstName.toLowerCase().includes(searchTerm.toLowerCase()) && order.status === "ConfirmedOrder",
     )
     .sort((a, b) => moment(b.createdAt).valueOf() - moment(a.createdAt).valueOf())
 
+  const totalItems = filteredOrders.length
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
   const currentItems = filteredOrders.slice(indexOfFirstItem, indexOfLastItem)
@@ -105,10 +81,13 @@ function ShippedOrders({ updateTotalOrders }) {
 
   return (
     <div className="admin-orders p-6">
-      <ToastContainer position="top-right" autoClose={3000} />
       <h2 className="text-3xl font-bold mb-6 text-center text-gray-800" style={{ color: "#000" }}>
-        Shipped Orders Details
+      Shipped Orders Details
       </h2>
+      {/* <div className="mb-6 text-center">
+        <p className="text-xl font-semibold">Total Confirmed Orders: {totalConfirmedOrders}</p>
+        <p className="text-xl font-semibold">Total Sales Amount: Rs.{totalSalesAmount.toFixed(2)}</p>
+      </div> */}
       <div className="search-container mb-4">
         <input
           type="text"
@@ -129,14 +108,13 @@ function ShippedOrders({ updateTotalOrders }) {
               <th>Payment Method</th>
               <th>Total Amount</th>
               <th>Tentative Delivery Date</th>
-              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {currentItems.length > 0 ? (
               currentItems.map((order, index) => (
                 <tr key={order._id}>
-                  <td data-label="Sr. No">{index + 1}</td>
+                  <td data-label="Sr. No">{totalItems - (indexOfFirstItem + index)}</td>
                   <td data-label="Product Details">
                     <div>
                       <p>Product Id: {order.items[0].productId}</p>
@@ -164,22 +142,7 @@ function ShippedOrders({ updateTotalOrders }) {
                   <td data-label="Payment Method">{order.paymentMethod}</td>
                   <td data-label="Total Amount">Rs.{order.totalAmount}</td>
                   <td data-label="Tentative Delivery Date">
-                    <input
-                      type="date"
-                      value={tentativeDeliveryDates[order._id] || ""}
-                      onChange={(e) => handleDateChange(e.target.value, order._id)}
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    />
-                  </td>
-                  <td data-label="Status">
-                    <button
-                      onClick={() => statusHandler({ target: { value: "ConfirmedOrder" } }, order._id)}
-                      className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
-                      disabled={!tentativeDeliveryDates[order._id]}
-                      style={{ backgroundColor: "green" }}
-                    >
-                      Confirm Order
-                    </button>
+                    {order.tentativeDeliveryDate ? moment(order.tentativeDeliveryDate).format("YYYY-MM-DD") : ""}
                   </td>
                 </tr>
               ))
@@ -196,11 +159,11 @@ function ShippedOrders({ updateTotalOrders }) {
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
           className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-          style={{ backgroundColor: "#000" }}
+          style={{ backgroundColor: "black",color:"white" }}
         >
           Previous
         </button>
-        &ensp;
+        &emsp;
         <span className="text-sm text-black-700">
           Page {currentPage} of {totalPages}
         </span>
@@ -208,7 +171,7 @@ function ShippedOrders({ updateTotalOrders }) {
         <button
           onClick={() => setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev))}
           disabled={currentPage >= totalPages}
-          style={{ backgroundColor: "#000" }}
+          style={{ backgroundColor: "black",color:"white" }}
           className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Next

@@ -1,14 +1,26 @@
+import  React from "react"
 import { Link } from "react-router-dom"
 import "./Footer.css"
 import footer_logo from "../Assets/logo_big.png"
 import instagram_icon from "../Assets/instagram_icon.png"
 import pintester_icon from "../Assets/pintester_icon.png"
 import whatsapp_icon from "../Assets/whatsapp_icon.png"
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api"
 
 const Footer = () => {
+  const mapStyles = {
+    height: "100%",
+    width: "100%",
+  }
+
+  const defaultCenter = {
+    lat: 18.561252,
+    lng: 73.9443581,
+  }
+
   return (
     <footer className="footer" role="contentinfo">
-      <div className="footer-container">
+        <div className="footer-container">
         <div className="footer-section footer-left">
           <Link to="/" className="footer-brand">
             <img src={footer_logo || "/placeholder.svg"} alt="SILKSEW logo" className="footer-logo" />
@@ -18,7 +30,7 @@ const Footer = () => {
             <ul className="footer-links">
               <li>
                 <Link to="/" className="footer-link">
-                  Shop
+                  Home
                 </Link>
               </li>
               <li>
@@ -33,14 +45,24 @@ const Footer = () => {
               </li>
             </ul>
           </nav>
+
+
+
+          <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+            <GoogleMap mapContainerStyle={mapStyles} zoom={14} center={defaultCenter}>
+              <Marker position={defaultCenter} />
+            </GoogleMap>
+          </LoadScript><br/>
+
           <p className="footer-copyright">
-            &copy; 2025{" "}
-            <Link to="https://www.cobaztech.com/" target="new" className="footer-link">
-            Cobaztech
-            </Link>
+            &copy; {new Date().getFullYear()}{" "}
+            <a href="https://www.cobaztech.com/" target="_blank" rel="noopener noreferrer" className="footer-link">
+              Cobaztech
+            </a>
             . All rights reserved.
           </p>
         </div>
+        <br/>
 
         <div className="footer-section footer-center">
           <h3 className="footer-heading">Contact Us</h3>
@@ -49,9 +71,7 @@ const Footer = () => {
               <div className="footer-icon" aria-hidden="true">
                 <i className="fas fa-map-marker-alt"></i>
               </div>
-              <p className="footer-text">
-                Pune
-              </p>
+              <p className="footer-text">Pune</p>
             </div>
             <div className="footer-info">
               <div className="footer-icon" aria-hidden="true">
@@ -74,7 +94,6 @@ const Footer = () => {
               </p>
             </div>
           </address>
-          
         </div>
 
         <div className="footer-section footer-right">
@@ -118,11 +137,11 @@ const Footer = () => {
       </div>
       <div className="footer-bottom">
         <p className="footer-legal">
-          <Link to="/" className="footer-link">
+          <Link to="/Privacy_Policy" className="footer-link">
             Privacy Policy
           </Link>{" "}
           |
-          <Link to="/" className="footer-link">
+          <Link to="/Terms" className="footer-link">
             Terms of Service
           </Link>
         </p>

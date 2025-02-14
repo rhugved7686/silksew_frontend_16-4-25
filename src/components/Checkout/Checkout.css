@@ -204,7 +204,7 @@
   max-width: 90%;
   width: 400px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  animation: popIn 0.3s ease-out;
+  animation: popIn 0.1s ease-out;
 }
 
 @keyframes popIn {

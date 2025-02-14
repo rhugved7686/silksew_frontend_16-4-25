@@ -1,0 +1,42 @@
+.stats-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-icon {
+    font-size: 36px;
+    margin-right: 20px;
+    background-color: var(--card-color);
+    color: white;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  
+  .card-content h3 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--text-light);
+  }
+  
+  .card-content p {
+    margin: 5px 0 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--card-color);
+  }
+  
+  

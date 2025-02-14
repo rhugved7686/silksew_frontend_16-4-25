@@ -338,7 +338,7 @@ const AdminProductForm = () => {
       // Display success message
       toast.success("Product Added Successfully!", {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -357,7 +357,7 @@ const AdminProductForm = () => {
         `Failed to add product: ${error.response?.data?.message || error.message || "An unexpected error occurred"}`,
         {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -373,7 +373,7 @@ const AdminProductForm = () => {
     <div style={{ padding: "10px" }}>
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

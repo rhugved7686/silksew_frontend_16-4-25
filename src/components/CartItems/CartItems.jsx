@@ -1,37 +1,44 @@
-import { useContext, useEffect, useState } from "react"
-import "./CartItems.css"
-import { ShopContext } from "../../context/ShopContext"
-import { useNavigate } from "react-router-dom"
+import { useContext, useEffect, useState } from "react";
+import "./CartItems.css";
+import { ShopContext } from "../../context/ShopContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CartItems = () => {
-  const { cartItems, removeFromCart, getTotalCartAmount, products } = useContext(ShopContext)
-  const [localCartItems, setLocalCartItems] = useState(cartItems)
-  const [localProducts, setLocalProducts] = useState(products)
-  const navigate = useNavigate()
+  const { cartItems, removeFromCart, getTotalCartAmount, products } =
+    useContext(ShopContext);
+  const [localCartItems, setLocalCartItems] = useState(cartItems);
+  const [localProducts, setLocalProducts] = useState(products);
+  const navigate = useNavigate();
 
   const getImage = (images, color) => {
     if (images && images.length > 0) {
       try {
-        const parsedImages = JSON.parse(images[0])
+        const parsedImages = JSON.parse(images[0]);
         if (parsedImages[color] && parsedImages[color].length > 0) {
-          return parsedImages[color][0]
+          return parsedImages[color][0];
         }
         // Fallback to first available color if selected color not found
-        const firstAvailableColor = Object.keys(parsedImages)[0]
-        if (parsedImages[firstAvailableColor] && parsedImages[firstAvailableColor].length > 0) {
-          return parsedImages[firstAvailableColor][0]
+        const firstAvailableColor = Object.keys(parsedImages)[0];
+        if (
+          parsedImages[firstAvailableColor] &&
+          parsedImages[firstAvailableColor].length > 0
+        ) {
+          return parsedImages[firstAvailableColor][0];
         }
       } catch (error) {
-        console.error("Error parsing image JSON:", error)
+        console.error("Error parsing image JSON:", error);
       }
     }
-    return "/placeholder.svg"
-  }
+    return "/placeholder.svg";
+  };
 
   useEffect(() => {
-    setLocalCartItems(cartItems)
-    setLocalProducts(products)
-  }, [cartItems, products])
+    setLocalCartItems(cartItems);
+    setLocalProducts(products);
+  }, [cartItems, products]);
+
 
   return (
     <div className="cartitems">
@@ -47,16 +54,17 @@ const CartItems = () => {
       </div>
       <hr />
       {localCartItems.map((cartItem) => {
-        const { productId, quantity, size, color } = cartItem
-        const product = localProducts.find((p) => p._id === productId)
+        const { productId, quantity, size, color } = cartItem;
+        const product = localProducts.find((p) => p._id === productId);
 
         if (!product) {
-          console.warn(`Product with ID ${productId} not found.`)
-          return null
+          console.warn(`Product with ID ${productId} not found.`);
+          return null; // Prevents rendering a broken cart item
         }
+        
 
         // Use the selected color from the cart item
-        const displayColor = color || "Default"
+        const displayColor = color || "Default";
 
         return (
           <div key={`${productId}-${size}-${color}`} className="cartitem">
@@ -72,9 +80,11 @@ const CartItems = () => {
             <p>{quantity}</p>
             <p>{size}</p>
             <p>Rs {quantity * product.price}</p>
-            <button onClick={() => removeFromCart(productId, size, color)}>Remove</button>
+            <button onClick={() => removeFromCart(productId, size, color)}>
+              Remove
+            </button>
           </div>
-        )
+        );
       })}
       <hr />
       <div className="cartitems-down">
@@ -96,7 +106,20 @@ const CartItems = () => {
               <h3>Rs.{getTotalCartAmount()}</h3>
             </div>
           </div>
-          <button onClick={() => navigate("/checkout")}>PROCEED TO CHECKOUT</button>
+          <button
+            onClick={() => {
+              if (localCartItems.length === 0) {
+                toast.error("Your cart is empty!", {
+                  position: "top-center",
+                  autoClose: 2000,
+                });
+                return;
+              }
+              navigate("/checkout");
+            }}
+          >
+            PROCEED TO CHECKOUT
+          </button>
         </div>
         <div className="cartitems-promocode">
           <p>If you have a promo code, enter it here</p>
@@ -107,8 +130,7 @@ const CartItems = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CartItems
-
+export default CartItems;

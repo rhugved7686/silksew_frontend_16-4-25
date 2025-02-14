@@ -64,7 +64,7 @@ const Popular = () => {
 
   return (
     <div className="popular">
-      <h1 className="section-title">POPULAR IN WOMEN</h1>
+      <h1 className="section-title">POPULAR IN MEN</h1>
       <div className="gradient-line"></div>
       <div className="popular-items">
         {products.length > 0 ? (

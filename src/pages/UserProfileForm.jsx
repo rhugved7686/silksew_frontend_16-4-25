@@ -110,7 +110,7 @@ const UserProfileForm = () => {
         </div>
 
         <button type="submit" className="submit-btn" >Save</button>
-            <ToastContainer position="top-center" autoClose={2000} hideProgressBar={true} />
+            <ToastContainer position="top-center" autoClose={1000} hideProgressBar={true} />
       </form>
       
     </div>

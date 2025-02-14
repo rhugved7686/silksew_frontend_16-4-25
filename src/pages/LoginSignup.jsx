@@ -144,7 +144,7 @@ const LoginSignup = () => {
         </div>
       </div>
 
-      <ToastContainer position="top-center" autoClose={2000} hideProgressBar={true} />
+      <ToastContainer position="top-center" autoClose={1000} hideProgressBar={true} />
     </form>
   )
 }
