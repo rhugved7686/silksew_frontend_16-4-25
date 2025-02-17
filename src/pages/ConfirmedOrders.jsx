@@ -140,7 +140,7 @@ function ConfirmedOrder({ updateTotalOrders }) {
                   <td data-label="Product Details">
                     <div>
                       {/* <p>Product Id: {order.items[0].productId}</p> */}
-                      <p>Product name: {order.items[0].productName}</p>
+                      <p>Product Id: {order.items[0]._id}</p>
                       <p>Size: {order.items[0].size}</p>
                       <p>Quantity: {order.items[0].quantity}</p>
                     </div>

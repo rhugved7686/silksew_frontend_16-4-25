@@ -8,13 +8,23 @@ const Mens = () => {
   const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
   const [subcategories, setSubcategories] = useState([
-    "All Products",
     "Traditional Wear",
     "Casual Wear",
+    "Formal Wear",
     "Ethnic Wear",
-    "Wedding Wear",
     "Street Style",
+    "Smart Casuals",
+    "Athleisure",
+    "Summer Wear",
+    "Winter Wear",
+    "Party Wear",
+    "Wedding Wear",
+    "Indo-Western",
+    "Loungewear",
+    "Vacation Wear",
+    "Festive Wear",
   ])
+
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [selectedSubcategory, setSelectedSubcategory] = useState("All Products")

@@ -19,12 +19,6 @@ const SubcategorySideBar = ({ subcategories, onSubcategoryClick, selectedSubcate
           -webkit-overflow-scrolling: touch;
           margin-bottom: 2rem;
           padding: 0.5rem;
-          scrollbar-width: none; /* Firefox */
-          -ms-overflow-style: none; /* Internet Explorer 10+ */
-        }
-
-        .subcategory-container::-webkit-scrollbar {
-          display: none; /* WebKit */
         }
 
         .subcategory-list {
@@ -63,10 +57,48 @@ const SubcategorySideBar = ({ subcategories, onSubcategoryClick, selectedSubcate
           transform: translateY(0);
         }
 
+        /* Mobile styles */
         @media (max-width: 640px) {
+          .subcategory-container {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+          }
+
+          .subcategory-container::-webkit-scrollbar {
+            display: none;
+          }
+
           .subcategory-button {
             padding: 0.5rem 1rem;
             font-size: 0.8125rem;
+          }
+        }
+
+        /* Desktop styles */
+        @media (min-width: 641px) {
+          .subcategory-container {
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e0 #f3f4f6;
+          }
+
+          .subcategory-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+          }
+
+          .subcategory-container::-webkit-scrollbar-track {
+            background: #f3f4f6;
+            border-radius: 4px;
+          }
+
+          .subcategory-container::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 4px;
+            border: 2px solid #f3f4f6;
+          }
+
+          .subcategory-container::-webkit-scrollbar-thumb:hover {
+            background-color: #a0aec0;
           }
         }
       `}</style>

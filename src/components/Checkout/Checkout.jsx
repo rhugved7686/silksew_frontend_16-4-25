@@ -1,41 +1,35 @@
+"use client"
+
 // eslint-disable-next-line no-unused-vars
-import { useContext, useState } from "react";
-import { ShopContext } from "../../context/ShopContext";
-import razorpay from "../Assets/razorpay_logo.png";
-import CashonDelivery from "../Assets/CashonDelivery.jpg";
-import stripe from "../Assets/stripe_logo.png";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { BASEURL } from "../../config";
-import { useNavigate } from "react-router-dom";
-import "./Checkout.css";
+import { useContext, useState } from "react"
+import { ShopContext } from "../../context/ShopContext"
+import razorpay from "../Assets/razorpay_logo.png"
+import CashonDelivery from "../Assets/CashonDelivery.jpg"
+import stripe from "../Assets/stripe_logo.png"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import axios from "axios"
+import { BASEURL } from "../../config"
+import { useNavigate } from "react-router-dom"
+import "./Checkout.css"
 
 const OrderSuccessPopup = () => {
   return (
     <div className="popup-overlay">
       <div className="popup-content">
         <h2>Order Placed Successfully!</h2>
-        <p>
-          Thank you for your purchase. Your order has been placed and will be
-          processed soon.
-        </p>
+        <p>Thank you for your purchase. Your order has been placed and will be processed soon.</p>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const Checkout = () => {
-  const navigate = useNavigate();
-  const [method, setMethod] = useState("Cash on Delivery");
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const {
-    cartItems,
-    delivery_fee,
-    setCartItems,
-    getTotalCartAmount,
-    products,
-  } = useContext(ShopContext);
+  const navigate = useNavigate()
+  const [method, setMethod] = useState("Cash on Delivery")
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false)
+  const [isLoading, setIsLoading] = useState(false) // Added loading state
+  const { cartItems, delivery_fee, setCartItems, getTotalCartAmount, products } = useContext(ShopContext)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -47,41 +41,43 @@ const Checkout = () => {
     state: "",
     phone: "",
     email: "",
-  });
+  })
 
-  const subtotal = getTotalCartAmount();
-  const totalAmount = subtotal + delivery_fee;
+  const subtotal = getTotalCartAmount()
+  const totalAmount = subtotal + delivery_fee
 
   const onChangeHandler = (event) => {
-    const { name, value } = event.target;
-    setFormData((data) => ({ ...data, [name]: value }));
-  };
+    const { name, value } = event.target
+    setFormData((data) => ({ ...data, [name]: value }))
+  }
 
   const onSubmitHandler = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
+    setIsLoading(true) // Set loading state to true
+
+    // Show the success popup immediately
+    setShowSuccessPopup(true)
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token")
       if (!token) {
-        toast.error("You are not authorized. Please log in.");
-        navigate("/login");
-        return;
+        toast.error("You are not authorized. Please log in.")
+        navigate("/login")
+        return
       }
 
       if (!cartItems || !Array.isArray(cartItems) || cartItems.length === 0) {
-        console.error("Cart is empty or invalid.");
-        toast.error("Your cart is empty!");
-        return;
+        console.error("Cart is empty or invalid.")
+        toast.error("Your cart is empty!")
+        return
       }
 
       const orderItems = cartItems
         .map((cartItem) => {
-          const product = products.find((p) => p._id === cartItem.productId);
+          const product = products.find((p) => p._id === cartItem.productId)
           if (!product) {
-            console.warn(
-              `Product not found for productId: ${cartItem.productId}`
-            );
-            return null;
+            console.warn(`Product not found for productId: ${cartItem.productId}`)
+            return null
           }
           return {
             productId: cartItem.productId,
@@ -89,54 +85,51 @@ const Checkout = () => {
             productName: product.name, // Matches backend expected key
             quantity: cartItem.quantity,
             price: product.price,
-          };
+          }
         })
-        .filter((item) => item !== null);
+        .filter((item) => item !== null)
 
       if (orderItems.length === 0) {
-        toast.error("No valid products found in cart.");
-        return;
+        toast.error("No valid products found in cart.")
+        return
       }
 
-      const totalAmount = getTotalCartAmount() + delivery_fee;
+      const totalAmount = getTotalCartAmount() + delivery_fee
 
       const orderData = {
         address: formData,
         items: orderItems,
         totalAmount,
         paymentMethod: method,
-      };
+      }
 
       // Send order request
-      const response = await axios.post(
-        `${BASEURL}/api/orders/place`,
-        orderData,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await axios.post(`${BASEURL}/api/orders/place`, orderData, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
 
       if (response.data.success) {
         // Clear cart after successful order
-        setCartItems([]);
-        setShowSuccessPopup(true);
+        setCartItems([])
 
-        // Hide success popup and navigate home
+        // Navigate to orders page after a short delay
         setTimeout(() => {
-          setShowSuccessPopup(false);
-          navigate("/orders");
-        }, 3000);
+          setShowSuccessPopup(false)
+          setIsLoading(false) // Set loading state to false
+          navigate("/")
+        }, 2000)
       } else {
-        toast.error(response.data.message || "Failed to place order.");
+        setShowSuccessPopup(false)
+        setIsLoading(false) // Set loading state to false
+        toast.error(response.data.message || "Failed to place order.")
       }
     } catch (error) {
-      console.error(error);
-      toast.error(
-        error.response?.data?.message ||
-          "An error occurred while placing your order."
-      );
+      console.error(error)
+      setShowSuccessPopup(false)
+      setIsLoading(false) // Set loading state to false
+      toast.error(error.response?.data?.message || "An error occurred while placing your order.")
     }
-  };
+  }
 
   return (
     <form className="form-container" onSubmit={onSubmitHandler}>
@@ -145,40 +138,22 @@ const Checkout = () => {
           <legend>Payment Options</legend>
           <div className="payment-options">
             <div
-              className={`payment-option ${
-                method === "Stripe" ? "selected" : ""
-              }`}
+              className={`payment-option ${method === "Stripe" ? "selected" : ""}`}
               onClick={() => setMethod("Stripe")}
             >
-              <img
-                src={stripe || "/placeholder.svg"}
-                alt="Stripe"
-                className="payment-logo"
-              />
+              <img src={stripe || "/placeholder.svg"} alt="Stripe" className="payment-logo" />
             </div>
             <div
-              className={`payment-option ${
-                method === "Razorpay" ? "selected" : ""
-              }`}
+              className={`payment-option ${method === "Razorpay" ? "selected" : ""}`}
               onClick={() => setMethod("Razorpay")}
             >
-              <img
-                src={razorpay || "/placeholder.svg"}
-                alt="Razorpay"
-                className="payment-logo"
-              />
+              <img src={razorpay || "/placeholder.svg"} alt="Razorpay" className="payment-logo" />
             </div>
             <div
-              className={`payment-option ${
-                method === "CashonDelivery" ? "selected" : ""
-              }`}
+              className={`payment-option ${method === "CashonDelivery" ? "selected" : ""}`}
               onClick={() => setMethod("Cash on Delivery")}
             >
-              <img
-                src={CashonDelivery || "/placeholder.svg"}
-                alt="CashonDelivery"
-                className="payment-logo"
-              />
+              <img src={CashonDelivery || "/placeholder.svg"} alt="CashonDelivery" className="payment-logo" />
               {/* <span className="payment-text">
                 CASH ON DELIVERY
               </span> */}
@@ -303,14 +278,15 @@ const Checkout = () => {
           </div>
         </div>
 
-        <button type="submit" className="submit-button">
-          PLACE ORDER
+        <button type="submit" className="submit-button" disabled={isLoading}>
+          {isLoading ? "Processing..." : "PLACE ORDER"}
         </button>
       </div>
 
       {showSuccessPopup && <OrderSuccessPopup />}
     </form>
-  );
-};
+  )
+}
 
-export default Checkout;
+export default Checkout
+

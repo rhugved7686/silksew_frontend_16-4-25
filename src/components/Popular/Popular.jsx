@@ -15,7 +15,7 @@ const Popular = () => {
         const response = await axios.get('https://api.silksew.com/api/products/list');
         // console.log(response);
         const fetchedProducts = Array.isArray(response.data) ? response.data : response.data.products;
-        const womenProducts = fetchedProducts.filter((product) => product.category.includes('women'));
+        const womenProducts = fetchedProducts.filter((product) => product.category.includes('men'));
         setProducts(womenProducts);
       } catch (error) {
         setError('Failed to load products');

@@ -40,6 +40,13 @@ const ConditionalFloatingButtons = () => {
   return !excludeFloatingButtonsRoutes.includes(location.pathname) ? <FloatingButtons /> : null
 }
 
+// Create a component to conditionally render Footer
+const ConditionalFooter = () => {
+  const location = useLocation()
+  const excludeFooterRoutes = ["/admin"] // Define routes where Footer should not appear
+  return !excludeFooterRoutes.includes(location.pathname) ? <Footer /> : null
+}
+
 function App() {
   return (
     <AuthContextProvider>
@@ -64,8 +71,8 @@ function App() {
             <Route path="/category/:category" element={<FilterProduct />} />
             <Route path="/your-order" element={<YourOrder />} />
             <Route path="/orders" element={<OrderItems />} />
-            <Route path="/Privacy_Policy" element={<PrivacyPolicy/>}/>
-            <Route path="/Terms" element={<TermsServices/>}/>
+            <Route path="/Privacy_Policy" element={<PrivacyPolicy />} />
+            <Route path="/Terms" element={<TermsServices />} />
 
             {/* Protected Admin Route */}
             <Route
@@ -78,7 +85,7 @@ function App() {
             />
           </Routes>
           <ConditionalFloatingButtons />
-          <Footer />
+          <ConditionalFooter />
           <ToastContainer />
         </div>
       </BrowserRouter>

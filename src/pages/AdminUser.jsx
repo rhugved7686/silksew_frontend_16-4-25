@@ -165,8 +165,8 @@ const AdminUser = ({ updateTotalOrders }) => {
                   <td data-label="Sr. No">{index + 1}</td>
                   <td data-label="Product Details">
                     <div>
-                      <p>Product name: {order.items[0].productName}</p>
-                      <p>Product Color: {order.items[0].color}</p>
+                      <p>Product Id: {order.items[0]._id}</p>
+                      {/* <p>Product Color: {order.items[0].color}</p> */}
                       <p>Size: {order.items[0].size}</p>
                       <p>Quantity: {order.items[0].quantity}</p>
                     </div>
