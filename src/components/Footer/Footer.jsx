@@ -8,11 +8,6 @@ import whatsapp_icon from "../Assets/whatsapp_icon.png"
 //import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api"
 
 const Footer = () => {
-  const mapStyles = {
-    height: "100%",
-    width: "100%",
-  }
-
   // const defaultCenter = {
   //   lat: 18.561252,
   //   lng: 73.9443581,

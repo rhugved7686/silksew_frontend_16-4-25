@@ -3,9 +3,7 @@ import "./CartItems.css";
 import { ShopContext } from "../../context/ShopContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
-import { BASEURL } from "../../config"; // make sure you have this
 
 const CartItems = () => {
   const { cartItems, removeFromCart, getTotalCartAmount, products } = useContext(ShopContext);
