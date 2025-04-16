@@ -12,7 +12,7 @@ const Popular = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://api.silksew.com/api/products/list');
+        const response = await axios.get('http://localhost:5001/api/products/list');
         // console.log(response);
         const fetchedProducts = Array.isArray(response.data) ? response.data : response.data.products;
         const womenProducts = fetchedProducts.filter((product) => product.category.includes('men'));

@@ -3,11 +3,12 @@ import "./CartItems.css";
 import { ShopContext } from "../../context/ShopContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
+import { BASEURL } from "../../config"; // make sure you have this
 
 const CartItems = () => {
-  const { cartItems, removeFromCart, getTotalCartAmount, products } =
-    useContext(ShopContext);
+  const { cartItems, removeFromCart, getTotalCartAmount, products } = useContext(ShopContext);
   const [localCartItems, setLocalCartItems] = useState(cartItems);
   const [localProducts, setLocalProducts] = useState(products);
   const navigate = useNavigate();
@@ -19,12 +20,8 @@ const CartItems = () => {
         if (parsedImages[color] && parsedImages[color].length > 0) {
           return parsedImages[color][0];
         }
-        // Fallback to first available color if selected color not found
         const firstAvailableColor = Object.keys(parsedImages)[0];
-        if (
-          parsedImages[firstAvailableColor] &&
-          parsedImages[firstAvailableColor].length > 0
-        ) {
+        if (parsedImages[firstAvailableColor] && parsedImages[firstAvailableColor].length > 0) {
           return parsedImages[firstAvailableColor][0];
         }
       } catch (error) {
@@ -39,6 +36,16 @@ const CartItems = () => {
     setLocalProducts(products);
   }, [cartItems, products]);
 
+  useEffect(() => {
+    const missing = cartItems
+      .map((item) => item.productId)
+      .filter((id) => !products.some((p) => p._id === id))
+  
+    if (missing.length > 0) {
+      console.warn("Missing product IDs:", missing)
+    }
+  }, [cartItems, products])
+  
 
   return (
     <div className="cartitems">
@@ -55,15 +62,13 @@ const CartItems = () => {
       <hr />
       {localCartItems.map((cartItem) => {
         const { productId, quantity, size, color } = cartItem;
-        const product = localProducts.find((p) => p._id === productId);
+        const product = localProducts.find((p) => String(p._id) === String(productId));
 
         if (!product) {
           console.warn(`Product with ID ${productId} not found.`);
-          return null; // Prevents rendering a broken cart item
+          return null;
         }
-        
 
-        // Use the selected color from the cart item
         const displayColor = color || "Default";
 
         return (
@@ -80,9 +85,7 @@ const CartItems = () => {
             <p>{quantity}</p>
             <p>{size}</p>
             <p>Rs {quantity * product.price}</p>
-            <button onClick={() => removeFromCart(productId, size, color)}>
-              Remove
-            </button>
+            <button onClick={() => removeFromCart(productId, size, color)}>Remove</button>
           </div>
         );
       })}

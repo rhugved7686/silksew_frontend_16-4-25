@@ -16,7 +16,7 @@ const RelatedProducts = ({ subcategory, currentProductId }) => {
 
     const fetchRelatedProducts = async () => {
       try {
-        const response = await axios.get("https://api.silksew.com/api/products", {
+        const response = await axios.get("http://localhost:5001/api/products", {
           params: { exclude: currentProductId },
         });
 

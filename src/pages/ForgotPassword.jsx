@@ -14,7 +14,7 @@ function ForgotPassword() {
     };
 
     const userValid = async () => {
-        const res = await fetch(`https://api.silksew.com/api/forgot-password/forgotpassword/${id}/${token}`, {
+        const res = await fetch(`http://localhost:5001/api/forgot-password/forgotpassword/${id}/${token}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -43,7 +43,7 @@ function ForgotPassword() {
         } else if (password.length < 6) {
             toast.error("Password must be 6 characters!", { position: "top-center" });
         } else {
-            const res = await fetch(`https://api.silksew.com/api/change-password/${id}/${token}`, {
+            const res = await fetch(`http://localhost:5001/api/change-password/${id}/${token}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

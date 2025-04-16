@@ -328,7 +328,7 @@ const AdminProductForm = () => {
       productData.append("images", JSON.stringify(uploadedImagesByColor))
 
       // eslint-disable-next-line no-unused-vars
-      const response = await axios.post("https://api.silksew.com/api/products", productData, {
+      const response = await axios.post("http://localhost:5001/api/products", productData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "multipart/form-data",

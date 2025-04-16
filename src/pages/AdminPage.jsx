@@ -76,10 +76,10 @@ const Dashboard = () => {
     if (token) {
       try {
         const [productsResponse, ordersResponse] = await Promise.all([
-          axios.get("https://api.silksew.com/api/products", {
+          axios.get("http://localhost:5001/api/products", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("https://api.silksew.com/api/orders", {
+          axios.get("http://localhost:5001/api/orders", {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ])
